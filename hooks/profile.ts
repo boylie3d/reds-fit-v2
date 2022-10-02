@@ -9,7 +9,7 @@ export function UseProfile(userId: string) {
   )
 
   return {
-    activities: data,
+    profile: data,
     loading: !error && !data,
     error: error,
   }
