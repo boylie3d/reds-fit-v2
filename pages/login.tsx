@@ -18,9 +18,9 @@ export default function Login() {
       <Center>
         <VStack>
           <Image src="reds-logo.png" pt="2em" pr="2em" pl="2em" />
-          <Heading size="xl">REDS FIT</Heading>
+          <Heading size="4xl">REDS FIT</Heading>
           <LoginBox />
-          <Flex align="center">
+          <Flex p="1em" align="center">
             <Divider orientation="horizontal" />
             <Text padding="2">OR</Text>
             <Divider orientation="horizontal" />

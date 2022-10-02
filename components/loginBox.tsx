@@ -30,7 +30,7 @@ export default function LoginBox() {
   }
 
   return (
-    <Box borderWidth="2px" borderRadius="lg" h="18em" w="25em" pb="2em">
+    <Box borderWidth="2px" borderRadius="lg" w="25em">
       <Tabs isFitted variant="enclosed">
         <TabList mb="1em">
           <Tab>Login</Tab>
