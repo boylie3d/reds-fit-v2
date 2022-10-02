@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { getAnalytics } from "firebase/analytics"
+import { getAuth, GoogleAuthProvider } from "@firebase/auth"
 import { initializeApp } from "firebase/app"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app"
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCNOZ3bC_QVQpwW25MW1VbF_dV4zT9_uTM",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "reds-fit-v2.firebaseapp.com",
   projectId: "reds-fit-v2",
   storageBucket: "reds-fit-v2.appspot.com",
@@ -18,6 +18,13 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
-const analytics = getAnalytics(app)
+const provider = new GoogleAuthProvider()
+const auth = getAuth()
 
-export default app
+const firebase = {
+  app: app,
+  auth: auth,
+  provider: provider,
+}
+
+export default firebase

@@ -16,7 +16,7 @@ const theme = extendTheme({
   components: {
     Heading: {
       sizes: {
-        "4xl": {
+        "3xl": {
           color: colors.teamPrimary,
         },
       },
