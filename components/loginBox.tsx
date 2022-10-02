@@ -48,11 +48,15 @@ const Login = () => {
   return (
     <VStack>
       <InputGroup>
-        <InputLeftElement children={<EmailIcon color="gray.300" />} />
+        <InputLeftElement>
+          <EmailIcon color="gray.300" />
+        </InputLeftElement>
         <Input placeholder="Email" />
       </InputGroup>
       <InputGroup>
-        <InputLeftElement children={<LockIcon color="gray.300" />} />
+        <InputLeftElement>
+          <LockIcon color="gray.300" />
+        </InputLeftElement>
         <Input placeholder="Password" type={show ? "text" : "password"} />
         <InputRightElement>
           <Box onClick={() => setShow(!show)}>
