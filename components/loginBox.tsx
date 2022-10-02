@@ -15,10 +15,20 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { useState } from "react"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 
 export default function LoginBox() {
+  const signUp = (form: FormInput) => {
+    console.log("signing up")
+    console.log(form)
+  }
+
+  const signIn = (form: FormInput) => {
+    console.log("signing in")
+    console.log(form)
+  }
+
   return (
     <Box borderWidth="2px" borderRadius="lg" h="18em" w="25em" pb="2em">
       <Tabs isFitted variant="enclosed">
@@ -28,10 +38,10 @@ export default function LoginBox() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Login />
+            <EmailPassForm submitLabel="Sign In" onSubmit={signIn} />
           </TabPanel>
           <TabPanel>
-            <SignUp />
+            <EmailPassForm submitLabel="Sign Up" onSubmit={signUp} />
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -44,7 +54,12 @@ type FormInput = {
   pass: string
 }
 
-const Login = () => {
+interface FormProps {
+  submitLabel: string
+  onSubmit: (form: FormInput) => void
+}
+
+const EmailPassForm = ({ onSubmit, submitLabel }: FormProps) => {
   const [show, setShow] = useState(false)
   const {
     register,
@@ -52,8 +67,6 @@ const Login = () => {
     watch,
     formState: { errors },
   } = useForm<FormInput>()
-
-  const onSubmit: SubmitHandler<FormInput> = data => console.log(data)
 
   const PasswordShow = () => {
     if (show) return <AiOutlineEyeInvisible color="gray" />
@@ -84,21 +97,8 @@ const Login = () => {
             </Box>
           </InputRightElement>
         </InputGroup>
-        <Button type="submit">Sign in</Button>
+        <Button type="submit">{submitLabel}</Button>
       </VStack>
     </form>
-  )
-}
-
-const SignUp = () => {
-  return (
-    <VStack spacing="1em">
-      <InputGroup>
-        <InputLeftElement>
-          <EmailIcon color="gray.300" />
-        </InputLeftElement>
-        <Input placeholder="Email" />
-      </InputGroup>
-    </VStack>
   )
 }
