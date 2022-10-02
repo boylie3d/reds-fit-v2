@@ -1,9 +1,9 @@
+import { Profile } from "@/types"
 import type { NextApiRequest, NextApiResponse } from "next"
-import { Profile } from "../../../types/profile"
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Profile | string>,
+  res: NextApiResponse<Profile | any>,
 ) {
-  res.status(200).json("")
+  res.status(200).json({})
 }
