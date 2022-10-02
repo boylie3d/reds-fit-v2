@@ -1,9 +1,11 @@
 import { EmailIcon, LockIcon } from "@chakra-ui/icons"
 import {
   Box,
+  Icon,
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   Tab,
   TabList,
   TabPanel,
@@ -11,6 +13,8 @@ import {
   Tabs,
   VStack,
 } from "@chakra-ui/react"
+import { useState } from "react"
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 
 export default function LoginBox() {
   return (
@@ -34,6 +38,13 @@ export default function LoginBox() {
 }
 
 const Login = () => {
+  const [show, setShow] = useState(false)
+
+  const PasswordShow = () => {
+    if (show) return <AiOutlineEyeInvisible color="gray" />
+    else return <AiOutlineEye color="gray" />
+  }
+
   return (
     <VStack>
       <InputGroup>
@@ -42,7 +53,12 @@ const Login = () => {
       </InputGroup>
       <InputGroup>
         <InputLeftElement children={<LockIcon color="gray.300" />} />
-        <Input placeholder="Password" />
+        <Input placeholder="Password" type={show ? "text" : "password"} />
+        <InputRightElement>
+          <Box onClick={() => setShow(!show)}>
+            <Icon as={PasswordShow} />
+          </Box>
+        </InputRightElement>
       </InputGroup>
     </VStack>
   )
