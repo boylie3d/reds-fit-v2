@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [userLoading, user])
 
   useEffect(() => {
-    if (!profileLoading && !profile) {
+    if (user && !profileLoading && !profile) {
       console.log("no profile")
     }
   }, [profileLoading, profile])
