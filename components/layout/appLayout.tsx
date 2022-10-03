@@ -1,8 +1,9 @@
-import { Profile, UserType } from "@/types"
+import { Profile } from "@/types"
 import { Grid, GridItem } from "@chakra-ui/react"
 import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import { tmpUser } from "test"
 import PageHead from "./head"
 import NavBottom from "./navBottom"
 import NavTop from "./navTop"
@@ -10,15 +11,6 @@ import NavTop from "./navTop"
 interface LayoutProps {
   userProfile?: Profile
   children: JSX.Element[] | JSX.Element
-}
-
-const tmpUser: Profile = {
-  firstName: "Dave",
-  lastName: "Boyle",
-  email: "dave@globacore.com",
-  profilePhoto:
-    "https://pbs.twimg.com/profile_images/422249828500779009/rv2DKary_400x400.jpeg",
-  userType: UserType.Admin,
 }
 
 export default function AppLayout(props: LayoutProps) {
