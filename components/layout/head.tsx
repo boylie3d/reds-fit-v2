@@ -9,7 +9,7 @@ export default function PageHead({ title }: HeadProps) {
     <Head>
       <title>{title}</title>
       <meta name="description" content="Making Scoro kinda ok! Ish!" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/favicon.png" />
     </Head>
   )
 }

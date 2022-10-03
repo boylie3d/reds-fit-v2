@@ -1,83 +1,44 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons"
 import {
-  Avatar,
-  Box,
-  Divider,
-  Flex,
+  Center,
+  HStack,
+  Icon,
   LinkBox,
   LinkOverlay,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
+  VStack,
 } from "@chakra-ui/react"
+import { navItems } from "navigation"
 import { useRouter } from "next/router"
-import { useState } from "react"
-
-const navItems = [
-  {
-    name: "Home",
-    route: "/",
-  },
-  {
-    name: "Planner",
-    route: "/planner",
-  },
-]
 
 export default function NavBottom() {
   const router = useRouter()
   return (
     <>
-      <Box h="50px">
-        <Flex p="10px">
+      <Center h="100%">
+        <HStack>
           {navItems.map(item => (
             <LinkBox key={item.route}>
               <LinkOverlay href={item.route}>
-                <Box w="100px" textAlign="center">
-                  <Text
-                    color={
-                      router.pathname === item.route ? "blue.500" : "black"
+                <VStack w="100px">
+                  <Icon
+                    color="white"
+                    w={6}
+                    h={6}
+                    as={
+                      router.pathname === item.route
+                        ? item.iconSelected
+                        : item.icon
                     }
-                    fontWeight={
-                      router.pathname === item.route ? "bold" : "normal"
-                    }
-                  >
+                  />
+                  <Text fontSize="sm" color="white">
                     {item.name}
                   </Text>
-                </Box>
+                </VStack>
               </LinkOverlay>
             </LinkBox>
           ))}
-          <Box flex={1}>{/* <UserBadge /> */}</Box>
-        </Flex>
-      </Box>
-      <Divider />
+        </HStack>
+      </Center>
     </>
-  )
-}
-
-const UserBadge = () => {
-  const { data } = useSession()
-  const { user, loading, error } = UseUser(data?.user?.email || "")
-  const [menuOpen, setMenuOpen] = useState(false)
-
-  const logout = () => {
-    signOut()
-  }
-
-  return (
-    <Menu onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)}>
-      <MenuButton float="right">
-        <Box alignItems="center" display="inline-flex">
-          <Avatar size="sm" src={user?.user_picture}></Avatar>
-          {menuOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-        </Box>
-      </MenuButton>
-      <MenuList>
-        <MenuItem onClick={logout}>Log Out</MenuItem>
-      </MenuList>
-    </Menu>
   )
 }

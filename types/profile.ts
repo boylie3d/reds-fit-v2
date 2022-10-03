@@ -1,13 +1,13 @@
-enum UserType {
-  "Player",
-  "Parent",
-  "Admin",
+export enum UserType {
+  Player = "Player",
+  Parent = "Parent",
+  Admin = "Admin",
 }
 
 export type Profile = {
   firstName: string
   lastName: string
-  email: boolean
-  profilePhoto: string
+  email: string
+  profilePhoto?: string
   userType: UserType
 }

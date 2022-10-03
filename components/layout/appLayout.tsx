@@ -1,17 +1,39 @@
+import { Profile, UserType } from "@/types"
 import { Grid, GridItem } from "@chakra-ui/react"
+import { getNavItem, NavItem } from "navigation"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import PageHead from "./head"
-import NavBar from "./navBottom"
+import NavBottom from "./navBottom"
 import NavTop from "./navTop"
 
 interface LayoutProps {
-  title: string
+  userProfile?: Profile
   children: JSX.Element[] | JSX.Element
 }
 
+const tmpUser: Profile = {
+  firstName: "Dave",
+  lastName: "Boyle",
+  email: "dave@globacore.com",
+  profilePhoto:
+    "https://pbs.twimg.com/profile_images/422249828500779009/rv2DKary_400x400.jpeg",
+  userType: UserType.Admin,
+}
+
 export default function AppLayout(props: LayoutProps) {
+  const [nav, setNav] = useState<NavItem>()
+  const router = useRouter()
+
+  useEffect(() => {
+    setNav(getNavItem(router.pathname))
+  }, [router])
+
+  if (!nav) return <div />
+
   return (
     <>
-      <PageHead title={props.title} />
+      <PageHead title={nav.name} />
       <Grid
         templateAreas={`"header"
                   "main"
@@ -21,14 +43,35 @@ export default function AppLayout(props: LayoutProps) {
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem pl="2" area={"header"}>
-          <NavTop />
+        <GridItem area={"header"}>
+          <NavTop user={tmpUser} title={nav.name} />
         </GridItem>
-        <GridItem overflowX="hidden" overflowY="scroll" pl="2" area={"main"}>
+        <GridItem
+          sx={{
+            "&::-webkit-scrollbar": {
+              width: "10px",
+              borderRadius: "8px",
+              backgroundColor: `rgba(0, 0, 0, 0.05)`,
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: `rgba(0, 0, 0, 0.05)`,
+              borderRadius: "8px",
+            },
+          }}
+          overflowX="hidden"
+          overflowY="scroll"
+          pl="2"
+          area={"main"}
+        >
           {props.children}
         </GridItem>
-        <GridItem pl="2" bg="teamPrimary" area={"footer"}>
-          <NavBar />
+        <GridItem
+          style={{ boxShadow: "0px 0px 20px 0px" }}
+          pl="2"
+          bg="teamPrimary"
+          area={"footer"}
+        >
+          <NavBottom />
         </GridItem>
       </Grid>
     </>
