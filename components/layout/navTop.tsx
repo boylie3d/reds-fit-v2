@@ -12,6 +12,7 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react"
+import Router from "next/router"
 import { useState } from "react"
 
 interface NavProps {
@@ -70,6 +71,7 @@ const UserBadge = ({ user }: NavProps) => {
   }
 
   const goToAdmin = () => {
+    Router.push("/admin")
     console.log("admin panel")
   }
 

@@ -7,7 +7,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
-import { navItems } from "navigation"
+import { getNavBarElements } from "navigation"
 import { useRouter } from "next/router"
 
 export default function NavBottom() {
@@ -15,8 +15,11 @@ export default function NavBottom() {
   return (
     <>
       <Center h="100%">
-        <Grid w="100%" templateColumns={`repeat(${navItems.length},1fr)`}>
-          {navItems.map(item => (
+        <Grid
+          w="100%"
+          templateColumns={`repeat(${getNavBarElements().length},1fr)`}
+        >
+          {getNavBarElements().map(item => (
             <Center key={item.route}>
               <LinkBox>
                 <LinkOverlay href={item.route}>
