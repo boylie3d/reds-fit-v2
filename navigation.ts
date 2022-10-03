@@ -6,7 +6,12 @@ import {
   AiOutlineHome,
   AiOutlineTrophy,
 } from "react-icons/ai"
-import { HiOutlineUserGroup, HiUserGroup } from "react-icons/hi"
+import {
+  HiOutlineUser,
+  HiOutlineUserGroup,
+  HiUser,
+  HiUserGroup,
+} from "react-icons/hi"
 import { IconType } from "react-icons/lib"
 
 export interface NavItem {
@@ -31,6 +36,13 @@ export const navItems: NavItem[] = [
     icon: HiOutlineUserGroup,
     iconSelected: HiUserGroup,
     route: "/team",
+  },
+  {
+    name: "Profile",
+    showInNav: true,
+    icon: HiOutlineUser,
+    iconSelected: HiUser,
+    route: "/profile",
   },
   {
     name: "Leaderboard",

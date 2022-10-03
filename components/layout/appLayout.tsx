@@ -67,7 +67,6 @@ export default function AppLayout(props: LayoutProps) {
         </GridItem>
         <GridItem
           style={{ boxShadow: "0px 0px 20px 0px" }}
-          pl="2"
           bg="teamPrimary"
           area={"footer"}
         >

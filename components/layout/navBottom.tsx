@@ -16,14 +16,14 @@ export default function NavBottom() {
     <>
       <Center h="100%">
         <Grid
-          w="100%"
+          gap={2}
           templateColumns={`repeat(${getNavBarElements().length},1fr)`}
         >
           {getNavBarElements().map(item => (
             <Center key={item.route}>
               <LinkBox>
                 <LinkOverlay href={item.route}>
-                  <VStack w="100px">
+                  <VStack spacing={0}>
                     <Icon
                       color="white"
                       w={6}
