@@ -1,6 +1,6 @@
 import {
   Center,
-  HStack,
+  Grid,
   Icon,
   LinkBox,
   LinkOverlay,
@@ -15,29 +15,31 @@ export default function NavBottom() {
   return (
     <>
       <Center h="100%">
-        <HStack>
+        <Grid w="100%" templateColumns={`repeat(${navItems.length},1fr)`}>
           {navItems.map(item => (
-            <LinkBox key={item.route}>
-              <LinkOverlay href={item.route}>
-                <VStack w="100px">
-                  <Icon
-                    color="white"
-                    w={6}
-                    h={6}
-                    as={
-                      router.pathname === item.route
-                        ? item.iconSelected
-                        : item.icon
-                    }
-                  />
-                  <Text fontSize="sm" color="white">
-                    {item.name}
-                  </Text>
-                </VStack>
-              </LinkOverlay>
-            </LinkBox>
+            <Center>
+              <LinkBox key={item.route}>
+                <LinkOverlay href={item.route}>
+                  <VStack w="100px">
+                    <Icon
+                      color="white"
+                      w={6}
+                      h={6}
+                      as={
+                        router.pathname === item.route
+                          ? item.iconSelected
+                          : item.icon
+                      }
+                    />
+                    <Text fontSize="xs" color="white">
+                      {item.name}
+                    </Text>
+                  </VStack>
+                </LinkOverlay>
+              </LinkBox>
+            </Center>
           ))}
-        </HStack>
+        </Grid>
       </Center>
     </>
   )

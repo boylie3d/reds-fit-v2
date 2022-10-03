@@ -6,7 +6,7 @@ import styles from "../styles/Home.module.css"
 const Home: NextPage = () => {
   return (
     <div>
-      <AppLayout title="main">
+      <AppLayout>
         <main className={styles.main}>
           <h1 className={styles.title}>
             Welcome to <a href="https://nextjs.org">Next.js!</a>
