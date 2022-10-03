@@ -17,8 +17,8 @@ export default function NavBottom() {
       <Center h="100%">
         <Grid w="100%" templateColumns={`repeat(${navItems.length},1fr)`}>
           {navItems.map(item => (
-            <Center>
-              <LinkBox key={item.route}>
+            <Center key={item.route}>
+              <LinkBox>
                 <LinkOverlay href={item.route}>
                   <VStack w="100px">
                     <Icon
