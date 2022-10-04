@@ -53,7 +53,9 @@ const Banner = ({ profile }: ProfileProps) => {
             color="white"
             // color="teamPrimary"
             zIndex={0}
-          >{`${profile.firstName} ${profile.lastName}`}</Heading>
+          >
+            {profile?.displayName}
+          </Heading>
         </VStack>
       </Center>
     </Box>
