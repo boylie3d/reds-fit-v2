@@ -1,7 +1,7 @@
 import { Profile } from "@/types"
 import { getNavItem, NavItem } from "@/types/navigation"
 import { Grid, GridItem } from "@chakra-ui/react"
-import { UseProfile } from "hooks/profile"
+import { UseLocalProfile } from "hooks/profile"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
@@ -19,15 +19,12 @@ export default function AppLayout(props: LayoutProps) {
   const [nav, setNav] = useState<NavItem>()
   const router = useRouter()
   const [user, loading, error] = useAuthState(fb.auth)
+
   const {
     profile,
     loading: profileLoading,
     error: profileError,
-  } = UseProfile(user ? user.uid : "")
-
-  useEffect(() => {
-    console.log(profile)
-  }, [profile])
+  } = UseLocalProfile()
 
   useEffect(() => {
     setNav(getNavItem(router.pathname))

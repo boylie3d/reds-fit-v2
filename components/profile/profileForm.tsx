@@ -37,8 +37,6 @@ export default function ProfileForm({ existingProfile, id }: FormProps) {
         : undefined
     )!
 
-    console.log(photo)
-
     const fullName = `${form.firstName} ${form.lastName}`
     const newProfile: Profile = {
       firstName: form.firstName,

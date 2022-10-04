@@ -8,6 +8,7 @@ export enum AccessType {
   Unverified = "Unverified",
   Verified = "Verified",
   Admin = "Admin",
+  Archived = "Archived",
 }
 
 export type Profile = {

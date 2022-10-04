@@ -1,7 +1,7 @@
 import { Profile } from "@/types"
 import { Avatar, Box, Center, Heading, VStack } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
-import { UseProfile } from "hooks/profile"
+import { UseLocalProfile } from "hooks/profile"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { tmpUser } from "test"
 import fb from "util/firebase"
@@ -12,7 +12,7 @@ export function ProfilePage() {
     profile,
     loading: profileLoading,
     error: profileError,
-  } = UseProfile(user ? user.uid : "")
+  } = UseLocalProfile()
 
   return (
     <AppLayout>
