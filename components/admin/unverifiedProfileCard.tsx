@@ -14,13 +14,9 @@ import { useSWRConfig } from "swr"
 
 interface ProfileProps {
   profile: Profile
-  onUpdate: (profile: Profile) => void
 }
 
-export default function UnverifiedProfileCard({
-  profile,
-  onUpdate,
-}: ProfileProps) {
+export default function UnverifiedProfileCard({ profile }: ProfileProps) {
   const { mutate } = useSWRConfig()
 
   const approve = async () => {
@@ -31,8 +27,6 @@ export default function UnverifiedProfileCard({
       body: JSON.stringify(profile),
     })
     mutate("/api/profile")
-
-    onUpdate(profile)
   }
 
   const reject = async () => {
