@@ -1,19 +1,21 @@
 import { AccessType, Profile, UserType } from "@/types"
 import { Button, Input, useToast } from "@chakra-ui/react"
+import { UseLocalProfile } from "hooks/profile"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useForm } from "react-hook-form"
 import fb from "util/firebase"
 
-interface FormProps {
-  id: string
-  existingProfile?: Profile
-}
+// interface FormProps {
+//   id: string
+//   existingProfile?: Profile
+// }
 
-export default function ProfileForm({ existingProfile, id }: FormProps) {
+export default function ProfileForm() {
   const [submitting, setSubmitting] = useState<boolean>(false)
   const toast = useToast()
-  const [user, loading, error] = useAuthState(fb.auth)
+  const [user, uLoading, uErr] = useAuthState(fb.auth)
+  const { profile: existingProfile, loading, error } = UseLocalProfile()
 
   const {
     register,
@@ -39,6 +41,7 @@ export default function ProfileForm({ existingProfile, id }: FormProps) {
 
     const fullName = `${form.firstName} ${form.lastName}`
     const newProfile: Profile = {
+      uid: user!.uid,
       firstName: form.firstName,
       lastName: form.lastName,
       accessType: access,
@@ -47,7 +50,7 @@ export default function ProfileForm({ existingProfile, id }: FormProps) {
       email: form.email,
     }
 
-    const resp = await fetch(`/api/profile/${id}`, {
+    const resp = await fetch(`/api/profile/${user?.uid}`, {
       method: "POST",
       body: JSON.stringify(newProfile),
     })
@@ -74,6 +77,8 @@ export default function ProfileForm({ existingProfile, id }: FormProps) {
       })
     })
   }
+
+  if (!user) return <div />
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

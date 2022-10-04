@@ -1,30 +1,45 @@
 import { AccessType, Profile } from "@/types"
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons"
-import {
-  Avatar,
-  Box,
-  Center,
-  Grid,
-  GridItem,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react"
+import { Box, Divider, Text } from "@chakra-ui/react"
 import { useProfiles } from "hooks/profile"
+import { useEffect } from "react"
+import { useSWRConfig } from "swr"
+import UnverifiedProfileCard from "./unverifiedProfileCard"
+import VerifiedProfileCard from "./verifiedProfileCard"
 
 export default function UserManagement() {
   const { profiles, loading, error } = useProfiles()
+  // const [localProfiles, setLocalProfiles] = useState<Profile[]>()
+  const { mutate } = useSWRConfig()
 
-  if (loading) return <div />
+  useEffect(() => {
+    console.log(profiles)
+  }, [profiles])
+
+  const updateProfiles = (profile: Profile) => {
+    // mutate("/api/profiles")
+  }
+
+  if (!profiles) return <div />
 
   return (
     <>
       {profiles && (
-        <UnverifiedProfiles
-          profiles={profiles?.filter(
-            profile => profile.accessType === AccessType.Unverified,
-          )}
-        />
+        <>
+          <UnverifiedProfiles
+            profiles={profiles.filter(
+              profile => profile.accessType === AccessType.Unverified,
+            )}
+            onUpdate={updateProfiles}
+          />
+          <VerifiedProfiles
+            profiles={profiles.filter(
+              profile =>
+                profile.accessType !== AccessType.Blocked &&
+                profile.accessType !== AccessType.Unverified,
+            )}
+            onUpdate={updateProfiles}
+          />
+        </>
       )}
     </>
   )
@@ -32,59 +47,36 @@ export default function UserManagement() {
 
 interface ProfilesProps {
   profiles: Profile[]
+  onUpdate: (profile: Profile) => void
 }
 
-const UnverifiedProfiles = ({ profiles }: ProfilesProps) => {
+const UnverifiedProfiles = ({ profiles, onUpdate }: ProfilesProps) => {
+  if (!profiles || profiles.length === 0) return <div />
+
+  return (
+    <Box>
+      <Text>Verification Required</Text>
+      {profiles.map(profile => (
+        <UnverifiedProfileCard
+          onUpdate={onUpdate}
+          key={profile.uid}
+          profile={profile}
+        />
+      ))}
+      <Divider mt="10px" mb="10px" />
+    </Box>
+  )
+}
+
+const VerifiedProfiles = ({ profiles }: ProfilesProps) => {
   if (!profiles || profiles.length === 0) return <div />
 
   return (
     <>
-      <Text>Unverified Users:</Text>
+      <Text>Users</Text>
       {profiles.map(profile => (
-        <UnverifiedProfile profile={profile} />
+        <VerifiedProfileCard key={profile.uid} profile={profile} />
       ))}
     </>
-  )
-}
-
-interface ProfileProps {
-  profile: Profile
-}
-
-const UnverifiedProfile = ({ profile }: ProfileProps) => {
-  const approve = async () => {
-    console.log("cheers")
-  }
-  const reject = async () => {
-    console.log("piss off")
-  }
-
-  return (
-    <Box borderWidth="1px" borderRadius={5} p="10px">
-      <Grid templateColumns="repeat(5, 1fr)" h="100%" w="100%">
-        <GridItem colSpan={4}>
-          <HStack>
-            <Avatar src={profile.photoURL} />
-            <VStack align="left">
-              <Box>{profile.displayName}</Box>
-              <Box>
-                <Text fontSize="xs">{profile.email}</Text>
-              </Box>
-            </VStack>
-          </HStack>
-        </GridItem>
-        <GridItem colSpan={1}>
-          <Center h="100%">
-            <VStack>
-              <Text fontSize="xs">Approve?</Text>
-              <HStack spacing={5}>
-                <CloseIcon w={5} h={5} color="red" onClick={reject} />
-                <CheckIcon w={5} h={5} color="green" onClick={approve} />
-              </HStack>
-            </VStack>
-          </Center>
-        </GridItem>
-      </Grid>
-    </Box>
   )
 }
