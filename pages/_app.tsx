@@ -5,9 +5,9 @@ import type { AppProps } from "next/app"
 import Router from "next/router"
 import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import firebase from "../firebase"
 import "../styles/globals.css"
 import theme from "../theme"
+import firebase from "../util/firebase"
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, userLoading, userError] = useAuthState(firebase.auth)
@@ -27,6 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (user && !profileLoading && !profile) {
       console.log("no profile")
     }
+    console.log(profile)
   }, [profileLoading, profile])
 
   if (userLoading) return <div />

@@ -7,7 +7,8 @@ export enum UserType {
 export type Profile = {
   firstName: string
   lastName: string
+  displayName: string
   email: string
-  profilePhoto?: string
+  photoURL?: string
   userType: UserType
 }

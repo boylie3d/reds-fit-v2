@@ -1,6 +1,6 @@
 import { Profile, UserType } from "@/types"
+import { getNavItem, NavItem } from "@/types/navigation"
 import { Grid, GridItem } from "@chakra-ui/react"
-import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import PageHead from "./head"
