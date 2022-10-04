@@ -35,7 +35,7 @@ const Banner = ({ profile }: ProfileProps) => {
         <VStack>
           <Avatar
             size="xl"
-            src={profile.profilePhoto}
+            src={profile.photoURL}
             // style={{ boxShadow: "0px 0px 50px 30px #ffffff" }}
           />
           <Heading
