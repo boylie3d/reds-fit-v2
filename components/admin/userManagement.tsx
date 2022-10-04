@@ -1,5 +1,14 @@
 import { AccessType, Profile } from "@/types"
-import { Divider, Text } from "@chakra-ui/react"
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Divider,
+  Text,
+} from "@chakra-ui/react"
 import { useProfiles } from "hooks/profile"
 import { useSWRConfig } from "swr"
 import BlockedProfileCard from "./blockedProfileCard"
@@ -82,10 +91,21 @@ const BlockedProfiles = ({ profiles }: ProfilesProps) => {
 
   return (
     <>
-      <Text>Blocked Users</Text>
-      {profiles.map(profile => (
-        <BlockedProfileCard key={profile.uid} profile={profile} />
-      ))}
+      <Accordion allowToggle>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              <Text>Blocked Users</Text>
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel>
+            {profiles.map(profile => (
+              <BlockedProfileCard key={profile.uid} profile={profile} />
+            ))}
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </>
   )
 }
