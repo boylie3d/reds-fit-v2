@@ -7,10 +7,10 @@ import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import "../styles/globals.css"
 import theme from "../theme"
-import firebase from "../util/firebase"
+import fb from "../util/firebase"
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [user, userLoading, userError] = useAuthState(firebase.auth)
+  const [user, userLoading, userError] = useAuthState(fb.auth)
   const {
     profile,
     loading: profileLoading,

@@ -12,8 +12,10 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react"
+import { signOut } from "@firebase/auth"
 import Router from "next/router"
 import { useState } from "react"
+import fb from "util/firebase"
 
 interface NavProps {
   user?: Profile
@@ -67,12 +69,11 @@ const UserBadge = ({ user }: NavProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const logout = () => {
-    console.log("signing out")
+    signOut(fb.auth)
   }
 
   const goToAdmin = () => {
     Router.push("/admin")
-    console.log("admin panel")
   }
 
   return (
