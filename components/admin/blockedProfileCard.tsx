@@ -1,8 +1,8 @@
 import { AccessType, Profile } from "@/types"
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons"
 import {
   Avatar,
   Box,
+  Button,
   Center,
   Grid,
   GridItem,
@@ -16,7 +16,7 @@ interface ProfileProps {
   profile: Profile
 }
 
-export default function UnverifiedProfileCard({ profile }: ProfileProps) {
+export default function BlockedProfileCard({ profile }: ProfileProps) {
   const { mutate } = useSWRConfig()
 
   const verify = async () => {
@@ -54,13 +54,9 @@ export default function UnverifiedProfileCard({ profile }: ProfileProps) {
         </GridItem>
         <GridItem colSpan={1}>
           <Center h="100%">
-            <VStack>
-              <Text fontSize="xs">Approve?</Text>
-              <HStack spacing={5}>
-                <CloseIcon w={5} h={5} color="red" onClick={block} />
-                <CheckIcon w={5} h={5} color="green" onClick={verify} />
-              </HStack>
-            </VStack>
+            <Button variant="outline" colorScheme="green" onClick={verify}>
+              <Text fontSize="xs">Unblock</Text>
+            </Button>
           </Center>
         </GridItem>
       </Grid>

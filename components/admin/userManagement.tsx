@@ -1,9 +1,12 @@
 import { AccessType, Profile } from "@/types"
-import { Box, Divider, Text } from "@chakra-ui/react"
+import { Divider, Text } from "@chakra-ui/react"
 import { useProfiles } from "hooks/profile"
 import { useSWRConfig } from "swr"
+import BlockedProfileCard from "./blockedProfileCard"
 import UnverifiedProfileCard from "./unverifiedProfileCard"
 import VerifiedProfileCard from "./verifiedProfileCard"
+
+const superUserId = "UpKYkVJKXzQww0HiE88q6nD65mP2"
 
 export default function UserManagement() {
   const { profiles, loading, error } = useProfiles()
@@ -27,6 +30,11 @@ export default function UserManagement() {
                 profile.accessType !== AccessType.Unverified,
             )}
           />
+          <BlockedProfiles
+            profiles={profiles.filter(
+              profile => profile.accessType === AccessType.Blocked,
+            )}
+          />
         </>
       )}
     </>
@@ -41,13 +49,13 @@ const UnverifiedProfiles = ({ profiles }: ProfilesProps) => {
   if (!profiles || profiles.length === 0) return <div />
 
   return (
-    <Box>
+    <>
       <Text>Verification Required</Text>
       {profiles.map(profile => (
         <UnverifiedProfileCard key={profile.uid} profile={profile} />
       ))}
       <Divider mt="10px" mb="10px" />
-    </Box>
+    </>
   )
 }
 
@@ -58,7 +66,25 @@ const VerifiedProfiles = ({ profiles }: ProfilesProps) => {
     <>
       <Text>Users</Text>
       {profiles.map(profile => (
-        <VerifiedProfileCard key={profile.uid} profile={profile} />
+        <VerifiedProfileCard
+          key={profile.uid}
+          superUserId={superUserId}
+          profile={profile}
+        />
+      ))}
+      <Divider mt="10px" mb="10px" />
+    </>
+  )
+}
+
+const BlockedProfiles = ({ profiles }: ProfilesProps) => {
+  if (!profiles || profiles.length === 0) return <div />
+
+  return (
+    <>
+      <Text>Blocked Users</Text>
+      {profiles.map(profile => (
+        <BlockedProfileCard key={profile.uid} profile={profile} />
       ))}
     </>
   )
