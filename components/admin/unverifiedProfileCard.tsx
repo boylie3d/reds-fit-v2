@@ -35,6 +35,7 @@ export default function UnverifiedProfileCard({ profile }: ProfileProps) {
       method: "POST",
       body: JSON.stringify(profile),
     })
+    mutate("/api/profile")
   }
 
   return (
