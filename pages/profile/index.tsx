@@ -1,13 +1,19 @@
 import { Profile } from "@/types"
 import { Avatar, Box, Center, Heading, VStack } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
+import { UseProfile } from "hooks/profile"
+import { useAuthState } from "react-firebase-hooks/auth"
 import { tmpUser } from "test"
+import fb from "util/firebase"
 
-interface ProfileProps {
-  profile: Profile
-}
+export function ProfilePage() {
+  const [user, loading, error] = useAuthState(fb.auth)
+  const {
+    profile,
+    loading: profileLoading,
+    error: profileError,
+  } = UseProfile(user ? user.uid : "")
 
-export function ProfilePage({ profile }: ProfileProps) {
   return (
     <AppLayout>
       <VStack>
@@ -23,6 +29,10 @@ export async function getServerSideProps() {
 
 export default ProfilePage
 
+interface ProfileProps {
+  profile?: Profile
+}
+
 const Banner = ({ profile }: ProfileProps) => {
   return (
     <Box
@@ -35,7 +45,7 @@ const Banner = ({ profile }: ProfileProps) => {
         <VStack>
           <Avatar
             size="xl"
-            src={profile.photoURL}
+            src={profile?.photoURL}
             // style={{ boxShadow: "0px 0px 50px 30px #ffffff" }}
           />
           <Heading

@@ -1,7 +1,9 @@
 import { AccessType, Profile, UserType } from "@/types"
 import { Button, Input, useToast } from "@chakra-ui/react"
 import { useState } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
 import { useForm } from "react-hook-form"
+import fb from "util/firebase"
 
 interface FormProps {
   id: string
@@ -11,6 +13,7 @@ interface FormProps {
 export default function ProfileForm({ existingProfile, id }: FormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false)
   const toast = useToast()
+  const [user, loading, error] = useAuthState(fb.auth)
 
   const {
     register,
@@ -26,7 +29,15 @@ export default function ProfileForm({ existingProfile, id }: FormProps) {
       ? existingProfile.accessType
       : AccessType.Unverified
 
-    const photo = existingProfile ? existingProfile.photoURL : undefined
+    const photo: string | undefined = (
+      existingProfile
+        ? existingProfile.photoURL
+        : user
+        ? user.photoURL
+        : undefined
+    )!
+
+    console.log(photo)
 
     const fullName = `${form.firstName} ${form.lastName}`
     const newProfile: Profile = {
