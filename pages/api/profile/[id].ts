@@ -1,4 +1,5 @@
 import { Profile } from "@/types"
+import { GoogleUser } from "@/types/googleUser"
 import type { NextApiRequest, NextApiResponse } from "next"
 import firebaseAdmin from "util/firebaseAdmin"
 
@@ -8,7 +9,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Profile | any>,
 ) {
-  console.log(req.query)
   const { id } = req.query
 
   if (!id || Array.isArray(id))
@@ -42,3 +42,5 @@ async function sync(id: string, user: Profile) {
   const res = await ref.set(user, { merge: true })
   return res
 }
+
+async function post(id: string, user: GoogleUser) {}

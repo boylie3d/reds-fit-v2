@@ -80,7 +80,7 @@ const UserBadge = ({ user }: NavProps) => {
       <MenuButton float="right">
         <Box alignItems="center" display="inline-flex">
           {/* <Text pr="0.5em">{user?.firstName}</Text> */}
-          <Avatar size="sm" src={user?.profilePhoto}></Avatar>
+          <Avatar size="sm" src={user?.photoURL}></Avatar>
           {menuOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </Box>
       </MenuButton>
