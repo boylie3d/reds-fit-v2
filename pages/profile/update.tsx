@@ -1,16 +1,32 @@
-import { Box } from "@chakra-ui/react"
+import { Profile } from "@/types"
+import { useToast } from "@chakra-ui/react"
+import PageHead from "components/layout/head"
 import ProfileForm from "components/profile/profileForm"
 
-// interface ProfileProps {
-//   user: User
-// }
 export default function ProfileUpdate() {
-  //TODO: Remove
-  // const tmpGoogleId = "UpKYkVJKXzQww0HiE88q6nD65mP2"
+  const toast = useToast()
+
+  const formSubmitted = (profile: Profile) => {
+    showToast()
+  }
+
+  const showToast = (): Promise<boolean> => {
+    return new Promise<boolean>((res, rej) => {
+      toast({
+        title: "Profile Updated.",
+        description: "We've updated your profile for you.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        onCloseComplete: () => res(true),
+      })
+    })
+  }
 
   return (
-    <Box>
-      <ProfileForm />
-    </Box>
+    <>
+      <PageHead title="Update Profile" />
+      <ProfileForm create={false} onUpdate={formSubmitted} />
+    </>
   )
 }

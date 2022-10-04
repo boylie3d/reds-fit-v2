@@ -1,5 +1,5 @@
 import { AccessType, Profile, UserType } from "@/types"
-import { Button, Input, useToast } from "@chakra-ui/react"
+import { Avatar, Button, Center, Input, VStack } from "@chakra-ui/react"
 import { UseLocalProfile } from "hooks/profile"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -7,9 +7,13 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { useForm } from "react-hook-form"
 import fb from "util/firebase"
 
-export default function ProfileForm() {
+interface FormProps {
+  onUpdate: (profile: Profile) => void
+  create: boolean
+}
+
+export default function ProfileForm({ onUpdate, create }: FormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false)
-  const toast = useToast()
   const [user, uLoading, uErr] = useAuthState(fb.auth)
   const { profile: existingProfile, loading, error } = UseLocalProfile()
   const router = useRouter()
@@ -52,27 +56,10 @@ export default function ProfileForm() {
       body: JSON.stringify(newProfile),
     })
 
-    // if this is initial profile creation, we should just move straight to the next page
-    if (existingProfile) {
-      const toast = await showToast()
-    } else {
-      console.log("move on to main")
-    }
+    const profileResp = (await resp.json()) as Profile
 
+    onUpdate(profileResp)
     setSubmitting(false)
-  }
-
-  const showToast = (): Promise<boolean> => {
-    return new Promise<boolean>((res, rej) => {
-      toast({
-        title: "Profile Updated.",
-        description: "We've updated your profile for you.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-        onCloseComplete: () => res(true),
-      })
-    })
   }
 
   const getFirstName = () => {
@@ -92,25 +79,37 @@ export default function ProfileForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        defaultValue={user.email!}
-        disabled={true}
-        placeholder="Email"
-        {...register("email")}
-      />
-      <Input
-        defaultValue={getFirstName()}
-        placeholder="First Name"
-        {...register("firstName")}
-      />
-      <Input
-        defaultValue={getLastName()}
-        placeholder="Last Name"
-        {...register("lastName")}
-      />
-      <Button type="submit" disabled={submitting}>
-        {existingProfile ? "Update Profile" : "Create Profile"}
-      </Button>
+      <Center pb={2}>
+        <Avatar size="2xl" src={user.photoURL!} />
+      </Center>
+      <VStack rowGap={2} w="90vw">
+        <Input
+          w="100%"
+          defaultValue={user.email!}
+          disabled={true}
+          placeholder="Email"
+          {...register("email")}
+        />
+        <Input
+          defaultValue={getFirstName()}
+          placeholder="First Name"
+          {...register("firstName")}
+        />
+        <Input
+          defaultValue={getLastName()}
+          placeholder="Last Name"
+          {...register("lastName")}
+        />
+        <Button
+          variant="outline"
+          colorScheme="green"
+          type="submit"
+          disabled={submitting}
+          w="100%"
+        >
+          {create ? "Create Profile" : "Update Profile"}
+        </Button>
+      </VStack>
     </form>
   )
 }
