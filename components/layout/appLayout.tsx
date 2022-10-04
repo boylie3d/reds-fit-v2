@@ -1,6 +1,6 @@
 import { Profile, UserType } from "@/types"
+import { getNavItem, NavItem } from "@/types/navigation"
 import { Grid, GridItem } from "@chakra-ui/react"
-import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import PageHead from "./head"
@@ -15,8 +15,9 @@ interface LayoutProps {
 const tmpUser: Profile = {
   firstName: "Dave",
   lastName: "Boyle",
+  displayName: "Dave Boyle",
   email: "dave@globacore.com",
-  profilePhoto:
+  photoURL:
     "https://pbs.twimg.com/profile_images/422249828500779009/rv2DKary_400x400.jpeg",
   userType: UserType.Admin,
 }

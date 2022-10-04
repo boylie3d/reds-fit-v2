@@ -15,7 +15,7 @@ import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { FcGoogle } from "react-icons/fc"
 import LoginBox from "../components/loginBox"
-import firebase from "../firebase"
+import firebase from "../util/firebase"
 
 export default function LoginPage() {
   const [user, loading, error] = useAuthState(firebase.auth)
