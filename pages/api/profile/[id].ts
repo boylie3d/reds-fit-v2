@@ -1,5 +1,6 @@
 import { Profile } from "@/types"
 import type { NextApiRequest, NextApiResponse } from "next"
+import firebaseAdmin from "util/firebaseAdmin"
 
 const fb = firebaseAdmin
 
