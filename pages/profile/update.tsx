@@ -1,6 +1,6 @@
 import { Profile } from "@/types"
-import { useToast } from "@chakra-ui/react"
-import PageHead from "components/layout/head"
+import { Center, useToast } from "@chakra-ui/react"
+import AppLayout from "components/layout/appLayout"
 import ProfileForm from "components/profile/profileForm"
 
 export default function ProfileUpdate() {
@@ -25,8 +25,11 @@ export default function ProfileUpdate() {
 
   return (
     <>
-      <PageHead title="Update Profile" />
-      <ProfileForm create={false} onUpdate={formSubmitted} />
+      <AppLayout>
+        <Center h="100%">
+          <ProfileForm create={false} onUpdate={formSubmitted} />
+        </Center>
+      </AppLayout>
     </>
   )
 }

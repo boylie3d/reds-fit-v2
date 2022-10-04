@@ -12,7 +12,7 @@ export default function ProfileCreate() {
   }
 
   return (
-    <Box padding="20px">
+    <Box padding="20px" pt="40px">
       <PageHead title="Create Profile" />
       <Center h="100%">
         <VStack gap={5}>
