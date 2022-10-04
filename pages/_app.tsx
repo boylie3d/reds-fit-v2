@@ -27,7 +27,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (user && !profileLoading && !profile) {
       console.log("no profile")
     }
-    console.log(profile)
   }, [profileLoading, profile])
 
   if (userLoading) return <div />

@@ -20,17 +20,20 @@ export default function ProfileForm({ existingProfile, id }: FormProps) {
       ? existingProfile.accessType
       : AccessType.Unverified
 
-    const profile: Profile = {
+    const fullName = `${form.firstName} ${form.lastName}`
+    const newProfile: Profile = {
       firstName: form.firstName,
       lastName: form.lastName,
       accessType: access,
-      displayName: `${form.firstName} ${form.lastName}`,
+      displayName: fullName,
       email: form.email,
     }
 
+    console.log(newProfile)
+
     fetch(`/api/profile/${id}`, {
       method: "POST",
-      body: JSON.stringify(profile),
+      body: JSON.stringify(newProfile),
     })
     console.log(form)
   }

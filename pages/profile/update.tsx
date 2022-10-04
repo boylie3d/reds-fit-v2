@@ -3,11 +3,11 @@ import ProfileForm from "components/profile/profileForm"
 
 export default function ProfileUpdate() {
   //TODO: Remove
-  const tmpId = "UpKYkVJKXzQww0HiE88q6nD65mP2"
+  const tmpGoogleId = "UpKYkVJKXzQww0HiE88q6nD65mP2"
 
   return (
     <Box>
-      <ProfileForm id={tmpId} />
+      <ProfileForm id={tmpGoogleId} />
     </Box>
   )
 }
