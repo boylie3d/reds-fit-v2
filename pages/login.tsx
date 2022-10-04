@@ -10,11 +10,11 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { signInWithRedirect } from "@firebase/auth"
+import LoginBox from "components/auth/loginBox"
 import Router from "next/router"
 import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { FcGoogle } from "react-icons/fc"
-import LoginBox from "../components/loginBox"
 import firebase from "../util/firebase"
 
 export default function LoginPage() {

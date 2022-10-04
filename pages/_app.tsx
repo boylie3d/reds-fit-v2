@@ -1,8 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import "@fontsource/graduate"
+import AuthProvider from "components/auth/authProvider"
 import { UseProfile } from "hooks/profile"
 import type { AppProps } from "next/app"
-import Router from "next/router"
 import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import "../styles/globals.css"
@@ -17,12 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     error: profileError,
   } = UseProfile(user ? user.uid : "")
 
-  useEffect(() => {
-    if (!userLoading && !user) {
-      Router.push("/login")
-    }
-  }, [userLoading, user])
-
+  //check if user has a profile, if not, bring them to mandatory profile creation
   useEffect(() => {
     if (user && !profileLoading && !profile) {
       console.log("no profile")
@@ -33,7 +28,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} user={user} />
+      </AuthProvider>
     </ChakraProvider>
   )
 }
