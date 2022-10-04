@@ -1,4 +1,4 @@
-import { Profile, UserType } from "@/types"
+import { AccessType, Profile } from "@/types"
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons"
 import {
   Avatar,
@@ -85,7 +85,7 @@ const UserBadge = ({ user }: NavProps) => {
         </Box>
       </MenuButton>
       <MenuList>
-        {user?.userType === UserType.Admin && (
+        {user?.accessType === AccessType.Admin && (
           <MenuItem onClick={goToAdmin}>Admin</MenuItem>
         )}
         <MenuItem onClick={logout}>Log Out</MenuItem>
