@@ -52,7 +52,6 @@ export default function AppLayout(props: LayoutProps) {
           }}
           overflowX="hidden"
           overflowY="scroll"
-          pl="2"
           area={"main"}
         >
           {props.children}
