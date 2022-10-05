@@ -28,9 +28,9 @@ export default function VerifiedProfileCard({
 
   const toggleAdmin = async () => {
     const access =
-      profile.accessType === AccessType.Verified
+      profile.accessType === AccessType.User
         ? AccessType.Admin
-        : AccessType.Verified
+        : AccessType.User
     profile.accessType = access
     const res = await fetch(`/api/profile/${profile.id}`, {
       method: "POST",

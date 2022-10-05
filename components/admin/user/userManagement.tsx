@@ -10,16 +10,13 @@ import {
   Text,
 } from "@chakra-ui/react"
 import { useProfiles } from "hooks/profile"
-import { useSWRConfig } from "swr"
 import BlockedProfileCard from "./blockedProfileCard"
-import UnverifiedProfileCard from "./unverifiedProfileCard"
-import VerifiedProfileCard from "./verifiedProfileCard"
+import UserProfileCard from "./userProfileCard"
 
 const superUserId = "UpKYkVJKXzQww0HiE88q6nD65mP2"
 
 export default function UserManagement() {
   const { profiles, loading, error } = useProfiles()
-  const { mutate } = useSWRConfig()
 
   if (!profiles) return <div />
 
@@ -27,16 +24,9 @@ export default function UserManagement() {
     <>
       {profiles && (
         <>
-          <UnverifiedProfiles
+          <UserProfiles
             profiles={profiles.filter(
-              profile => profile.accessType === AccessType.Unverified,
-            )}
-          />
-          <VerifiedProfiles
-            profiles={profiles.filter(
-              profile =>
-                profile.accessType !== AccessType.Blocked &&
-                profile.accessType !== AccessType.Unverified,
+              profile => profile.accessType !== AccessType.Blocked,
             )}
           />
           <BlockedProfiles
@@ -54,28 +44,14 @@ interface ProfilesProps {
   profiles: Profile[]
 }
 
-const UnverifiedProfiles = ({ profiles }: ProfilesProps) => {
-  if (!profiles || profiles.length === 0) return <div />
-
-  return (
-    <>
-      <Text>Verification Required</Text>
-      {profiles.map(profile => (
-        <UnverifiedProfileCard key={profile.id} profile={profile} />
-      ))}
-      <Divider mt="10px" mb="10px" />
-    </>
-  )
-}
-
-const VerifiedProfiles = ({ profiles }: ProfilesProps) => {
+const UserProfiles = ({ profiles }: ProfilesProps) => {
   if (!profiles || profiles.length === 0) return <div />
 
   return (
     <>
       <Text>Users</Text>
       {profiles.map(profile => (
-        <VerifiedProfileCard
+        <UserProfileCard
           key={profile.id}
           superUserId={superUserId}
           profile={profile}

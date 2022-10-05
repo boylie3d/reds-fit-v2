@@ -30,7 +30,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
 
     const access = existingProfile
       ? existingProfile.accessType
-      : AccessType.Unverified
+      : AccessType.User
 
     const photo: string | undefined = (
       existingProfile
