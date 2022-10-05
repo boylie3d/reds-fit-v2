@@ -10,15 +10,15 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { signInWithRedirect } from "@firebase/auth"
+import LoginBox from "components/auth/loginBox"
 import Router from "next/router"
 import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { FcGoogle } from "react-icons/fc"
-import LoginBox from "../components/loginBox"
-import firebase from "../util/firebase"
+import fb from "../util/firebase"
 
 export default function LoginPage() {
-  const [user, loading, error] = useAuthState(firebase.auth)
+  const [user, loading, error] = useAuthState(fb.auth)
 
   useEffect(() => {
     if (!loading && user) {
@@ -30,7 +30,7 @@ export default function LoginPage() {
     return <div />
   }
 
-  const ssoSignIn = () => signInWithRedirect(firebase.auth, firebase.provider)
+  const ssoSignIn = () => signInWithRedirect(fb.auth, fb.provider)
 
   return (
     <>

@@ -25,7 +25,7 @@ const auth = getAuth(app)
 const db = getFirestore(app)
 const provider = new GoogleAuthProvider()
 
-const firebase: FirebaseConfig = {
+const fb: FirebaseConfig = {
   app: app,
   provider: provider,
   auth: auth,
@@ -40,4 +40,4 @@ function getFirebaseApp() {
   }
 }
 
-export default firebase
+export default fb
