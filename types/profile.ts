@@ -12,7 +12,7 @@ export enum AccessType {
 }
 
 export type Profile = {
-  uid: string
+  id: string
   firstName: string
   lastName: string
   displayName: string

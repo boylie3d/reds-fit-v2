@@ -22,7 +22,7 @@ export default function BlockedProfileCard({ profile }: ProfileProps) {
   const verify = async () => {
     profile.accessType = AccessType.Verified
 
-    const res = await fetch(`/api/profile/${profile.uid}`, {
+    const res = await fetch(`/api/profile/${profile.id}`, {
       method: "POST",
       body: JSON.stringify(profile),
     })
@@ -31,7 +31,7 @@ export default function BlockedProfileCard({ profile }: ProfileProps) {
 
   const block = async () => {
     profile.accessType = AccessType.Blocked
-    const res = await fetch(`/api/profile/${profile.uid}`, {
+    const res = await fetch(`/api/profile/${profile.id}`, {
       method: "POST",
       body: JSON.stringify(profile),
     })

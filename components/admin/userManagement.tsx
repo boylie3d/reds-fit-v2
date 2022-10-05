@@ -61,7 +61,7 @@ const UnverifiedProfiles = ({ profiles }: ProfilesProps) => {
     <>
       <Text>Verification Required</Text>
       {profiles.map(profile => (
-        <UnverifiedProfileCard key={profile.uid} profile={profile} />
+        <UnverifiedProfileCard key={profile.id} profile={profile} />
       ))}
       <Divider mt="10px" mb="10px" />
     </>
@@ -76,7 +76,7 @@ const VerifiedProfiles = ({ profiles }: ProfilesProps) => {
       <Text>Users</Text>
       {profiles.map(profile => (
         <VerifiedProfileCard
-          key={profile.uid}
+          key={profile.id}
           superUserId={superUserId}
           profile={profile}
         />
@@ -101,7 +101,7 @@ const BlockedProfiles = ({ profiles }: ProfilesProps) => {
           </AccordionButton>
           <AccordionPanel>
             {profiles.map(profile => (
-              <BlockedProfileCard key={profile.uid} profile={profile} />
+              <BlockedProfileCard key={profile.id} profile={profile} />
             ))}
           </AccordionPanel>
         </AccordionItem>
