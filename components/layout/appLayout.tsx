@@ -1,5 +1,5 @@
 import { Profile } from "@/types"
-import { Grid, GridItem } from "@chakra-ui/react"
+import { Box, Center, Grid, GridItem } from "@chakra-ui/react"
 import { UseLocalProfile } from "hooks/profile"
 import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
@@ -63,7 +63,13 @@ export default function AppLayout(props: LayoutProps) {
           overflowY="scroll"
           area={"main"}
         >
-          {props.children}
+          <Box>
+            <Center>
+              <Box w="80%" maxW="800px">
+                {props.children}
+              </Box>
+            </Center>
+          </Box>
         </GridItem>
         <GridItem
           style={{ boxShadow: "0px 0px 20px 0px" }}
