@@ -21,7 +21,7 @@ export default async function handler(
       res.status(200).json(profile)
     } else if (req.method === "PUT") {
       const profile: Profile = JSON.parse(req.body)
-      const result = await sync(id, profile)
+      const result = await put(id, profile)
       res.status(200).json(profile)
     } else {
       res.status(405).end(new Error("Method not allowed"))
@@ -38,7 +38,7 @@ async function get(id: string) {
   return doc.data() as Profile
 }
 
-async function sync(id: string, user: Profile) {
+async function put(id: string, user: Profile) {
   const ref = fb.db.collection("profiles").doc(id)
   const res = await ref.set(user, { merge: true })
   return res

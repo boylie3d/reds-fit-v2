@@ -19,20 +19,11 @@ interface ProfileProps {
 export default function BlockedProfileCard({ profile }: ProfileProps) {
   const { mutate } = useSWRConfig()
 
-  const verify = async () => {
+  const unblock = async () => {
     profile.accessType = AccessType.User
 
     const res = await fetch(`/api/profile/${profile.id}`, {
-      method: "POST",
-      body: JSON.stringify(profile),
-    })
-    mutate("/api/profile")
-  }
-
-  const block = async () => {
-    profile.accessType = AccessType.Blocked
-    const res = await fetch(`/api/profile/${profile.id}`, {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(profile),
     })
     mutate("/api/profile")
@@ -54,7 +45,7 @@ export default function BlockedProfileCard({ profile }: ProfileProps) {
         </GridItem>
         <GridItem colSpan={1}>
           <Center h="100%">
-            <Button variant="outline" colorScheme="green" onClick={verify}>
+            <Button variant="outline" colorScheme="green" onClick={unblock}>
               <Text fontSize="xs">Unblock</Text>
             </Button>
           </Center>
