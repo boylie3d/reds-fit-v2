@@ -1,7 +1,7 @@
 import { Profile } from "@/types"
-import { getNavItem, NavItem } from "@/types/navigation"
 import { Grid, GridItem } from "@chakra-ui/react"
 import { UseLocalProfile } from "hooks/profile"
+import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
