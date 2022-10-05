@@ -19,7 +19,7 @@ export default async function handler(
     if (req.method === "GET") {
       const profile = await get(id)
       res.status(200).json(profile)
-    } else if (req.method === "POST") {
+    } else if (req.method === "PUT") {
       const profile: Profile = JSON.parse(req.body)
       const result = await sync(id, profile)
       res.status(200).json(profile)

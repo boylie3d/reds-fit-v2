@@ -9,7 +9,10 @@ export default function WorkoutList({ date }: ListProps) {
 
   return (
     <>
-      {workouts && workouts.map(workout => <WorkoutCard workout={workout} />)}
+      {workouts &&
+        workouts.map(workout => (
+          <WorkoutCard key={workout.id} workout={workout} />
+        ))}
     </>
   )
 }
