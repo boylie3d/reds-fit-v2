@@ -1,6 +1,6 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react"
 import UserManagement from "components/admin/user/userManagement"
-import RoutineManagement from "components/admin/workout/routineManagement"
+import WorkoutManagement from "components/admin/workout/workoutManagement"
 import AppLayout from "components/layout/appLayout"
 
 export default function AdminPage() {
@@ -14,7 +14,7 @@ export default function AdminPage() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <RoutineManagement />
+            <WorkoutManagement />
           </TabPanel>
           <TabPanel></TabPanel>
           <TabPanel>

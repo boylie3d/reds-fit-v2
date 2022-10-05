@@ -4,15 +4,7 @@ export type Workout = {
   description: string
   scoreType: ScoringType
   live: Date
-}
-
-export type WorkoutResult = {
-  id?: string
-  title: string
-  comment: string
-  workoutId: string
-  created: Date
-  updated: Date
+  libraryRefs?: string[]
 }
 
 export enum ScoringType {
