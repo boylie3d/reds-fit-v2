@@ -65,7 +65,7 @@ export default function AppLayout(props: LayoutProps) {
         >
           <Box>
             <Center>
-              <Box w="80%" maxW="800px">
+              <Box w="90%" maxW="800px">
                 {props.children}
               </Box>
             </Center>

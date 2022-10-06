@@ -25,6 +25,7 @@ export default function WorkoutManagement() {
       userId: "UpKYkVJKXzQww0HiE88q6nD65mP2",
       title: "did it",
       description: "did the shits",
+      value: 100,
       created: new Date(),
       updated: new Date(),
     }

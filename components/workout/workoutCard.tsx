@@ -33,8 +33,6 @@ export default function WorkoutCard({ workout }: CardProps) {
     userId: profile?.id,
   })
 
-  console.log(allResults)
-
   if (!allResults || !yourResults) return <div />
 
   return (
@@ -68,6 +66,8 @@ const buttonProps = (workout: Workout, result: Result) => {
       return <>what up fam</>
     case ScoringType.Time:
       return <>{getFormattedTime(result.value)}</>
+    default:
+      return <>Type not implemented</>
   }
   return <div />
 }
