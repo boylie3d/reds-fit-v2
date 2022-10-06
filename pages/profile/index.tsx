@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
-import { UseLocalProfile } from "hooks/profile"
+import { useLocalProfile } from "hooks/profile"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { BsPencilSquare } from "react-icons/bs"
 import { tmpUser } from "test"
@@ -23,7 +23,7 @@ export function ProfilePage() {
     profile,
     loading: profileLoading,
     error: profileError,
-  } = UseLocalProfile()
+  } = useLocalProfile()
 
   return (
     <AppLayout>

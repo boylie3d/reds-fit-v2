@@ -1,6 +1,6 @@
 import { Profile } from "@/types"
 import { Box, Center, Grid, GridItem } from "@chakra-ui/react"
-import { UseLocalProfile } from "hooks/profile"
+import { useLocalProfile } from "hooks/profile"
 import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -24,7 +24,7 @@ export default function AppLayout(props: LayoutProps) {
     profile,
     loading: profileLoading,
     error: profileError,
-  } = UseLocalProfile()
+  } = useLocalProfile()
 
   useEffect(() => {
     setNav(getNavItem(router.pathname))

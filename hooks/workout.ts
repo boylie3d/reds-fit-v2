@@ -2,7 +2,7 @@ import { Workout } from "@/types"
 import useSWR from "swr"
 import fetcher from "./fetcher"
 
-export function UseWorkout(id: string) {
+export function useWorkout(id: string) {
   const { data, error } = useSWR<Workout, Error>(`/api/workout/${id}`, fetcher)
 
   return {

@@ -3,6 +3,7 @@ export type Result = {
   workoutId: string
   userId: string
   title: string
+  value: any
   description: string
   created?: Date
   updated: Date

@@ -1,6 +1,6 @@
 import { AccessType, Profile, UserType } from "@/types"
 import { Avatar, Button, Center, Input, VStack } from "@chakra-ui/react"
-import { UseLocalProfile } from "hooks/profile"
+import { useLocalProfile } from "hooks/profile"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
@@ -15,7 +15,7 @@ interface FormProps {
 export default function ProfileForm({ onUpdate, create }: FormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false)
   const [user, uLoading, uErr] = useAuthState(fb.auth)
-  const { profile: existingProfile, loading, error } = UseLocalProfile()
+  const { profile: existingProfile, loading, error } = useLocalProfile()
   const router = useRouter()
 
   const {
