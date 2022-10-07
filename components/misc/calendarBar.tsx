@@ -17,7 +17,7 @@ import { addDays } from "util/time"
 
 interface CalendarProps {
   date?: Date
-  onChanged?: (date: Date) => void
+  onChanged: (date: Date) => void
 }
 
 export default function CalendarBar({ date, onChanged }: CalendarProps) {
@@ -27,7 +27,7 @@ export default function CalendarBar({ date, onChanged }: CalendarProps) {
   const nextDay = () => {
     const newDate = addDays(currDate, 1)
     setDate(newDate)
-    if (onChanged) onChanged(currDate)
+    onChanged(currDate)
   }
 
   const previousDay = () => {

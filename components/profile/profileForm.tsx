@@ -12,6 +12,13 @@ interface FormProps {
   create: boolean
 }
 
+type ProfilePartial = {
+  email: string
+  firstName: string
+  lastName: string
+  userType: UserType
+}
+
 export default function ProfileForm({ onUpdate, create }: FormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false)
   const [user, uLoading, uErr] = useAuthState(fb.auth)
@@ -23,9 +30,9 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormInput>()
+  } = useForm<ProfilePartial>()
 
-  const onSubmit = async (form: FormInput) => {
+  const onSubmit = async (form: ProfilePartial) => {
     setSubmitting(true)
 
     const access = existingProfile
@@ -112,11 +119,4 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
       </VStack>
     </form>
   )
-}
-
-type FormInput = {
-  email: string
-  firstName: string
-  lastName: string
-  userType: UserType
 }
