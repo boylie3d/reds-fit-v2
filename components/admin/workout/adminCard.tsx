@@ -16,14 +16,16 @@ import WorkoutForm from "./workoutForm"
 
 interface WorkoutProps {
   workout: Workout
+  onDelete?: () => void
+  onComplete?: (workout: Workout) => void
 }
 
-export default function AdminCard({ workout }: WorkoutProps) {
+export default function AdminCard({
+  workout,
+  onComplete,
+  onDelete,
+}: WorkoutProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-  const updateComplete = (result: Workout | null) => {
-    onClose()
-  }
 
   return (
     <Box boxShadow="md" w="100%" p="20px" borderRadius="md" borderWidth="1px">
@@ -41,14 +43,20 @@ export default function AdminCard({ workout }: WorkoutProps) {
           <ModalHeader>Edit Workout</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <WorkoutForm onSubmitted={updateComplete} workout={workout} />
+            <WorkoutForm
+              onDelete={() => {
+                if (onDelete) onDelete()
+                onClose()
+              }}
+              onSubmitted={result => {
+                if (onComplete) onComplete(result)
+                onClose()
+              }}
+              workout={workout}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
     </Box>
   )
-}
-
-const EditWorkout = ({ workout }: WorkoutProps) => {
-  return <div>sup family</div>
 }

@@ -1,4 +1,4 @@
-import { Workout } from "@/types"
+import { ScoringType, Workout } from "@/types"
 import {
   Box,
   Button,
@@ -18,6 +18,7 @@ import {
 import CalendarBar from "components/misc/calendarBar"
 import { useWorkouts } from "hooks/workout"
 import { useState } from "react"
+import { mutate } from "swr"
 import { toUntimedDate } from "util/time"
 import AdminCard from "./adminCard"
 import WorkoutForm from "./workoutForm"
@@ -30,7 +31,13 @@ export default function WorkoutManagement() {
   })
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const workoutFormSubmitted = (workout: Workout | null) => {
+  const workoutFormSubmitted = (workout: Workout) => {
+    mutate("/api/workout")
+    onClose()
+  }
+
+  const workoutDeleted = () => {
+    mutate("/api/workout")
     onClose()
   }
 
@@ -45,9 +52,26 @@ export default function WorkoutManagement() {
         <Button w="100%" bgColor="teamPrimary" color="white" onClick={onOpen}>
           Create New
         </Button>
+        <Button
+          onClick={() => {
+            const tmp: Workout = {
+              title: "fuck sakes",
+              description: "start working",
+              scoreType: ScoringType.Calories,
+              live: toUntimedDate(calDate),
+            }
+
+            fetch("/api/workout", {
+              method: "POST",
+              body: JSON.stringify(tmp),
+            })
+          }}
+        >
+          tmp
+        </Button>
         <Box p="10px" />
         {workouts && workouts.length > 0 ? (
-          <WorkoutList workouts={workouts} />
+          <WorkoutList onUpdate={workoutDeleted} workouts={workouts} />
         ) : (
           <NoWorkouts />
         )}
@@ -59,7 +83,10 @@ export default function WorkoutManagement() {
           <ModalHeader>Edit Workout</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <WorkoutForm onSubmitted={workoutFormSubmitted} />
+            <WorkoutForm
+              onDelete={() => console.log("hi?")}
+              onSubmitted={workoutFormSubmitted}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -74,7 +101,7 @@ const NoWorkouts = () => {
         <Text fontSize="4xl">{":("}</Text>
         <Box w="200px">
           <Text justifyContent="center" align="center">
-            {"No workouts assigned for today - create on up top!"}
+            {"No workouts assigned for today - create one up top!"}
           </Text>
         </Box>
       </VStack>
@@ -84,15 +111,21 @@ const NoWorkouts = () => {
 
 interface WorkoutProps {
   workouts: Workout[]
+  onUpdate: () => void
 }
 
-const WorkoutList = ({ workouts }: WorkoutProps) => {
+const WorkoutList = ({ workouts, onUpdate }: WorkoutProps) => {
   return (
     <>
       <Heading size="sm">Current Workouts</Heading>
       <Divider />
       {workouts.map(workout => (
-        <AdminCard workout={workout} key={workout.id}></AdminCard>
+        <AdminCard
+          onDelete={onUpdate}
+          onComplete={onUpdate}
+          workout={workout}
+          key={workout.id}
+        ></AdminCard>
       ))}
     </>
   )

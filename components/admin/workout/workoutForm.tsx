@@ -18,7 +18,8 @@ import { toUntimedDate } from "util/time"
 interface WorkoutProps {
   workout?: Workout
   date?: Date
-  onSubmitted: (result: Workout | null) => void
+  onSubmitted?: (result: Workout) => void
+  onDelete?: () => void
 }
 
 type WorkoutPartial = {
@@ -32,6 +33,7 @@ export default function WorkoutForm({
   workout: existing,
   date,
   onSubmitted,
+  onDelete,
 }: WorkoutProps) {
   const [currentWorkout, setCurrentWorkout] = useState<Workout | undefined>(
     existing,
@@ -59,7 +61,6 @@ export default function WorkoutForm({
 
       const workout = await update(updatedWorkout)
       setCurrentWorkout(workout)
-      onSubmitted(workout)
     } else {
       const newWorkout: Workout = {
         description: form.description,
@@ -70,10 +71,9 @@ export default function WorkoutForm({
 
       const workout = await create(newWorkout)
       setCurrentWorkout(workout)
-      onSubmitted(workout)
     }
 
-    mutate("/api/workout")
+    if (onSubmitted) onSubmitted(currentWorkout!)
     setSubmitting(false)
   }
 
@@ -100,14 +100,19 @@ export default function WorkoutForm({
 
   const del = async () => {
     if (!existing) return
+    setSubmitting(true)
+
     const resp = await fetch(`/api/workout/${existing.id}`, {
       method: "DELETE",
     })
     const result = await resp.json()
-
+    console.log("tf")
     mutate("/api/workout")
+    if (onDelete) {
+      console.log("asdsf")
+      onDelete()
+    }
     setSubmitting(false)
-    onSubmitted(result)
   }
 
   return (
