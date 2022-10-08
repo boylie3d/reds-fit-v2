@@ -52,6 +52,7 @@ export default function AdminCard({
                 if (onComplete) onComplete(result)
                 onClose()
               }}
+              onCancel={onClose}
               workout={workout}
             />
           </ModalBody>

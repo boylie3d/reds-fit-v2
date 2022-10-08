@@ -20,6 +20,7 @@ interface WorkoutProps {
   date?: Date
   onSubmitted?: (result: Workout) => void
   onDelete?: () => void
+  onCancel?: () => void
 }
 
 type WorkoutPartial = {
@@ -34,6 +35,7 @@ export default function WorkoutForm({
   date,
   onSubmitted,
   onDelete,
+  onCancel,
 }: WorkoutProps) {
   const [currentWorkout, setCurrentWorkout] = useState<Workout | undefined>(
     existing,
@@ -165,7 +167,7 @@ export default function WorkoutForm({
             {existing && (
               <div>
                 <Spacer />
-                <Button onClick={() => onSubmitted(existing)}>Cancel</Button>
+                <Button onClick={onCancel}>Cancel</Button>
               </div>
             )}
           </Flex>

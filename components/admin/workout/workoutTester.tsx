@@ -1,6 +1,7 @@
 import { Result, ScoringType, Workout } from "@/types"
 import { Button, VStack } from "@chakra-ui/react"
 import WorkoutList from "components/workout/workoutList"
+import { toUntimedDate } from "util/time"
 
 export default function WorkoutTester() {
   const post = async () => {
@@ -8,7 +9,7 @@ export default function WorkoutTester() {
       title: "Test Workout",
       description: "Workout like your life depends on it",
       scoreType: ScoringType.Reps,
-      live: new Date(),
+      live: toUntimedDate(new Date()),
     }
 
     const resp = await fetch("/api/workout", {
