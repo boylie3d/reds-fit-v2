@@ -3,7 +3,7 @@ export type Workout = {
   title: string
   description: string
   scoreType: ScoringType
-  live: Date
+  live: string
   libraryRefs?: string[]
 }
 

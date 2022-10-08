@@ -5,14 +5,22 @@ import {
   Center,
   Divider,
   Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react"
 import CalendarBar from "components/misc/calendarBar"
 import { useWorkouts } from "hooks/workout"
 import { useState } from "react"
 import { toUntimedDate } from "util/time"
-import AdminCard from "./workoutCard"
+import AdminCard from "./adminCard"
+import WorkoutForm from "./workoutForm"
 
 export default function WorkoutManagement() {
   const [calDate, setCalDate] = useState<Date>(new Date())
@@ -20,14 +28,10 @@ export default function WorkoutManagement() {
   const { workouts, loading, error } = useWorkouts({
     live: toUntimedDate(calDate),
   })
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const workoutFormSubmitted = (workout: Workout) => {
-    console.log("done?")
-    console.log(workout)
-  }
-
-  function thing(date: any) {
-    console.log(date)
+  const workoutFormSubmitted = (workout: Workout | null) => {
+    onClose()
   }
 
   return (
@@ -38,12 +42,7 @@ export default function WorkoutManagement() {
           onChanged={newDate => setCalDate(new Date(newDate))}
         />
         <Box p="10px" />
-        <Button
-          w="100%"
-          bgColor="teamPrimary"
-          color="white"
-          onClick={() => setModalOpen(true)}
-        >
+        <Button w="100%" bgColor="teamPrimary" color="white" onClick={onOpen}>
           Create New
         </Button>
         <Box p="10px" />
@@ -53,6 +52,17 @@ export default function WorkoutManagement() {
           <NoWorkouts />
         )}
       </VStack>
+
+      <Modal onClose={onClose} isOpen={isOpen}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit Workout</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <WorkoutForm onSubmitted={workoutFormSubmitted} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   )
 }

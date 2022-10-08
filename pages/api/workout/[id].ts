@@ -6,7 +6,7 @@ const fb = firebaseAdmin
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Workout | Error>,
+  res: NextApiResponse<Workout | null | Error>,
 ) {
   const { id } = req.query
 
@@ -22,7 +22,11 @@ export default async function handler(
     } else if (req.method === "PUT") {
       const workout: Workout = JSON.parse(req.body)
       const result = await put(id, workout)
+      console.log(result)
       res.status(200).json(workout)
+    } else if (req.method === "DELETE") {
+      del(id)
+      res.status(200).json(null)
     } else {
       res.status(405).end(new Error("Method not allowed"))
     }
@@ -33,13 +37,19 @@ export default async function handler(
 }
 
 async function get(id: string) {
-  const ref = fb.db.collection("profiles").doc(id)
+  const ref = fb.db.collection("workouts").doc(id)
   const doc = await ref.get()
   return doc.data() as Workout
 }
 
 async function put(id: string, workout: Workout) {
-  const ref = fb.db.collection("profiles").doc(id)
+  const ref = fb.db.collection("workouts").doc(id)
   const res = await ref.set(workout, { merge: true })
+  return res
+}
+
+async function del(id: string) {
+  const ref = fb.db.collection("workouts").doc(id)
+  const res = await ref.delete()
   return res
 }
