@@ -7,3 +7,7 @@ export function addDays(date: Date, days: number) {
   date.setDate(date.getDate() + days)
   return new Date(date)
 }
+
+export function toUntimedDate(date: Date) {
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+}

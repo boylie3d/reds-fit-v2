@@ -113,8 +113,10 @@ export default function WorkoutForm({
             size="sm"
             placeholder="Select Type"
           >
-            {Object.keys(ScoringType).map(t => (
-              <option value={t}>{t}</option>
+            {Object.values(ScoringType).map(t => (
+              <option key={t} value={t}>
+                {t}
+              </option>
             ))}
           </Select>
           <Button

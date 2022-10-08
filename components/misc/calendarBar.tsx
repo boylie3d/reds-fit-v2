@@ -36,7 +36,12 @@ export default function CalendarBar({ date, onChanged }: CalendarProps) {
     if (onChanged) onChanged(currDate)
   }
 
-  const openCalendar = () => {}
+  const calUpdated = (date: Date) => {
+    console.log("hi")
+    const newDate = new Date(date)
+    setDate(newDate)
+    if (onChanged) onChanged(newDate)
+  }
 
   return (
     <Flex w="100%">
@@ -69,7 +74,7 @@ export default function CalendarBar({ date, onChanged }: CalendarProps) {
         open={calOpen}
         date={currDate}
         onClose={() => setCalOpen(false)}
-        onChange={newDate => setDate(newDate)}
+        onChange={calUpdated}
       />
     </Flex>
   )

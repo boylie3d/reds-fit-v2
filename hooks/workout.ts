@@ -1,5 +1,6 @@
 import { Workout } from "@/types"
 import useSWR from "swr"
+import { objToQueryString } from "util/query"
 import fetcher from "./fetcher"
 
 export function useWorkout(id: string) {
@@ -22,8 +23,12 @@ export function useWorkoutsByDate(date: Date) {
   }
 }
 
-export function useWorkouts() {
-  const { data, error } = useSWR<Workout[], Error>(`/api/workout`, fetcher)
+export function useWorkouts(query?: any) {
+  const formattedQuery = objToQueryString(query)
+  const { data, error } = useSWR<Workout[], Error>(
+    `/api/workout${formattedQuery}`,
+    fetcher,
+  )
 
   return {
     workouts: data,

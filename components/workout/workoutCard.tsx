@@ -69,7 +69,6 @@ const buttonProps = (workout: Workout, result: Result) => {
     default:
       return <>Type not implemented</>
   }
-  return <div />
 }
 
 interface BtnProps {

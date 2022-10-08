@@ -1,6 +1,7 @@
 import { Workout } from "@/types"
 import type { NextApiRequest, NextApiResponse } from "next"
 import firebaseAdmin from "util/firebaseAdmin"
+import { objToFirestoreQuery } from "util/query"
 
 const fb = firebaseAdmin
 
@@ -10,7 +11,7 @@ export default async function handler(
 ) {
   try {
     if (req.method === "GET") {
-      const workout = await get()
+      const workout = await get(req.query)
       res.status(200).json(workout)
     } else if (req.method === "POST") {
       const workout: Workout = JSON.parse(req.body)
@@ -25,9 +26,11 @@ export default async function handler(
   }
 }
 
-async function get() {
+async function get(query: Object) {
   const ref = fb.db.collection("workouts")
-  const coll = await ref.get()
+  const formattedQuery = query ? objToFirestoreQuery(ref, query) : ref
+  const coll = await formattedQuery.get()
+
   const workouts = coll.docs.map(item => item.data()) as Workout[]
   return workouts
 }
