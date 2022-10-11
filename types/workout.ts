@@ -4,7 +4,12 @@ export type Workout = {
   description: string
   scoreType: ScoringType
   live: string
+  parameters?: TimeParams
   libraryRefs?: string[]
+}
+
+export interface TimeParams {
+  rounds: number
 }
 
 export enum ScoringType {

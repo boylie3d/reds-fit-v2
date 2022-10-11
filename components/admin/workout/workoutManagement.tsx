@@ -18,25 +18,28 @@ import {
 import CalendarBar from "components/misc/calendarBar"
 import { useWorkouts } from "hooks/workout"
 import { useState } from "react"
-import { mutate } from "swr"
+import { useSWRConfig } from "swr"
 import { toUntimedDate } from "util/time"
 import AdminCard from "./adminCard"
 import WorkoutForm from "./workoutForm"
 
 export default function WorkoutManagement() {
   const [calDate, setCalDate] = useState<Date>(new Date())
-  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  // const [modalOpen, setModalOpen] = useState<boolean>(false)
   const { workouts, loading, error } = useWorkouts({
     live: toUntimedDate(calDate),
   })
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { mutate } = useSWRConfig()
 
   const workoutFormSubmitted = (workout: Workout) => {
+    console.log("hi")
     mutate("/api/workout")
     onClose()
   }
 
   const workoutDeleted = () => {
+    console.log("hi")
     mutate("/api/workout")
     onClose()
   }
