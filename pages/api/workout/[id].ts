@@ -22,7 +22,6 @@ export default async function handler(
     } else if (req.method === "PUT") {
       const workout: Workout = JSON.parse(req.body)
       const result = await put(id, workout)
-      console.log(result)
       res.status(200).json(workout)
     } else if (req.method === "DELETE") {
       del(id)
