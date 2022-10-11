@@ -2,7 +2,6 @@ import { Result, ScoringType, Workout } from "@/types"
 import { Box, Button, Flex, Spacer, Text, VStack } from "@chakra-ui/react"
 import { useLocalProfile } from "hooks/profile"
 import { useResults } from "hooks/result"
-import { useEffect, useState } from "react"
 import { getFormattedTime } from "util/time"
 
 interface CardProps {
@@ -37,6 +36,7 @@ export default function WorkoutCard({ workout }: CardProps) {
 
   return (
     <Box boxShadow="md" w="100%" p="20px" borderRadius="md" borderWidth="1px">
+      {/* <Box w="100%" variant='card'> */}
       <VStack align="left" rowGap={4}>
         <Text fontSize="sm">{workout.title}</Text>
         <Text fontSize="xs">{workout.description}</Text>
@@ -49,11 +49,11 @@ export default function WorkoutCard({ workout }: CardProps) {
           </Text>
         </Flex>
         {yourResults && yourResults?.length === 0 ? (
-          <Button bgColor="teamPrimary" color="white">
-            Log Your Result
-          </Button>
+          <Button>Log Your Result</Button>
         ) : (
-          <WorkoutButton workout={workout} result={yourResults[0]} />
+          <Button variant="teamOutline">
+            {buttonProps(workout, yourResults[0])}
+          </Button>
         )}
       </VStack>
     </Box>
@@ -69,22 +69,4 @@ const buttonProps = (workout: Workout, result: Result) => {
     default:
       return <>Type not implemented</>
   }
-}
-
-interface BtnProps {
-  workout: Workout
-  result: Result
-}
-
-const WorkoutButton = ({ workout, result }: BtnProps) => {
-  const [props, setProps] = useState<JSX.Element>(<div />)
-  useEffect(() => {
-    setProps(buttonProps(workout, result))
-  }, [workout, result])
-
-  return (
-    <Button bgColor="teamPrimary" color="white">
-      {props}
-    </Button>
-  )
 }

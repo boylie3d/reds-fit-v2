@@ -6,10 +6,26 @@ const colors = {
 
 const Button = defineStyleConfig({
   variants: {
+    teamSolid: {
+      bgColor: "teamPrimary",
+      color: "white",
+    },
     teamOutline: {
       border: "2px solid",
       boderColor: "teamPrimary",
       color: "teamPrimary",
+    },
+  },
+  defaultProps: { variant: "teamSolid" },
+})
+
+const Box = defineStyleConfig({
+  variants: {
+    card: {
+      boxShadow: "md",
+      p: "20px",
+      borderRadius: "md",
+      borderWidth: "1px",
     },
   },
 })
@@ -25,6 +41,7 @@ const theme = extendTheme({
   },
   components: {
     Button,
+    Box,
     Heading: {
       sizes: {
         "3xl": {

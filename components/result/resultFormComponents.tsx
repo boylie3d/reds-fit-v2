@@ -24,12 +24,9 @@ export function TimedResult({ workout, result, onSubmit }: ResultProps) {
         {Array.from({ length: workout.parameters!.rounds }).map((_, i) => (
           <HStack key={i}>
             <InputGroup>
-              <InputLeftElement
-                h="100%"
-                children={
-                  <Text color="gray.300" fontSize="sm">{`#${i + 1}`}</Text>
-                }
-              />
+              <InputLeftElement h="100%">
+                <Text color="gray.300" fontSize="sm">{`#${i + 1}`}</Text>
+              </InputLeftElement>
               <Input type="number" size="lg" placeholder="min" />
             </InputGroup>
             <Text fontSize="xl">{":"}</Text>
