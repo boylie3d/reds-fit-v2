@@ -44,10 +44,7 @@ export default function WorkoutManagement() {
   return (
     <>
       <VStack>
-        <CalendarBar
-          date={calDate}
-          onChanged={newDate => setCalDate(new Date(newDate))}
-        />
+        <CalendarBar date={calDate} onChanged={setCalDate} />
         <Box p="10px" />
         <Button w="100%" bgColor="teamPrimary" color="white" onClick={onOpen}>
           Create New

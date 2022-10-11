@@ -27,20 +27,20 @@ export default function CalendarBar({ date, onChanged }: CalendarProps) {
   const nextDay = () => {
     const newDate = addDays(currDate, 1)
     setDate(newDate)
-    onChanged(currDate)
+    onChanged(new Date(currDate))
   }
 
   const previousDay = () => {
     const newDate = addDays(currDate, -1)
     setDate(newDate)
-    if (onChanged) onChanged(currDate)
+    onChanged(new Date(currDate))
   }
 
   const calUpdated = (date: Date) => {
     console.log("hi")
     const newDate = new Date(date)
     setDate(newDate)
-    if (onChanged) onChanged(newDate)
+    onChanged(new Date(currDate))
   }
 
   return (
