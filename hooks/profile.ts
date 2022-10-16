@@ -4,7 +4,7 @@ import useSWR from "swr"
 import fb from "util/firebase"
 import fetcher from "./fetcher"
 
-export function UseProfile(userId: string) {
+export function useProfile(userId: string) {
   const { data, error } = useSWR<Profile, Error>(
     `/api/profile/${userId}`,
     fetcher,
@@ -17,7 +17,7 @@ export function UseProfile(userId: string) {
   }
 }
 
-export function UseLocalProfile() {
+export function useLocalProfile() {
   const [user, userLoading, userErr] = useAuthState(fb.auth)
 
   const { data, error } = useSWR<Profile, Error>(

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import Card from "components/layout/card"
-import { UseLocalProfile } from "hooks/profile"
+import { useLocalProfile } from "hooks/profile"
 import { GetServerSideProps, NextPage } from "next"
 import { get } from "pages/api/profile/[id]"
 import { useEffect, useState } from "react"
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const Profile: NextPage<Props> = ({ profile }: Props) => {
-  const { profile: localProfile, loading, error } = UseLocalProfile()
+  const { profile: localProfile, loading, error } = useLocalProfile()
   const [isLocal, setIsLocal] = useState(false)
 
   useEffect(() => {

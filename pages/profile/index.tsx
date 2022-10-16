@@ -1,4 +1,4 @@
-import { UseLocalProfile } from "hooks/profile"
+import { useLocalProfile } from "hooks/profile"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 
@@ -7,7 +7,7 @@ export default function ProfilePage() {
     profile,
     loading: profileLoading,
     error: profileError,
-  } = UseLocalProfile()
+  } = useLocalProfile()
 
   const router = useRouter()
 
