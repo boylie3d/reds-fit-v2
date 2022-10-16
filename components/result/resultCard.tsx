@@ -19,6 +19,7 @@ import { useWorkout } from "hooks/workout"
 import { useEffect, useState } from "react"
 import { BiCommentDetail } from "react-icons/bi"
 import { FaHandRock, FaRegHandRock } from "react-icons/fa"
+import { useSWRConfig } from "swr"
 
 interface ResultsProps {
   result: Result
@@ -83,6 +84,8 @@ interface SocialProps {
 }
 
 const FistbumpToggle = ({ profile, result }: SocialProps) => {
+  const { mutate } = useSWRConfig()
+
   const { fistbumps, loading, error } = useQueriedFistbumps(result.id || "", {
     userId: profile.uid,
   })
@@ -93,7 +96,6 @@ const FistbumpToggle = ({ profile, result }: SocialProps) => {
     if (!fistbumps) return
 
     const existing = fistbumps.find(fb => fb.userId === profile.uid)
-    console.log(existing)
     setExisting(existing)
   }, [fistbumps])
 
@@ -108,6 +110,7 @@ const FistbumpToggle = ({ profile, result }: SocialProps) => {
     })
     const json = await resp.json()
     setExisting(json)
+    mutate(`/api/result/${result.id}/fistbump`)
   }
 
   const removeFistbump = async () => {
@@ -119,6 +122,7 @@ const FistbumpToggle = ({ profile, result }: SocialProps) => {
     )
 
     setExisting(undefined)
+    mutate(`/api/result/${result.id}/fistbump`)
   }
 
   if (existing === null) return <div />
