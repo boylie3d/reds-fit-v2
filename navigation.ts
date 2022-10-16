@@ -1,9 +1,7 @@
 import {
   AiFillBell,
-  AiFillHome,
   AiFillTrophy,
   AiOutlineBell,
-  AiOutlineHome,
   AiOutlineTrophy,
 } from "react-icons/ai"
 import {
@@ -12,7 +10,10 @@ import {
   HiUser,
   HiUserGroup,
 } from "react-icons/hi"
+
+import { IoBarbellSharp } from "react-icons/io5"
 import { IconType } from "react-icons/lib"
+import { TbBarbell } from "react-icons/tb"
 
 export interface NavItem {
   name: string
@@ -24,10 +25,10 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   {
-    name: "Home",
+    name: "Workouts",
     showInNav: true,
-    icon: AiOutlineHome,
-    iconSelected: AiFillHome,
+    icon: TbBarbell,
+    iconSelected: IoBarbellSharp,
     route: "/",
   },
   {
