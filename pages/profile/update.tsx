@@ -2,12 +2,16 @@ import { Profile } from "@/types"
 import { Center, useToast } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import ProfileForm from "components/profile/profileForm"
+import { useRouter } from "next/router"
 
 export default function ProfileUpdate() {
   const toast = useToast()
+  const router = useRouter()
 
-  const formSubmitted = (profile: Profile) => {
-    showToast()
+  const formSubmitted = async (profile: Profile) => {
+    // const toast = await showToast()
+    // console.log("done")
+    router.push("/profile")
   }
 
   const showToast = (): Promise<boolean> => {
@@ -16,8 +20,8 @@ export default function ProfileUpdate() {
         title: "Profile Updated.",
         description: "We've updated your profile for you.",
         status: "success",
-        duration: 3000,
-        isClosable: true,
+        duration: 1000,
+        // isClosable: true,
         onCloseComplete: () => res(true),
       })
     })
