@@ -5,5 +5,9 @@ interface Props {
 }
 
 export default function Card(props: Props) {
-  return <Box>{props.children}</Box>
+  return (
+    <Box boxShadow="md" w="100%" p="20px" borderRadius="md" borderWidth="1px">
+      {props.children}
+    </Box>
+  )
 }

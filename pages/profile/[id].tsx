@@ -13,7 +13,9 @@ import {
 } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import Card from "components/layout/card"
+import ResultList from "components/result/resultList"
 import { useLocalProfile } from "hooks/profile"
+import { useResults } from "hooks/result"
 import { GetServerSideProps, NextPage } from "next"
 import { get } from "pages/api/profile/[id]"
 import { useEffect, useState } from "react"
@@ -24,7 +26,12 @@ interface Props {
 }
 
 const Profile: NextPage<Props> = ({ profile }: Props) => {
-  const { profile: localProfile, loading, error } = useLocalProfile()
+  const {
+    profile: localProfile,
+    loading: pLoading,
+    error: pError,
+  } = useLocalProfile()
+  const { results, loading, error } = useResults({ userId: profile.uid })
   const [isLocal, setIsLocal] = useState(false)
 
   useEffect(() => {
@@ -34,9 +41,13 @@ const Profile: NextPage<Props> = ({ profile }: Props) => {
 
   return (
     <AppLayout>
-      <Banner profile={profile} />
-      <>{isLocal && <Toolbar />}</>
-      <ActivityCard />
+      <VStack gap={3}>
+        <Banner profile={profile} />
+        <>{isLocal && <Toolbar />}</>
+        <ActivityCard />
+        <ParticipationCard />
+        <ResultList results={results} />
+      </VStack>
     </AppLayout>
   )
 }
@@ -56,7 +67,21 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 export default Profile
 
 const ActivityCard = () => {
-  return <Card></Card>
+  return (
+    <Card>
+      <Center>Active Days</Center>
+      <Text>bar graph here</Text>
+    </Card>
+  )
+}
+
+const ParticipationCard = () => {
+  return (
+    <Card>
+      <Center>Participation Stats</Center>
+      <Text>stats pane here</Text>
+    </Card>
+  )
 }
 
 const Banner = ({ profile }: Props) => {
@@ -90,12 +115,12 @@ const Toolbar = () => {
             </VStack>
           </LinkOverlay>
         </Button>
-        <Button variant="unstyled">
+        {/* <Button variant="unstyled">
           <VStack>
             <Icon w={6} h={6} as={BsPencilSquare} />
             <Text fontSize="xs">Edit</Text>
           </VStack>
-        </Button>
+        </Button> */}
       </Flex>
     </Box>
   )
