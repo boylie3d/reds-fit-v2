@@ -7,8 +7,8 @@ const colors = {
 const theme = extendTheme({
   fonts: {
     heading: `'Graduate', sans-serif`,
-    // body: `'NBAAction', sans-serif`,
-    // text: `'NBAAction', sans-serif`,
+    body: `'Roboto', sans-serif`,
+    text: `'Roboto', sans-serif`,
   },
   colors: {
     teamPrimary: colors.teamPrimary,

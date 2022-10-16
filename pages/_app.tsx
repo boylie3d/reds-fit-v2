@@ -1,5 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import "@fontsource/graduate"
+import "@fontsource/roboto"
 import AuthProvider from "components/auth/authProvider"
 import { UseProfile } from "hooks/profile"
 import type { AppProps } from "next/app"

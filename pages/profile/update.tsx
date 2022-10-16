@@ -1,17 +1,35 @@
-import { Box } from "@chakra-ui/react"
-import { User } from "@firebase/auth"
+import { Profile } from "@/types"
+import { Center, useToast } from "@chakra-ui/react"
+import AppLayout from "components/layout/appLayout"
 import ProfileForm from "components/profile/profileForm"
 
-interface ProfileProps {
-  user: User
-}
-export default function ProfileUpdate({ user }: ProfileProps) {
-  //TODO: Remove
-  const tmpGoogleId = "UpKYkVJKXzQww0HiE88q6nD65mP2"
+export default function ProfileUpdate() {
+  const toast = useToast()
+
+  const formSubmitted = (profile: Profile) => {
+    showToast()
+  }
+
+  const showToast = (): Promise<boolean> => {
+    return new Promise<boolean>((res, rej) => {
+      toast({
+        title: "Profile Updated.",
+        description: "We've updated your profile for you.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        onCloseComplete: () => res(true),
+      })
+    })
+  }
 
   return (
-    <Box>
-      <ProfileForm id={user.uid} />
-    </Box>
+    <>
+      <AppLayout>
+        <Center h="100%">
+          <ProfileForm create={false} onUpdate={formSubmitted} />
+        </Center>
+      </AppLayout>
+    </>
   )
 }

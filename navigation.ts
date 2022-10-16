@@ -31,11 +31,11 @@ export const navItems: NavItem[] = [
     route: "/",
   },
   {
-    name: "Team",
+    name: "Feed",
     showInNav: true,
     icon: HiOutlineUserGroup,
     iconSelected: HiUserGroup,
-    route: "/team",
+    route: "/feed",
   },
   {
     name: "Profile",
@@ -62,6 +62,11 @@ export const navItems: NavItem[] = [
     name: "Admin",
     showInNav: false,
     route: "/admin",
+  },
+  {
+    name: "Update Profile",
+    showInNav: false,
+    route: "/profile/update",
   },
 ]
 

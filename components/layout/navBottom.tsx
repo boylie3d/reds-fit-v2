@@ -1,4 +1,3 @@
-import { getNavBarElements } from "@/types/navigation"
 import {
   Center,
   Grid,
@@ -8,6 +7,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
+import { getNavBarElements } from "navigation"
 import { useRouter } from "next/router"
 
 export default function NavBottom() {

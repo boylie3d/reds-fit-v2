@@ -22,9 +22,10 @@ export default async function handler(
       res.status(200).json(profile)
     } else if (req.method === "POST") {
       const profile: Profile = JSON.parse(req.body)
-      console.log(profile)
       const result = await sync(id, profile)
       res.status(200).json(profile)
+    } else {
+      res.status(405).end(new Error("Method not allowed"))
     }
   } catch (error) {
     console.error(error)
