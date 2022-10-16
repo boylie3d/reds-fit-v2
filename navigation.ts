@@ -21,6 +21,7 @@ export interface NavItem {
   icon?: IconType
   iconSelected?: IconType
   route: string
+  paramRoute?: string
 }
 
 export const navItems: NavItem[] = [
@@ -43,6 +44,7 @@ export const navItems: NavItem[] = [
     showInNav: true,
     icon: HiOutlineUser,
     iconSelected: HiUser,
+    paramRoute: "/profile/[id]",
     route: "/profile",
   },
   {
@@ -72,8 +74,13 @@ export const navItems: NavItem[] = [
 ]
 
 export const getNavItem = (path: string) => {
+  console.log(path)
   const item = navItems.find(x => x.route === path)
-  return item!
+  if (item) {
+    return item
+  } else {
+    return navItems.find(x => x.paramRoute === path)
+  }
 }
 
 export const getNavBarElements = () => {

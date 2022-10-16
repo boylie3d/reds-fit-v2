@@ -56,7 +56,7 @@ export default function VerifiedProfileCard({
   const block = async () => {
     if (profile.id === superUserId) return
     profile.accessType = AccessType.Blocked
-    const res = await fetch(`/api/profile/${profile.id}`, {
+    const res = await fetch(`/api/profile/${profile.uid}`, {
       method: "PUT",
       body: JSON.stringify(profile),
     })

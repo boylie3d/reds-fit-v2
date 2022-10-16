@@ -32,7 +32,7 @@ export default async function handler(
   }
 }
 
-async function get(id: string) {
+export async function get(id: string) {
   const ref = fb.db.collection("profiles").doc(id)
   const doc = await ref.get()
   return doc.data() as Profile

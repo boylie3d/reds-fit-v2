@@ -52,7 +52,7 @@ const UserProfiles = ({ profiles }: ProfilesProps) => {
       <Text>Users</Text>
       {profiles.map(profile => (
         <UserProfileCard
-          key={profile.id}
+          key={profile.uid}
           superUserId={superUserId}
           profile={profile}
         />
