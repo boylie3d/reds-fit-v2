@@ -11,6 +11,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
+import Card from "components/layout/card"
 import LoadingPane from "components/misc/loading"
 import { useProfile } from "hooks/profile"
 import { useWorkout } from "hooks/workout"
@@ -37,7 +38,7 @@ export default function ResultsCard({ result }: ResultsProps) {
 
   //TODO hook fistbumps and comments up
   return (
-    <Box boxShadow="md" w="100%" p="20px" borderRadius="md" borderWidth="1px">
+    <Card>
       <HStack>
         <Avatar size="sm" src={profile.photoURL} />
         <VStack align="left">
@@ -66,6 +67,6 @@ export default function ResultsCard({ result }: ResultsProps) {
           <Text fontSize="xs">Comment</Text>
         </HStack>
       </Flex>
-    </Box>
+    </Card>
   )
 }
