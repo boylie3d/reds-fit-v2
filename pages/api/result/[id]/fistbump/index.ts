@@ -19,7 +19,7 @@ export default async function handler(
   try {
     switch (req.method) {
       case "GET":
-        const getReq = await get(id)
+        const getReq = await get(id, req.query)
         res.status(200).json(getReq)
 
         break
