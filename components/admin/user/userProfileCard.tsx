@@ -28,11 +28,11 @@ export default function VerifiedProfileCard({
 
   const toggleAdmin = async () => {
     const access =
-      profile.accessType === AccessType.Verified
+      profile.accessType === AccessType.User
         ? AccessType.Admin
-        : AccessType.Verified
+        : AccessType.User
     profile.accessType = access
-    const res = await fetch(`/api/profile/${profile.uid}`, {
+    const res = await fetch(`/api/profile/${profile.id}`, {
       method: "POST",
       body: JSON.stringify(profile),
     })
@@ -54,10 +54,10 @@ export default function VerifiedProfileCard({
   }
 
   const block = async () => {
-    if (profile.uid === superUserId) return
+    if (profile.id === superUserId) return
     profile.accessType = AccessType.Blocked
-    const res = await fetch(`/api/profile/${profile.uid}`, {
-      method: "POST",
+    const res = await fetch(`/api/profile/${profile.id}`, {
+      method: "PUT",
       body: JSON.stringify(profile),
     })
     mutate("/api/profile")
@@ -94,7 +94,7 @@ export default function VerifiedProfileCard({
             <GridItem>
               <Center h="100%">
                 <Checkbox
-                  disabled={profile.uid === superUserId}
+                  disabled={profile.id === superUserId}
                   defaultChecked={profile.accessType === AccessType.Admin}
                   onChange={toggleAdmin}
                 />
@@ -105,7 +105,7 @@ export default function VerifiedProfileCard({
                 <CloseIcon
                   w={5}
                   h={5}
-                  color={profile.uid !== superUserId ? "red" : "gray"}
+                  color={profile.id !== superUserId ? "red" : "gray"}
                   onClick={block}
                 />
               </Center>

@@ -1,6 +1,6 @@
 import { Profile } from "@/types"
-import { Grid, GridItem } from "@chakra-ui/react"
-import { UseLocalProfile } from "hooks/profile"
+import { Box, Center, Grid, GridItem } from "@chakra-ui/react"
+import { useLocalProfile } from "hooks/profile"
 import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -24,7 +24,7 @@ export default function AppLayout(props: LayoutProps) {
     profile,
     loading: profileLoading,
     error: profileError,
-  } = UseLocalProfile()
+  } = useLocalProfile()
 
   useEffect(() => {
     setNav(getNavItem(router.pathname))
@@ -63,7 +63,13 @@ export default function AppLayout(props: LayoutProps) {
           overflowY="scroll"
           area={"main"}
         >
-          {props.children}
+          <Box>
+            <Center>
+              <Box w="90%" maxW="800px">
+                {props.children}
+              </Box>
+            </Center>
+          </Box>
         </GridItem>
         <GridItem
           style={{ boxShadow: "0px 0px 20px 0px" }}

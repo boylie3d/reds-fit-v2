@@ -1,5 +1,4 @@
 import { Profile } from "@/types"
-import { GoogleUser } from "@/types/googleUser"
 import type { NextApiRequest, NextApiResponse } from "next"
 import firebaseAdmin from "util/firebaseAdmin"
 
@@ -7,7 +6,7 @@ const fb = firebaseAdmin
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Profile | any>,
+  res: NextApiResponse<Profile | Error>,
 ) {
   const { id } = req.query
 
@@ -20,9 +19,9 @@ export default async function handler(
     if (req.method === "GET") {
       const profile = await get(id)
       res.status(200).json(profile)
-    } else if (req.method === "POST") {
+    } else if (req.method === "PUT") {
       const profile: Profile = JSON.parse(req.body)
-      const result = await sync(id, profile)
+      const result = await put(id, profile)
       res.status(200).json(profile)
     } else {
       res.status(405).end(new Error("Method not allowed"))
@@ -39,10 +38,8 @@ export async function get(id: string) {
   return doc.data() as Profile
 }
 
-async function sync(id: string, user: Profile) {
+async function put(id: string, user: Profile) {
   const ref = fb.db.collection("profiles").doc(id)
   const res = await ref.set(user, { merge: true })
   return res
 }
-
-async function post(id: string, user: GoogleUser) {}

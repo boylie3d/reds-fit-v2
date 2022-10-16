@@ -4,11 +4,8 @@ import useSWR from "swr"
 import fb from "util/firebase"
 import fetcher from "./fetcher"
 
-export function useProfile(userId: string) {
-  const { data, error } = useSWR<Profile, Error>(
-    `/api/profile/${userId}`,
-    fetcher,
-  )
+export function useProfile(id: string) {
+  const { data, error } = useSWR<Profile, Error>(`/api/profile/${id}`, fetcher)
 
   return {
     profile: data,
