@@ -49,7 +49,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
 
     const fullName = `${form.firstName} ${form.lastName}`
     const newProfile: Profile = {
-      id: user!.uid,
+      uid: user!.uid,
       firstName: form.firstName,
       lastName: form.lastName,
       accessType: access,
