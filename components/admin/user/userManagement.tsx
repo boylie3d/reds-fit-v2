@@ -52,7 +52,7 @@ const UserProfiles = ({ profiles }: ProfilesProps) => {
       <Text>Users</Text>
       {profiles.map(profile => (
         <UserProfileCard
-          key={profile.id}
+          key={profile.uid}
           superUserId={superUserId}
           profile={profile}
         />
@@ -77,7 +77,7 @@ const BlockedProfiles = ({ profiles }: ProfilesProps) => {
           </AccordionButton>
           <AccordionPanel>
             {profiles.map(profile => (
-              <BlockedProfileCard key={profile.id} profile={profile} />
+              <BlockedProfileCard key={profile.uid} profile={profile} />
             ))}
           </AccordionPanel>
         </AccordionItem>

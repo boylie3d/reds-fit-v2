@@ -22,7 +22,7 @@ export default function BlockedProfileCard({ profile }: ProfileProps) {
   const unblock = async () => {
     profile.accessType = AccessType.User
 
-    const res = await fetch(`/api/profile/${profile.id}`, {
+    const res = await fetch(`/api/profile/${profile.uid}`, {
       method: "PUT",
       body: JSON.stringify(profile),
     })

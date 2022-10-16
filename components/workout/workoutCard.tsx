@@ -29,7 +29,7 @@ export default function WorkoutCard({ workout }: CardProps) {
     error: yourErr,
   } = useResults({
     workoutId: workout.id,
-    userId: profile?.id,
+    userId: profile?.uid,
   })
 
   if (!allResults || !yourResults) return <div />
