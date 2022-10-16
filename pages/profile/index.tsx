@@ -11,24 +11,26 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
-import { UseLocalProfile } from "hooks/profile"
-import { useAuthState } from "react-firebase-hooks/auth"
+import ResultList from "components/result/resultList"
+import { useLocalProfile } from "hooks/profile"
+import { useResults } from "hooks/result"
 import { BsPencilSquare } from "react-icons/bs"
 import { tmpUser } from "test"
-import fb from "util/firebase"
 
 export function ProfilePage() {
-  const [user, loading, error] = useAuthState(fb.auth)
+  const { profile, loading: pLoading, error: pError } = useLocalProfile()
+
   const {
-    profile,
-    loading: profileLoading,
-    error: profileError,
-  } = UseLocalProfile()
+    results,
+    loading: rLoading,
+    error: rError,
+  } = useResults({ userId: profile ? profile.id : "" })
 
   return (
     <AppLayout>
       <Banner profile={profile} />
       <Toolbar />
+      {results ? <ResultList results={results} /> : <div />}
     </AppLayout>
   )
 }

@@ -1,8 +1,34 @@
-import { extendTheme } from "@chakra-ui/react"
+import { defineStyleConfig, extendTheme } from "@chakra-ui/react"
 
 const colors = {
   teamPrimary: "#e22224",
 }
+
+const Button = defineStyleConfig({
+  variants: {
+    teamSolid: {
+      bgColor: "teamPrimary",
+      color: "white",
+    },
+    teamOutline: {
+      border: "2px solid",
+      boderColor: "teamPrimary",
+      color: "teamPrimary",
+    },
+  },
+  defaultProps: { variant: "teamSolid" },
+})
+
+const Box = defineStyleConfig({
+  variants: {
+    card: {
+      boxShadow: "md",
+      p: "20px",
+      borderRadius: "md",
+      borderWidth: "1px",
+    },
+  },
+})
 
 const theme = extendTheme({
   fonts: {
@@ -14,6 +40,8 @@ const theme = extendTheme({
     teamPrimary: colors.teamPrimary,
   },
   components: {
+    Button,
+    Box,
     Heading: {
       sizes: {
         "3xl": {

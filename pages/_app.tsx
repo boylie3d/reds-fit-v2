@@ -2,9 +2,10 @@ import { ChakraProvider } from "@chakra-ui/react"
 import "@fontsource/graduate"
 import "@fontsource/roboto"
 import AuthProvider from "components/auth/authProvider"
-import { UseProfile } from "hooks/profile"
+import { useProfile } from "hooks/profile"
 import type { AppProps } from "next/app"
 import { useEffect } from "react"
+import "react-calendar/dist/Calendar.css"
 import { useAuthState } from "react-firebase-hooks/auth"
 import "../styles/globals.css"
 import theme from "../theme"
@@ -16,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     profile,
     loading: profileLoading,
     error: profileError,
-  } = UseProfile(user ? user.uid : "")
+  } = useProfile(user ? user.uid : "")
 
   //check if user has a profile, if not, bring them to mandatory profile creation
   useEffect(() => {

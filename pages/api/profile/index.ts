@@ -6,7 +6,7 @@ const fb = firebaseAdmin
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Profile | any>,
+  res: NextApiResponse<Profile[] | Error>,
 ) {
   try {
     if (req.method === "GET") {
@@ -24,6 +24,6 @@ export default async function handler(
 async function get() {
   const ref = fb.db.collection("profiles")
   const coll = await ref.get()
-  const profiles = coll.docs.map(item => item.data())
-  return profiles as Profile[]
+  const profiles = coll.docs.map(item => item.data()) as Profile[]
+  return profiles
 }

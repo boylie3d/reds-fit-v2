@@ -1,6 +1,6 @@
 import { AccessType, Profile, UserType } from "@/types"
 import { Avatar, Button, Center, Input, VStack } from "@chakra-ui/react"
-import { UseLocalProfile } from "hooks/profile"
+import { useLocalProfile } from "hooks/profile"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
@@ -12,10 +12,17 @@ interface FormProps {
   create: boolean
 }
 
+type ProfilePartial = {
+  email: string
+  firstName: string
+  lastName: string
+  userType: UserType
+}
+
 export default function ProfileForm({ onUpdate, create }: FormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false)
   const [user, uLoading, uErr] = useAuthState(fb.auth)
-  const { profile: existingProfile, loading, error } = UseLocalProfile()
+  const { profile: existingProfile, loading, error } = useLocalProfile()
   const router = useRouter()
 
   const {
@@ -23,14 +30,14 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormInput>()
+  } = useForm<ProfilePartial>()
 
-  const onSubmit = async (form: FormInput) => {
+  const onSubmit = async (form: ProfilePartial) => {
     setSubmitting(true)
 
     const access = existingProfile
       ? existingProfile.accessType
-      : AccessType.Unverified
+      : AccessType.User
 
     const photo: string | undefined = (
       existingProfile
@@ -42,7 +49,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
 
     const fullName = `${form.firstName} ${form.lastName}`
     const newProfile: Profile = {
-      uid: user!.uid,
+      id: user!.uid,
       firstName: form.firstName,
       lastName: form.lastName,
       accessType: access,
@@ -112,11 +119,4 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
       </VStack>
     </form>
   )
-}
-
-type FormInput = {
-  email: string
-  firstName: string
-  lastName: string
-  userType: UserType
 }
