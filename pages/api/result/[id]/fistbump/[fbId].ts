@@ -24,7 +24,6 @@ export default async function handler(
         res.status(200).json(getReq)
         break
       case "DELETE":
-        console.log(req.query)
         const delReq = await del(id, fbId)
         res.status(200).json(null)
         break
