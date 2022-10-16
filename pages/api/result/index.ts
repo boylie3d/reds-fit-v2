@@ -26,7 +26,6 @@ export default async function handler(
   }
 }
 
-//TODO order results by created / updated
 async function get(query: Object) {
   const ref = fb.db.collection("results")
   const formattedQuery = query ? objToFirestoreQuery(ref, query) : ref
