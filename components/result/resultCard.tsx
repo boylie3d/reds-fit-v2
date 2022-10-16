@@ -86,7 +86,7 @@ interface SocialProps {
 const FistbumpToggle = ({ profile, result }: SocialProps) => {
   const { mutate } = useSWRConfig()
 
-  const { fistbumps, loading, error } = useQueriedFistbumps(result.id || "", {
+  const { fistbumps, loading, error } = useQueriedFistbumps(result.id!, {
     userId: profile.uid,
   })
 
@@ -95,6 +95,8 @@ const FistbumpToggle = ({ profile, result }: SocialProps) => {
   useEffect(() => {
     if (!fistbumps) return
 
+    console.log(profile.uid)
+    console.log(fistbumps)
     const existing = fistbumps.find(fb => fb.userId === profile.uid)
     setExisting(existing)
   }, [fistbumps])
@@ -108,6 +110,7 @@ const FistbumpToggle = ({ profile, result }: SocialProps) => {
       method: "POST",
       body: JSON.stringify(fb),
     })
+
     const json = await resp.json()
     setExisting(json)
     mutate(`/api/result/${result.id}/fistbump`)
@@ -144,7 +147,7 @@ const FistbumpToggle = ({ profile, result }: SocialProps) => {
   )
 }
 
-const FistbumpCounter = ({ profile, result }: SocialProps) => {
+const FistbumpCounter = ({ result }: SocialProps) => {
   const { fistbumps, loading, error } = useFistbumps(result.id || "")
 
   return (

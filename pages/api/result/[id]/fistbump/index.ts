@@ -19,6 +19,7 @@ export default async function handler(
   try {
     switch (req.method) {
       case "GET":
+        delete req.query.id
         const getReq = await get(id, req.query)
         res.status(200).json(getReq)
 
@@ -29,7 +30,6 @@ export default async function handler(
         res.status(200).json(resp)
         break
       default:
-        console.log("u fucked up hombre")
         res
           .status(500)
           .end(new Error("Valid methods on this endpoint are POST and DELETE"))
@@ -45,6 +45,7 @@ async function get(id: string, query: Object) {
   const ref = await fb.db.collection(`results/${id}/fistbumps`)
   const formattedQuery = query ? objToFirestoreQuery(ref, query) : ref
   const collection = await formattedQuery.get()
+
   const results = collection.docs.map(item => item.data()) as Fistbump[]
 
   return results
