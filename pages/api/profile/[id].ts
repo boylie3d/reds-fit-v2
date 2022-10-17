@@ -16,15 +16,23 @@ export default async function handler(
       .end("Bad request. ID parameter cannot be an array of IDs.")
 
   try {
-    if (req.method === "GET") {
-      const profile = await get(id)
-      res.status(200).json(profile)
-    } else if (req.method === "PUT") {
-      const profile: Profile = JSON.parse(req.body)
-      const result = await put(id, profile)
-      res.status(200).json(profile)
-    } else {
-      res.status(405).end(new Error("Method not allowed"))
+    switch (req.method) {
+      case "GET":
+        const profile = await get(id)
+        res.status(200).json(profile)
+        break
+      case "PUT":
+        const update: Profile = JSON.parse(req.body)
+        const result = await set(id, update)
+        res.status(200).json(result)
+        break
+      case "POST":
+        const create: Profile = JSON.parse(req.body)
+        const created = await set(id, create)
+        res.status(200).json(created)
+        break
+      default:
+        res.status(405).end(new Error("Method not allowed"))
     }
   } catch (error) {
     console.error(error)
@@ -38,8 +46,8 @@ export async function get(id: string) {
   return doc.data() as Profile
 }
 
-async function put(id: string, user: Profile) {
+async function set(id: string, user: Profile) {
   const ref = fb.db.collection("profiles").doc(id)
-  const res = await ref.set(user, { merge: true })
-  return res
+  await ref.set(user, { merge: true })
+  return user
 }
