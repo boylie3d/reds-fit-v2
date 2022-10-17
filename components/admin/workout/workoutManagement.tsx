@@ -33,13 +33,11 @@ export default function WorkoutManagement() {
   const { mutate } = useSWRConfig()
 
   const workoutFormSubmitted = (workout: Workout) => {
-    console.log("hi")
     mutate("/api/workout")
     onClose()
   }
 
   const workoutDeleted = () => {
-    console.log("hi")
     mutate("/api/workout")
     onClose()
   }

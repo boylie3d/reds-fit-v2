@@ -13,8 +13,6 @@ export default function ResultForm({ result }: ResultProps) {
 
   if (!workout) return <LoadingPane />
 
-  console.log(workout)
-
   return (
     <Box w="100%">
       <Box pb={3}>

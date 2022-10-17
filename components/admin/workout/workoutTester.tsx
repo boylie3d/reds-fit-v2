@@ -17,7 +17,6 @@ export default function WorkoutTester() {
       body: JSON.stringify(workout),
     })
     const posted = (await resp.json()) as Workout
-    console.log(posted)
   }
 
   const postResult = async () => {
