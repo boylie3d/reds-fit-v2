@@ -1,4 +1,4 @@
-import { Profile } from "@/types"
+import { Profile, Result } from "@/types"
 import {
   Avatar,
   Box,
@@ -20,6 +20,7 @@ import { GetServerSideProps, NextPage } from "next"
 import { get } from "pages/api/profile/[id]"
 import { useEffect, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
+import { Bars, Chart } from "rumble-charts"
 
 interface Props {
   profile: Profile
@@ -44,7 +45,7 @@ const Profile: NextPage<Props> = ({ profile }: Props) => {
       <VStack gap={3}>
         <Banner profile={profile} />
         <>{isLocal && <Toolbar />}</>
-        <ActivityCard />
+        <ActivityCard results={results} />
         <ParticipationCard />
         <ResultList results={results} />
       </VStack>
@@ -66,10 +67,43 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
 export default Profile
 
-const ActivityCard = () => {
+interface ActivityProps {
+  results: Result[] | undefined
+}
+
+interface ChartItem {
+  count: number
+  date: string
+}
+
+const ActivityCard = ({ results }: ActivityProps) => {
+  useEffect(() => {
+    if (!results) return
+
+    // let items: ChartItem[] = []
+    // results.forEach(r => {
+    //   const item = items.find(f => f.date === toUntimedDate(r.created))
+    // })
+  }, [results])
+
+  const series = [
+    {
+      data: [1, 2, 3],
+    },
+    {
+      data: [5, 7, 11],
+    },
+    {
+      data: [13, 17, 19],
+    },
+  ]
+
   return (
     <Card>
       <Center>Active Days</Center>
+      <Chart width={10} series={series}>
+        <Bars innerPadding={5} groupPadding={10} />
+      </Chart>
       <Text>bar graph here</Text>
     </Card>
   )
