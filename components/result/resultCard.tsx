@@ -7,6 +7,7 @@ import {
   Flex,
   HStack,
   Icon,
+  Link,
   Spacer,
   Text,
   VStack,
@@ -49,9 +50,20 @@ export default function ResultsCard({ result }: ResultsProps) {
   return (
     <Card>
       <HStack>
-        <Avatar size="sm" src={profile.photoURL} />
+        <Box>
+          <Link href={`/profile/${profile.uid}`}>
+            <Avatar size="sm" src={profile.photoURL} />
+          </Link>
+        </Box>
         <VStack align="left">
-          <Text fontSize="sm">{profile.displayName} logged a workout</Text>
+          <HStack>
+            <Text fontSize="sm">
+              <Link href={`/profile/${profile.uid}`}>
+                <b>{profile.displayName}</b>
+              </Link>
+              {" logged a workout"}
+            </Text>
+          </HStack>
           <Text fontSize="xs">{result.updated.toString()}</Text>
         </VStack>
       </HStack>

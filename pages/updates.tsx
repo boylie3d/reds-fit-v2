@@ -1,12 +1,5 @@
 import { Comment, Fistbump, Result } from "@/types"
-import {
-  Avatar,
-  Box,
-  HStack,
-  LinkOverlay,
-  Text,
-  VStack,
-} from "@chakra-ui/react"
+import { Avatar, Box, HStack, Link, Text, VStack } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import LoadingPane from "components/misc/loading"
 import { useLocalProfile, useProfile } from "hooks/profile"
@@ -112,16 +105,17 @@ const UpdateItem = ({ data }: UpdateProps) => {
     <Box w="100%">
       <HStack>
         <Box>
-          <LinkOverlay href={`/profile/${profile.uid}`}>
+          <Link href={`/profile/${profile.uid}`}>
             <Avatar size="sm" src={profile?.photoURL} />
-          </LinkOverlay>
+          </Link>
         </Box>
         <Box>
-          {fistbump !== undefined ? (
-            <Text fontSize="sm">{`${profile.displayName} gave you fistbumps on your "${workout?.title}" workout`}</Text>
-          ) : (
-            <Text fontSize="sm">{`${profile.displayName} commented on your "${workout?.title}" workout`}</Text>
-          )}
+          <Text fontSize="sm">
+            <Link href={`/profile/${profile.uid}`}>{profile.displayName}</Link>
+            {fistbump !== undefined
+              ? ` gave you fistbumps on your "${workout?.title}" workout`
+              : `commented on your "${workout?.title}" workout`}
+          </Text>
           <Text color="gray.400" fontSize="xs">
             {new Date(data.item.created).toDateString()}
           </Text>
