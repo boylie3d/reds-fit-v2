@@ -1,6 +1,6 @@
 import { defineStyleConfig, extendTheme } from "@chakra-ui/react"
 
-const colors = {
+export const colors = {
   teamPrimary: "#e22224",
 }
 
