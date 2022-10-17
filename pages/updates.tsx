@@ -67,7 +67,8 @@ const Updates: NextPage = () => {
   return (
     <AppLayout>
       <VStack gap={3}>
-        {socialData && socialData.map(data => <UpdateItem data={data} />)}
+        {socialData &&
+          socialData.map(data => <UpdateItem key={data.id} data={data} />)}
       </VStack>
     </AppLayout>
   )
