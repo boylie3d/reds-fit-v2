@@ -78,7 +78,7 @@ const AnnouncementsBar = ({ date }: AnnouncementProps) => {
       <Center pb={3}>
         <HStack gap={2}>
           <Icon color="teamPrimary" as={BsFillMegaphoneFill} />
-          <Heading size="xs">Today's Announcement:</Heading>
+          <Heading size="xs">{"Today's Announcement:"}</Heading>
           <Icon color="teamPrimary" as={BsFillMegaphoneFill} />
         </HStack>
       </Center>
