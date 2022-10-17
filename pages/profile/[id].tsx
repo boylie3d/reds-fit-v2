@@ -5,7 +5,6 @@ import {
   Button,
   Center,
   Flex,
-  Heading,
   HStack,
   Icon,
   Link,
@@ -23,6 +22,7 @@ import {
 } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import Card from "components/layout/card"
+import Banner from "components/profile/banner"
 import ResultList from "components/result/resultList"
 import { useLocalProfile, useProfiles } from "hooks/profile"
 import { useResults } from "hooks/result"
@@ -36,7 +36,7 @@ interface Props {
   profile: Profile
 }
 
-const Profile: NextPage<Props> = ({ profile }: Props) => {
+const Profile: NextPage<Props> = ({ profile }) => {
   const {
     profile: localProfile,
     loading: pLoading,
@@ -63,6 +63,7 @@ const Profile: NextPage<Props> = ({ profile }: Props) => {
   )
 }
 
+//TODO: swr stuff? maybe?
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const { id } = ctx.query
   const idStr = id ? id.toString() : ""
@@ -143,21 +144,6 @@ const ParticipationCard = () => {
       <Center>Participation Stats</Center>
       <Text>stats pane here</Text>
     </Card>
-  )
-}
-
-const Banner = ({ profile }: Props) => {
-  return (
-    <Box w="100%" h="200px" bgColor="gray.800" bgImage="/banner-tile.png">
-      <Center h="100%" w="100%">
-        <VStack>
-          <Avatar size="xl" src={profile?.photoURL} />
-          <Heading size="md" color="white" zIndex={0}>
-            {profile?.displayName}
-          </Heading>
-        </VStack>
-      </Center>
-    </Box>
   )
 }
 

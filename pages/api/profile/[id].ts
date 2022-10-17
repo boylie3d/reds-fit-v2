@@ -46,7 +46,7 @@ export async function get(id: string) {
   return doc.data() as Profile
 }
 
-async function set(id: string, user: Profile) {
+export async function set(id: string, user: Profile) {
   const ref = fb.db.collection("profiles").doc(id)
   await ref.set(user, { merge: true })
   return user

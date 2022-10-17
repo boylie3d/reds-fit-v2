@@ -48,6 +48,14 @@ export const navItems: NavItem[] = [
     route: "/profile",
   },
   {
+    name: "Result",
+    showInNav: false,
+    icon: HiOutlineUser,
+    iconSelected: HiUser,
+    paramRoute: "/result/[id]",
+    route: "/result",
+  },
+  {
     name: "Leaderboard",
     showInNav: true,
     icon: AiOutlineTrophy,
