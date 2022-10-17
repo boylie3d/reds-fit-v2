@@ -71,7 +71,7 @@ const AnnouncementsBar = ({ date }: AnnouncementProps) => {
 
   if (loading) return <LoadingPane />
 
-  if (!currAnnouncement) return <div />
+  if (!announcements || announcements.length === 0) return <div />
 
   return (
     <Card>
@@ -83,7 +83,11 @@ const AnnouncementsBar = ({ date }: AnnouncementProps) => {
         </HStack>
       </Center>
       <VStack align="left" gap={2}>
-        <Text fontSize="xs">{currAnnouncement.message}</Text>
+        {announcements.map(a => (
+          <Text key={a.id} fontSize="xs">
+            {a.message}
+          </Text>
+        ))}
       </VStack>
     </Card>
   )
