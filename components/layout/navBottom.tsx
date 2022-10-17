@@ -1,4 +1,3 @@
-import { getNavBarElements } from "@/types/navigation"
 import {
   Center,
   Grid,
@@ -8,10 +7,12 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
+import { getNavBarElements } from "navigation"
 import { useRouter } from "next/router"
 
 export default function NavBottom() {
   const router = useRouter()
+
   return (
     <>
       <Center h="100%">
@@ -29,7 +30,8 @@ export default function NavBottom() {
                       w={6}
                       h={6}
                       as={
-                        router.pathname === item.route
+                        router.pathname === item.route ||
+                        router.pathname === item.paramRoute
                           ? item.iconSelected
                           : item.icon
                       }

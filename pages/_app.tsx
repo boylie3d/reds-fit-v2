@@ -1,40 +1,38 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import "@fontsource/graduate"
-import { UseProfile } from "hooks/profile"
+import "@fontsource/roboto"
+import AuthProvider from "components/auth/authProvider"
+import { useProfile } from "hooks/profile"
 import type { AppProps } from "next/app"
-import Router from "next/router"
 import { useEffect } from "react"
+import "react-calendar/dist/Calendar.css"
 import { useAuthState } from "react-firebase-hooks/auth"
 import "../styles/globals.css"
 import theme from "../theme"
-import firebase from "../util/firebase"
+import fb from "../util/firebase"
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [user, userLoading, userError] = useAuthState(firebase.auth)
+  const [user, userLoading, userError] = useAuthState(fb.auth)
   const {
     profile,
     loading: profileLoading,
     error: profileError,
-  } = UseProfile(user ? user.uid : "")
+  } = useProfile(user ? user.uid : "")
 
-  useEffect(() => {
-    if (!userLoading && !user) {
-      Router.push("/login")
-    }
-  }, [userLoading, user])
-
+  //check if user has a profile, if not, bring them to mandatory profile creation
   useEffect(() => {
     if (user && !profileLoading && !profile) {
       console.log("no profile")
     }
-    console.log(profile)
   }, [profileLoading, profile])
 
   if (userLoading) return <div />
 
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} user={user} />
+      </AuthProvider>
     </ChakraProvider>
   )
 }

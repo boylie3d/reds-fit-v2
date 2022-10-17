@@ -1,4 +1,4 @@
-import { Profile, UserType } from "@/types"
+import { AccessType, Profile } from "@/types"
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons"
 import {
   Avatar,
@@ -12,15 +12,17 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react"
+import { signOut } from "@firebase/auth"
 import Router from "next/router"
 import { useState } from "react"
+import fb from "util/firebase"
 
 interface NavProps {
-  user?: Profile
+  profile?: Profile
   title?: string
 }
 
-export default function NavTop({ user, title }: NavProps) {
+export default function NavTop({ profile, title }: NavProps) {
   return (
     <>
       <Grid templateColumns="repeat(4, 1fr)" h="100%" w="100%">
@@ -55,7 +57,7 @@ export default function NavTop({ user, title }: NavProps) {
               justifyContent: "flex-end",
             }}
           >
-            <UserBadge user={user} />
+            <UserBadge profile={profile} />
           </Box>
         </GridItem>
       </Grid>
@@ -63,29 +65,28 @@ export default function NavTop({ user, title }: NavProps) {
   )
 }
 
-const UserBadge = ({ user }: NavProps) => {
+const UserBadge = ({ profile }: NavProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const logout = () => {
-    console.log("signing out")
+    signOut(fb.auth)
   }
 
   const goToAdmin = () => {
     Router.push("/admin")
-    console.log("admin panel")
   }
 
   return (
     <Menu onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)}>
       <MenuButton float="right">
         <Box alignItems="center" display="inline-flex">
-          {/* <Text pr="0.5em">{user?.firstName}</Text> */}
-          <Avatar size="sm" src={user?.photoURL}></Avatar>
+          {/* <Text pr="0.5em">{profile?.firstName}</Text> */}
+          <Avatar size="sm" src={profile?.photoURL}></Avatar>
           {menuOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </Box>
       </MenuButton>
       <MenuList>
-        {user?.userType === UserType.Admin && (
+        {profile?.accessType === AccessType.Admin && (
           <MenuItem onClick={goToAdmin}>Admin</MenuItem>
         )}
         <MenuItem onClick={logout}>Log Out</MenuItem>

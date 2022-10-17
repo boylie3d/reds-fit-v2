@@ -1,9 +1,7 @@
 import {
   AiFillBell,
-  AiFillHome,
   AiFillTrophy,
   AiOutlineBell,
-  AiOutlineHome,
   AiOutlineTrophy,
 } from "react-icons/ai"
 import {
@@ -12,7 +10,10 @@ import {
   HiUser,
   HiUserGroup,
 } from "react-icons/hi"
+
+import { IoBarbellSharp } from "react-icons/io5"
 import { IconType } from "react-icons/lib"
+import { TbBarbell } from "react-icons/tb"
 
 export interface NavItem {
   name: string
@@ -20,28 +21,30 @@ export interface NavItem {
   icon?: IconType
   iconSelected?: IconType
   route: string
+  paramRoute?: string
 }
 
 export const navItems: NavItem[] = [
   {
-    name: "Home",
+    name: "Workouts",
     showInNav: true,
-    icon: AiOutlineHome,
-    iconSelected: AiFillHome,
+    icon: TbBarbell,
+    iconSelected: IoBarbellSharp,
     route: "/",
   },
   {
-    name: "Team",
+    name: "Feed",
     showInNav: true,
     icon: HiOutlineUserGroup,
     iconSelected: HiUserGroup,
-    route: "/team",
+    route: "/feed",
   },
   {
     name: "Profile",
     showInNav: true,
     icon: HiOutlineUser,
     iconSelected: HiUser,
+    paramRoute: "/profile/[id]",
     route: "/profile",
   },
   {
@@ -63,11 +66,21 @@ export const navItems: NavItem[] = [
     showInNav: false,
     route: "/admin",
   },
+  {
+    name: "Update Profile",
+    showInNav: false,
+    route: "/profile/update",
+  },
 ]
 
 export const getNavItem = (path: string) => {
+  console.log(path)
   const item = navItems.find(x => x.route === path)
-  return item!
+  if (item) {
+    return item
+  } else {
+    return navItems.find(x => x.paramRoute === path)
+  }
 }
 
 export const getNavBarElements = () => {

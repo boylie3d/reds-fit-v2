@@ -1,8 +1,11 @@
-import { Profile, UserType } from "@/types"
-import { getNavItem, NavItem } from "@/types/navigation"
-import { Grid, GridItem } from "@chakra-ui/react"
+import { Profile } from "@/types"
+import { Box, Center, Grid, GridItem } from "@chakra-ui/react"
+import { useLocalProfile } from "hooks/profile"
+import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
+import fb from "util/firebase"
 import PageHead from "./head"
 import NavBottom from "./navBottom"
 import NavTop from "./navTop"
@@ -12,19 +15,16 @@ interface LayoutProps {
   children: JSX.Element[] | JSX.Element
 }
 
-const tmpUser: Profile = {
-  firstName: "Dave",
-  lastName: "Boyle",
-  displayName: "Dave Boyle",
-  email: "dave@globacore.com",
-  photoURL:
-    "https://pbs.twimg.com/profile_images/422249828500779009/rv2DKary_400x400.jpeg",
-  userType: UserType.Admin,
-}
-
 export default function AppLayout(props: LayoutProps) {
   const [nav, setNav] = useState<NavItem>()
   const router = useRouter()
+  const [user, loading, error] = useAuthState(fb.auth)
+
+  const {
+    profile,
+    loading: profileLoading,
+    error: profileError,
+  } = useLocalProfile()
 
   useEffect(() => {
     setNav(getNavItem(router.pathname))
@@ -45,7 +45,7 @@ export default function AppLayout(props: LayoutProps) {
         fontWeight="bold"
       >
         <GridItem area={"header"}>
-          <NavTop user={tmpUser} title={nav.name} />
+          <NavTop profile={profile} title={nav.name} />
         </GridItem>
         <GridItem
           sx={{
@@ -61,10 +61,15 @@ export default function AppLayout(props: LayoutProps) {
           }}
           overflowX="hidden"
           overflowY="scroll"
-          pl="2"
           area={"main"}
         >
-          {props.children}
+          <Box>
+            <Center>
+              <Box w="90%" maxW="800px">
+                {props.children}
+              </Box>
+            </Center>
+          </Box>
         </GridItem>
         <GridItem
           style={{ boxShadow: "0px 0px 20px 0px" }}
