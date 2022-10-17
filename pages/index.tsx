@@ -1,10 +1,23 @@
-import { Box, Center, Divider, Heading, Text, VStack } from "@chakra-ui/react"
+import { Announcement } from "@/types"
+import {
+  Box,
+  Center,
+  Divider,
+  Heading,
+  HStack,
+  Icon,
+  Text,
+  VStack,
+} from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import Card from "components/layout/card"
 import CalendarBar from "components/misc/calendarBar"
+import LoadingPane from "components/misc/loading"
 import WorkoutCard from "components/workout/workoutCard"
+import { useAnnouncements } from "hooks/announcement"
 import { useWorkouts } from "hooks/workout"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { BsFillMegaphoneFill } from "react-icons/bs"
 import { useSWRConfig } from "swr"
 import { toUntimedDate } from "util/time"
 
@@ -19,7 +32,7 @@ export default function Home() {
     <AppLayout>
       <VStack>
         <CalendarBar date={calDate} onChanged={setCalDate} />
-        <AnnouncementsBar />
+        <AnnouncementsBar date={calDate} />
         {workouts && workouts.length > 0 ? (
           <Box w="100%">
             <Heading size="sm">Current Workouts</Heading>
@@ -36,8 +49,44 @@ export default function Home() {
   )
 }
 
-const AnnouncementsBar = () => {
-  return <Card />
+interface AnnouncementProps {
+  date: Date
+}
+
+const AnnouncementsBar = ({ date }: AnnouncementProps) => {
+  const { announcements, loading, error } = useAnnouncements({
+    live: toUntimedDate(date),
+  })
+  const [currAnnouncement, setCurrAnnouncement] = useState<
+    Announcement | undefined
+  >(undefined)
+
+  useEffect(() => {
+    if (announcements && announcements.length > 0) {
+      setCurrAnnouncement(announcements[0])
+    } else {
+      setCurrAnnouncement(undefined)
+    }
+  }, [announcements])
+
+  if (loading) return <LoadingPane />
+
+  if (!currAnnouncement) return <div />
+
+  return (
+    <Card>
+      <Center pb={3}>
+        <HStack gap={2}>
+          <Icon color="teamPrimary" as={BsFillMegaphoneFill} />
+          <Heading size="xs">Today's Announcement:</Heading>
+          <Icon color="teamPrimary" as={BsFillMegaphoneFill} />
+        </HStack>
+      </Center>
+      <VStack align="left" gap={2}>
+        <Text fontSize="xs">{currAnnouncement.message}</Text>
+      </VStack>
+    </Card>
+  )
 }
 
 const NoWorkouts = () => {

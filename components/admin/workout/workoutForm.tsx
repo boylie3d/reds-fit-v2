@@ -108,7 +108,6 @@ export default function WorkoutForm({
       method: "DELETE",
     })
     const result = await resp.json()
-    console.log("tf")
     mutate("/api/workout")
     if (onDelete) {
       console.log("asdsf")
@@ -141,7 +140,6 @@ export default function WorkoutForm({
             {...register("scoreType")}
             size="sm"
             placeholder="Select Type"
-            onChange={thing => console.log(thing.target)}
           >
             {Object.values(ScoringType).map((t, i) => (
               <option

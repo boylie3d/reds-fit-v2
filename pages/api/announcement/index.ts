@@ -34,17 +34,17 @@ export default async function handler(
 }
 
 async function get(query: Object) {
-  const ref = await fb.db.collection(`announcements`)
+  const ref = await fb.db.collection("announcements")
   const formattedQuery = query ? objToFirestoreQuery(ref, query) : ref
   const collection = await formattedQuery.get()
 
   const results = collection.docs.map(item => item.data()) as Announcement[]
-
+  console.log(results)
   return results
 }
 
 async function post(announcement: Announcement) {
-  const res = await fb.db.collection(`announcements`).add(announcement)
+  const res = await fb.db.collection("announcements").add(announcement)
 
   announcement.id = res.id
   const update = await res.set(announcement)

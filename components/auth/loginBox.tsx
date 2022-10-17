@@ -21,12 +21,10 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 export default function LoginBox() {
   const signUp = (form: FormInput) => {
     console.log("signing up")
-    console.log(form)
   }
 
   const signIn = (form: FormInput) => {
     console.log("signing in")
-    console.log(form)
   }
 
   return (

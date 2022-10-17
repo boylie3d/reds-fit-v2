@@ -95,8 +95,6 @@ const FistbumpToggle = ({ profile, result }: SocialProps) => {
   useEffect(() => {
     if (!fistbumps) return
 
-    console.log(profile.uid)
-    console.log(fistbumps)
     const existing = fistbumps.find(fb => fb.userId === profile.uid)
     setExisting(existing)
   }, [fistbumps])

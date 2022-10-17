@@ -1,7 +1,7 @@
 export type Announcement = {
   id?: string
   message: string
-  live: Date
+  live: string
   created?: Date
   updated: Date
 }
