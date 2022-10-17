@@ -41,11 +41,12 @@ export default async function handler(
 }
 
 async function get(id: string, query: Object) {
+  console.log(id)
   const ref = await fb.db.collection(`results/${id}/fistbumps`)
   const formattedQuery = query ? objToFirestoreQuery(ref, query) : ref
   const collection = await formattedQuery.get()
-
   const results = collection.docs.map(item => item.data()) as Fistbump[]
+  console.log(results)
 
   return results
 }

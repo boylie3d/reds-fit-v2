@@ -43,15 +43,15 @@ export default function ResultsCard({ result }: ResultsProps) {
     error: pError,
   } = useProfile(result.userId)
 
-  if (!lProfile || !workout) return <LoadingPane />
+  if (!lProfile || !workout || !profile) return <LoadingPane />
 
   //TODO hook fistbumps and comments up
   return (
     <Card>
       <HStack>
-        <Avatar size="sm" src={lProfile.photoURL} />
+        <Avatar size="sm" src={profile.photoURL} />
         <VStack align="left">
-          <Text fontSize="sm">{lProfile.displayName} logged a workout</Text>
+          <Text fontSize="sm">{profile.displayName} logged a workout</Text>
           <Text fontSize="xs">{result.updated.toString()}</Text>
         </VStack>
       </HStack>

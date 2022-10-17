@@ -74,7 +74,6 @@ export const navItems: NavItem[] = [
 ]
 
 export const getNavItem = (path: string) => {
-  console.log(path)
   const item = navItems.find(x => x.route === path)
   if (item) {
     return item
