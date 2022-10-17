@@ -1,5 +1,6 @@
 import { Box, Center, Divider, Heading, Text, VStack } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
+import Card from "components/layout/card"
 import CalendarBar from "components/misc/calendarBar"
 import WorkoutCard from "components/workout/workoutCard"
 import { useWorkouts } from "hooks/workout"
@@ -18,6 +19,7 @@ export default function Home() {
     <AppLayout>
       <VStack>
         <CalendarBar date={calDate} onChanged={setCalDate} />
+        <AnnouncementsBar />
         {workouts && workouts.length > 0 ? (
           <Box w="100%">
             <Heading size="sm">Current Workouts</Heading>
@@ -32,6 +34,10 @@ export default function Home() {
       </VStack>
     </AppLayout>
   )
+}
+
+const AnnouncementsBar = () => {
+  return <Card />
 }
 
 const NoWorkouts = () => {

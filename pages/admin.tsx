@@ -6,7 +6,9 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
 } from "@chakra-ui/react"
+import AnnouncementManagement from "components/admin/announcement/announcementManagement"
 import UserManagement from "components/admin/user/userManagement"
 import WorkoutManagement from "components/admin/workout/workoutManagement"
 import AppLayout from "components/layout/appLayout"
@@ -28,15 +30,27 @@ export default function AdminPage() {
 
   return (
     <AppLayout>
-      <Tabs isFitted>
+      <Tabs size="sm" isFitted>
         <TabList>
-          <Tab>Workouts</Tab>
-          <Tab>Library</Tab>
-          <Tab>Users</Tab>
+          <Tab>
+            <Text fontSize="xs">Workouts</Text>
+          </Tab>
+          <Tab>
+            <Text fontSize="xs">Announcements</Text>
+          </Tab>
+          <Tab>
+            <Text fontSize="xs">Library</Text>
+          </Tab>
+          <Tab>
+            <Text fontSize="xs">Users</Text>
+          </Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
             <WorkoutManagement />
+          </TabPanel>
+          <TabPanel>
+            <AnnouncementManagement />
           </TabPanel>
           <TabPanel></TabPanel>
           <TabPanel>

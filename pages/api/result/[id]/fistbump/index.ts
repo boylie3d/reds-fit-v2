@@ -22,7 +22,6 @@ export default async function handler(
         delete req.query.id
         const getReq = await get(id, req.query)
         res.status(200).json(getReq)
-
         break
       case "POST":
         const postReq = JSON.parse(req.body) as Fistbump
