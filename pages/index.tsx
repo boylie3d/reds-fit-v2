@@ -39,9 +39,9 @@ const NoWorkouts = () => {
     <Center h="100%">
       <VStack color="gray.400">
         <Text fontSize="4xl">{":("}</Text>
-        <Box w="200px">
+        <Box w="250px">
           <Text justifyContent="center" align="center">
-            {"No workouts assigned for today - create one up top!"}
+            {"No workouts assigned for today, why not make one of your own?"}
           </Text>
         </Box>
       </VStack>
