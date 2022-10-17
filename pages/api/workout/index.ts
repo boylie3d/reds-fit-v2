@@ -28,11 +28,9 @@ export default async function handler(
 
 async function get(query: Object) {
   const ref = fb.db.collection("workouts")
-  console.log("fetching")
   const formattedQuery = query ? objToFirestoreQuery(ref, query) : ref
   const coll = await formattedQuery.get()
   const workouts = coll.docs.map(item => item.data()) as Workout[]
-  console.log(workouts)
   return workouts
 }
 

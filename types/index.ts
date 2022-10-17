@@ -1,3 +1,4 @@
+export * from "./announcement"
 export * from "./profile"
 export * from "./result"
 export * from "./social"

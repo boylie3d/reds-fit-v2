@@ -49,7 +49,6 @@ async function get(id: string, query: Object) {
 }
 
 async function del(id: string, fbId: string) {
-  console.log("deleting")
   const ref = await fb.db.doc(`results/${id}/fistbumps/${fbId}`).delete()
   return null
 }
