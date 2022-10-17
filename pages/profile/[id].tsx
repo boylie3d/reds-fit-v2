@@ -6,21 +6,31 @@ import {
   Center,
   Flex,
   Heading,
+  HStack,
   Icon,
+  Link,
   LinkOverlay,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import Card from "components/layout/card"
 import ResultList from "components/result/resultList"
-import { useLocalProfile } from "hooks/profile"
+import { useLocalProfile, useProfiles } from "hooks/profile"
 import { useResults } from "hooks/result"
 import { GetServerSideProps, NextPage } from "next"
 import { get } from "pages/api/profile/[id]"
 import { useEffect, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
-import { Bars, Chart } from "rumble-charts"
+import { HiOutlineUserGroup } from "react-icons/hi"
 
 interface Props {
   profile: Profile
@@ -86,25 +96,43 @@ const ActivityCard = ({ results }: ActivityProps) => {
     // })
   }, [results])
 
-  const series = [
-    {
-      data: [1, 2, 3],
-    },
-    {
-      data: [5, 7, 11],
-    },
-    {
-      data: [13, 17, 19],
-    },
+  const labels = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
   ]
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: [20, 10, 1, 2, 4, 12, 13, 11, 83, 32, 98, 24],
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  }
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Chart.js Bar Chart",
+      },
+    },
+  }
 
   return (
     <Card>
       <Center>Active Days</Center>
-      <Chart width={10} series={series}>
-        <Bars innerPadding={5} groupPadding={10} />
-      </Chart>
-      <Text>bar graph here</Text>
+      {/* <Bar width="100%" height="200px" options={options} data={data} /> */}
     </Card>
   )
 }
@@ -120,7 +148,7 @@ const ParticipationCard = () => {
 
 const Banner = ({ profile }: Props) => {
   return (
-    <Box w="100%" h="200px" bgColor="gray.800" bgImage="banner-tile.png">
+    <Box w="100%" h="200px" bgColor="gray.800" bgImage="/banner-tile.png">
       <Center h="100%" w="100%">
         <VStack>
           <Avatar size="xl" src={profile?.photoURL} />
@@ -134,28 +162,63 @@ const Banner = ({ profile }: Props) => {
 }
 
 const Toolbar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { profiles, loading, error } = useProfiles()
+
   return (
-    <Box
-      // borderWidth="2px"
-      w="100%"
-      p="10px"
-    >
+    <Box w="100%" p="10px">
       <Flex alignItems="center" gap={5}>
-        <Button variant="unstyled">
-          <LinkOverlay href="/profile/update">
-            <VStack>
-              <Icon w={6} h={6} as={BsPencilSquare} />
-              <Text fontSize="xs">Edit</Text>
-            </VStack>
-          </LinkOverlay>
-        </Button>
-        {/* <Button variant="unstyled">
-          <VStack>
-            <Icon w={6} h={6} as={BsPencilSquare} />
-            <Text fontSize="xs">Edit</Text>
-          </VStack>
-        </Button> */}
+        <Box flex={1}>
+          <Center>
+            <Button variant="unstyled" onClick={onOpen}>
+              <VStack>
+                <Icon w={6} h={6} as={HiOutlineUserGroup} />
+                <Text fontSize="xs">Team</Text>
+              </VStack>
+            </Button>
+          </Center>
+        </Box>
+        <Box flex={1}>
+          <Center>
+            <Button variant="unstyled">
+              <LinkOverlay href="/profile/update">
+                <VStack>
+                  <Icon w={6} h={6} as={BsPencilSquare} />
+                  <Text fontSize="xs">Edit</Text>
+                </VStack>
+              </LinkOverlay>
+            </Button>
+          </Center>
+        </Box>
       </Flex>
+
+      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>My Team</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack gap={3} w="100%">
+              <>
+                {profiles &&
+                  profiles.map(p => (
+                    <Link w="100%" href={`/profiles/${p.uid}`}>
+                      <HStack w="100%" key={p.uid}>
+                        <Avatar size="md" src={p.photoURL} />
+                        <VStack>
+                          <Text>{p.displayName}</Text>
+                        </VStack>
+                      </HStack>
+                    </Link>
+                  ))}
+              </>
+            </VStack>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }
