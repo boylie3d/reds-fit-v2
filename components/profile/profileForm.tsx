@@ -108,7 +108,12 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
           placeholder="Last Name"
           {...register("lastName")}
         />
-        <Select {...register("userType")}>
+        <Select
+          {...register("userType")}
+          defaultValue={
+            existingProfile ? existingProfile.userType.valueOf() : "Player"
+          }
+        >
           {Object.keys(UserType).map(t => (
             <option key={t}>{t}</option>
           ))}
