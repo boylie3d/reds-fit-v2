@@ -45,7 +45,7 @@ const AnnouncementManagement: NextPage<Props> = ({}) => {
       <VStack gap={3}>
         <CalendarBar date={calDate} onChanged={setCalDate} />
         {announcements && announcements.length > 0 ? (
-          <div>there's stuff</div>
+          <div>{"there's stuff"}</div>
         ) : (
           <>
             <Button w="100%" onClick={onOpen}>
