@@ -202,7 +202,7 @@ const Toolbar = () => {
               <>
                 {profiles &&
                   profiles.map(p => (
-                    <Link w="100%" href={`/profiles/${p.uid}`}>
+                    <Link key={p.uid} w="100%" href={`/profiles/${p.uid}`}>
                       <HStack w="100%" key={p.uid}>
                         <Avatar size="md" src={p.photoURL} />
                         <VStack>
