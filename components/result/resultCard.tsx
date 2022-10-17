@@ -37,7 +37,6 @@ export default function ResultsCard({ result }: ResultsProps) {
     loading: wLoading,
     error: wError,
   } = useWorkout(result.workoutId)
-
   const {
     profile,
     loading: pLoading,
