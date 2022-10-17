@@ -1,9 +1,13 @@
 export function objToQueryString(query?: { [key: string]: string }) {
-  return query
-    ? `?${Object.keys(query)
-        .map((key, index) => `${key}=${query[key].toString()}`)
-        .join("&")}`
-    : ""
+  try {
+    return query
+      ? `?${Object.keys(query)
+          .map((key, index) => `${key}=${query[key].toString()}`)
+          .join("&")}`
+      : ""
+  } catch (e) {
+    return ""
+  }
 }
 
 export function objToFirestoreQuery(

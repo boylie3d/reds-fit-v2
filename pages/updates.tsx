@@ -1,5 +1,12 @@
 import { Comment, Fistbump, Result } from "@/types"
-import { Avatar, Box, HStack, Text, VStack } from "@chakra-ui/react"
+import {
+  Avatar,
+  Box,
+  HStack,
+  LinkOverlay,
+  Text,
+  VStack,
+} from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import LoadingPane from "components/misc/loading"
 import { useLocalProfile, useProfile } from "hooks/profile"
@@ -104,7 +111,11 @@ const UpdateItem = ({ data }: UpdateProps) => {
   return (
     <Box w="100%">
       <HStack>
-        <Avatar size="sm" src={profile?.photoURL} />
+        <Box>
+          <LinkOverlay href={`/profile/${profile.uid}`}>
+            <Avatar size="sm" src={profile?.photoURL} />
+          </LinkOverlay>
+        </Box>
         <Box>
           {fistbump !== undefined ? (
             <Text fontSize="sm">{`${profile.displayName} gave you fistbumps on your "${workout?.title}" workout`}</Text>
