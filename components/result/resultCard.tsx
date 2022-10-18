@@ -80,10 +80,12 @@ export default function ResultsCard({ result }: ResultsProps) {
       <Flex p={5}>
         <FistbumpToggle profile={lProfile} result={result} />
         <Spacer />
-        <HStack h="100%" style={{ cursor: "pointer" }}>
-          <Icon as={BiCommentDetail} />
-          <Text fontSize="xs">Comment</Text>
-        </HStack>
+        <Link href={`/result/${result.id}`}>
+          <HStack h="100%" style={{ cursor: "pointer" }}>
+            <Icon as={BiCommentDetail} />
+            <Text fontSize="xs">Comment</Text>
+          </HStack>
+        </Link>
       </Flex>
     </Card>
   )

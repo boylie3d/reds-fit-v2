@@ -1,5 +1,5 @@
 import { AccessType, Profile, UserType } from "@/types"
-import { Avatar, Button, Center, Input, VStack } from "@chakra-ui/react"
+import { Avatar, Button, Center, Input, Select, VStack } from "@chakra-ui/react"
 import { useLocalProfile } from "hooks/profile"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -56,6 +56,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
       photoURL: photo,
       displayName: fullName,
       email: form.email,
+      userType: form.userType,
     }
 
     const resp = await fetch(`/api/profile/${user?.uid}`, {
@@ -107,6 +108,16 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
           placeholder="Last Name"
           {...register("lastName")}
         />
+        <Select
+          {...register("userType")}
+          defaultValue={
+            existingProfile ? existingProfile.userType.valueOf() : "Player"
+          }
+        >
+          {Object.keys(UserType).map(t => (
+            <option key={t}>{t}</option>
+          ))}
+        </Select>
         <Button
           variant="outline"
           colorScheme="green"

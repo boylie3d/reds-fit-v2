@@ -17,6 +17,6 @@ export type Profile = {
   displayName: string
   email: string
   photoURL?: string
-  userType?: UserType
+  userType: UserType
   accessType: AccessType
 }

@@ -57,7 +57,7 @@ const Updates: NextPage = () => {
     )
       .map(c => c.value)
       .flat()
-      .sort((a, b) => b.item.created.valueOf() - a.item.created.valueOf())
+      .sort((a, b) => b.item.created!.valueOf() - a.item.created!.valueOf())
     //TODO: sorting isn't working, also no comments yet
     setSocialData(fistbumps)
   }
@@ -117,7 +117,7 @@ const UpdateItem = ({ data }: UpdateProps) => {
               : `commented on your "${workout?.title}" workout`}
           </Text>
           <Text color="gray.400" fontSize="xs">
-            {new Date(data.item.created).toDateString()}
+            {new Date(data.item.created!).toDateString()}
           </Text>
         </Box>
       </HStack>

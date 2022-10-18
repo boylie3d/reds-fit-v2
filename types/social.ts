@@ -1,10 +1,8 @@
 export type Comment = {
   id?: string
   userId: string
-  resultId: string
-  workoutId: string
   message: string
-  created: Date
+  created?: Date
   updated: Date
 }
 
