@@ -32,7 +32,7 @@ export default function AdminCard({
       <VStack align="left" rowGap={4}>
         <Text fontSize="sm">{workout.title}</Text>
         <Text fontSize="xs">{workout.description}</Text>
-        <Button onClick={onOpen} bgColor="teamPrimary" color="white">
+        <Button onClick={onOpen} variant="teamOutline">
           Edit
         </Button>
       </VStack>

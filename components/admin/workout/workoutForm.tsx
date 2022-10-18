@@ -154,11 +154,9 @@ export default function WorkoutForm({
           <Flex gap={5} w="100%">
             <Button
               flex={1}
-              bgColor="teamPrimary"
               type="submit"
-              variant="outline"
+              variant="teamOutline"
               disabled={submitting}
-              color="white"
             >
               {existing ? "Update Workout" : "Create Workout"}
             </Button>
@@ -171,12 +169,7 @@ export default function WorkoutForm({
           </Flex>
           {existing && (
             <Box w="100%" pt={4}>
-              <Button
-                colorScheme="red"
-                variant="outline"
-                float="right"
-                onClick={del}
-              >
+              <Button variant="teamOutline" float="right" onClick={del}>
                 <DeleteIcon />
               </Button>
             </Box>

@@ -1,4 +1,4 @@
-import { ScoringType, Workout } from "@/types"
+import { Workout } from "@/types"
 import {
   Box,
   Button,
@@ -44,28 +44,10 @@ export default function WorkoutManagement() {
 
   return (
     <>
-      <VStack>
+      <VStack gap={3}>
         <CalendarBar date={calDate} onChanged={setCalDate} />
-        <Box p="10px" />
         <Button w="100%" bgColor="teamPrimary" color="white" onClick={onOpen}>
           Create New
-        </Button>
-        <Button
-          onClick={() => {
-            const tmp: Workout = {
-              title: "fuck sakes",
-              description: "start working",
-              scoreType: ScoringType.Calories,
-              live: toUntimedDate(calDate),
-            }
-
-            fetch("/api/workout", {
-              method: "POST",
-              body: JSON.stringify(tmp),
-            })
-          }}
-        >
-          tmp
         </Button>
         <Box p="10px" />
         {workouts && workouts.length > 0 ? (

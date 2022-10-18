@@ -26,9 +26,7 @@ export default function LoginPage() {
     }
   }, [loading, user])
 
-  if (loading) {
-    return <div />
-  }
+  if (loading) return <div />
 
   const ssoSignIn = () => signInWithRedirect(fb.auth, fb.provider)
 
