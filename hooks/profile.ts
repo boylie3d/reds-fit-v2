@@ -1,4 +1,4 @@
-import { Profile } from "@/types"
+import { AccessType, Profile } from "@/types"
 import { useAuthState } from "react-firebase-hooks/auth"
 import useSWR from "swr"
 import fb from "util/firebase"
@@ -28,8 +28,18 @@ export function useLocalProfile() {
     error: error,
   }
 }
-
 export function useProfiles() {
+  const { data, error } = useSWR<Profile[], Error>(`/api/profile`, fetcher)
+
+  const users = data?.filter(p => p.accessType != AccessType.Blocked)
+  return {
+    profiles: users,
+    loading: !error && !data,
+    error: error,
+  }
+}
+
+export function useAllProfiles() {
   const { data, error } = useSWR<Profile[], Error>(`/api/profile`, fetcher)
 
   return {

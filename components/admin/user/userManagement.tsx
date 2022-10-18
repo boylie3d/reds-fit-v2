@@ -9,14 +9,14 @@ import {
   Divider,
   Text,
 } from "@chakra-ui/react"
-import { useProfiles } from "hooks/profile"
+import { useAllProfiles } from "hooks/profile"
 import BlockedProfileCard from "./blockedProfileCard"
 import UserProfileCard from "./userProfileCard"
 
 const superUserId = "UpKYkVJKXzQww0HiE88q6nD65mP2"
 
 export default function UserManagement() {
-  const { profiles, loading, error } = useProfiles()
+  const { profiles, loading, error } = useAllProfiles()
 
   if (!profiles) return <div />
 

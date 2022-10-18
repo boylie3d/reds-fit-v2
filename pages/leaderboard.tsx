@@ -1,3 +1,4 @@
+import { AccessType } from "@/types"
 import {
   Avatar,
   Center,
@@ -28,7 +29,13 @@ interface Entry {
 
 const Leaderboard: NextPage = () => {
   const { results, loading: rLoading, error: rError } = useResults()
-  const { profiles, loading: pLoading, error: pError } = useProfiles()
+  const {
+    profiles,
+    loading: pLoading,
+    error: pError,
+  } = useProfiles({
+    accessType: AccessType.User,
+  })
   const [entries, setEntries] = useState<Entry[] | null>(null)
 
   useEffect(() => {
