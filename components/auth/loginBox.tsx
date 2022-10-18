@@ -12,19 +12,68 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
   VStack,
 } from "@chakra-ui/react"
-import { useState } from "react"
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "@firebase/auth"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
 import { useForm } from "react-hook-form"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
+import fb from "util/firebase"
 
 export default function LoginBox() {
-  const signUp = (form: FormInput) => {
-    console.log("signing up")
+  const [user, loading, error] = useAuthState(fb.auth)
+  const router = useRouter()
+  const [signUpErr, setSignUpErr] = useState<string | undefined>(undefined)
+  const [signInErr, setSignInErr] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push("/")
+    }
+  }, [loading, user])
+
+  const signUp = async (form: FormInput) => {
+    setSignUpErr(undefined)
+
+    if (form.email === "") {
+      setSignUpErr("Email address required")
+      return
+    }
+    if (form.pass === "") {
+      setSignUpErr("Password required")
+      return
+    }
+
+    createUserWithEmailAndPassword(fb.auth, form.email, form.pass).catch(
+      (e: any) => {
+        setSignUpErr(e.message)
+      },
+    )
   }
 
-  const signIn = (form: FormInput) => {
-    console.log("signing in")
+  const signIn = async (form: FormInput) => {
+    setSignInErr(undefined)
+
+    if (form.email === "") {
+      setSignInErr("Email address required")
+      return
+    }
+    if (form.pass === "") {
+      setSignInErr("Password required")
+      return
+    }
+
+    signInWithEmailAndPassword(fb.auth, form.email, form.pass).catch(
+      (e: any) => {
+        setSignInErr(e.message)
+      },
+    )
   }
 
   return (
@@ -36,10 +85,18 @@ export default function LoginBox() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <EmailPassForm submitLabel="Sign In" onSubmit={signIn} />
+            <EmailPassForm
+              errorMsg={signInErr}
+              submitLabel="Sign In"
+              onSubmit={signIn}
+            />
           </TabPanel>
           <TabPanel>
-            <EmailPassForm submitLabel="Sign Up" onSubmit={signUp} />
+            <EmailPassForm
+              errorMsg={signUpErr}
+              submitLabel="Sign Up"
+              onSubmit={signUp}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -55,9 +112,10 @@ type FormInput = {
 interface FormProps {
   submitLabel: string
   onSubmit: (form: FormInput) => void
+  errorMsg: string | undefined
 }
 
-const EmailPassForm = ({ onSubmit, submitLabel }: FormProps) => {
+const EmailPassForm = ({ onSubmit, submitLabel, errorMsg }: FormProps) => {
   const [show, setShow] = useState(false)
   const {
     register,
@@ -95,6 +153,9 @@ const EmailPassForm = ({ onSubmit, submitLabel }: FormProps) => {
             </Box>
           </InputRightElement>
         </InputGroup>
+        <Text color="teamPrimary" fontSize="sm">
+          {errorMsg}
+        </Text>
         <Button type="submit">{submitLabel}</Button>
       </VStack>
     </form>
