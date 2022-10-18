@@ -16,11 +16,10 @@ export default async function handler(
       .status(400)
       .end("Bad request. ID parameter cannot be an array of IDs.")
 
-  console.log("ASDASDJHAHOSHDOASD")
   try {
     switch (req.method) {
       case "GET":
-        const getReq = await get(id, fbId)
+        const getReq = await queriedGet(id, fbId)
         res.status(200).json(getReq)
         break
       case "DELETE":
@@ -39,10 +38,18 @@ export default async function handler(
   }
 }
 
-async function get(id: string, query: Object) {
+async function queriedGet(id: string, query: Object) {
   const ref = await fb.db.collection(`results/${id}/fistbumps`)
   const formattedQuery = query ? objToFirestoreQuery(ref, query) : ref
   const collection = await formattedQuery.get()
+  const results = collection.docs.map(item => item.data()) as Fistbump[]
+
+  return results
+}
+
+export async function get(id: string) {
+  const ref = await fb.db.collection(`results/${id}/fistbumps`)
+  const collection = await ref.get()
   const results = collection.docs.map(item => item.data()) as Fistbump[]
 
   return results
