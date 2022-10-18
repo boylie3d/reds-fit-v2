@@ -122,16 +122,22 @@ const CommentItem = ({ comment }: CommentProps) => {
       <Link href={`/profile/${profile.uid}`}>
         <Avatar size="sm" src={profile.photoURL} />
       </Link>
-      <Box bgColor="gray.200" w="100%" borderRadius={5}>
+      <Box p={3} bgColor="gray.200" w="100%" borderRadius={5}>
         <Link href={`/profile/${profile.uid}`}>
           <Text>{profile.displayName}</Text>
         </Link>
         <Text fontSize="sm">{comment.message}</Text>
         <>
           {profile.uid === lProfile.uid && (
-            <Flex w="100%">
-              <Box flex={1}>hi</Box>
-              <Box flex={1}>there</Box>
+            <Flex w="100%" pt={3}>
+              <Box flex={1}>
+                <Text fontSize="xs">Edit</Text>
+              </Box>
+              <Box flex={1}>
+                <Text align="right" fontSize="xs">
+                  Delete
+                </Text>
+              </Box>
             </Flex>
           )}
         </>
