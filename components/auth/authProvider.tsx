@@ -1,3 +1,4 @@
+import { useLocalProfile } from "hooks/profile"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
@@ -10,6 +11,7 @@ interface AuthProps {
 export default function AuthProvider(props: AuthProps) {
   const [user, userLoading, userError] = useAuthState(fb.auth)
   const router = useRouter()
+  const { profile, loading, error } = useLocalProfile()
 
   useEffect(() => {
     if (!userLoading && !user) {
@@ -17,6 +19,12 @@ export default function AuthProvider(props: AuthProps) {
     }
   }, [userLoading, user])
 
-  if (userLoading) return <div />
+  useEffect(() => {
+    if (!profile && !loading) {
+      router.push("/profile/create")
+    }
+  }, [loading, profile])
+
+  if (userLoading || loading) return <div />
   return <div>{props.children}</div>
 }

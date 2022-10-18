@@ -135,6 +135,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
 
   return (
     <>
+      {/* <Center> */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Center pb={4}>
           <Box cursor="pointer" pos="relative">
@@ -158,7 +159,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
             </Dropzone>
           </Box>
         </Center>
-        <VStack rowGap={2} w="90vw">
+        <VStack rowGap={2} w="90vw" maxW="800px">
           <Input
             w="100%"
             defaultValue={user.email!}
@@ -199,6 +200,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
           </Button>
         </VStack>
       </form>
+      {/* </Center> */}
     </>
   )
 }
