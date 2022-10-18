@@ -9,6 +9,7 @@ import {
   Heading,
   Menu,
   MenuButton,
+  MenuDivider,
   MenuItem,
   MenuList,
 } from "@chakra-ui/react"
@@ -80,7 +81,6 @@ const UserBadge = ({ profile }: NavProps) => {
     <Menu onOpen={() => setMenuOpen(true)} onClose={() => setMenuOpen(false)}>
       <MenuButton float="right">
         <Box alignItems="center" display="inline-flex">
-          {/* <Text pr="0.5em">{profile?.firstName}</Text> */}
           <Avatar size="sm" src={profile?.photoURL}></Avatar>
           {menuOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </Box>
@@ -89,6 +89,10 @@ const UserBadge = ({ profile }: NavProps) => {
         {profile?.accessType === AccessType.Admin && (
           <MenuItem onClick={goToAdmin}>Admin</MenuItem>
         )}
+        <MenuItem onClick={() => Router.push("/profile/update")}>
+          Edit Profile
+        </MenuItem>
+        <MenuDivider />
         <MenuItem onClick={logout}>Log Out</MenuItem>
       </MenuList>
     </Menu>

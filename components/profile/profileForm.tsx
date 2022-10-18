@@ -134,67 +134,71 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
   if (!user) return <div />
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Center pb={4}>
-        <Box cursor="pointer" pos="relative">
-          <Dropzone onDrop={acceptedFiles => setFile(acceptedFiles[0])}>
-            {({ getRootProps, getInputProps }) => (
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <Avatar size="2xl" src={getPhoto()}>
-                  <AvatarBadge
-                    bg="gray.200"
-                    borderWidth="3px"
-                    borderColor="white"
-                    h="40px"
-                    w="40px"
-                  >
-                    <Icon w={7} h={7} as={AiOutlineCamera} />
-                  </AvatarBadge>
-                </Avatar>
-              </div>
-            )}
-          </Dropzone>
-        </Box>
-      </Center>
-      <VStack rowGap={2} w="90vw">
-        <Input
-          w="100%"
-          defaultValue={user.email!}
-          disabled={true}
-          placeholder="Email"
-          {...register("email")}
-        />
-        <Input
-          defaultValue={getFirstName()}
-          placeholder="First Name"
-          {...register("firstName")}
-        />
-        <Input
-          defaultValue={getLastName()}
-          placeholder="Last Name"
-          {...register("lastName")}
-        />
-        <Select
-          {...register("userType")}
-          defaultValue={
-            existingProfile ? existingProfile.userType.valueOf() : "Player"
-          }
-        >
-          {Object.keys(UserType).map(t => (
-            <option key={t}>{t}</option>
-          ))}
-        </Select>
-        <Button
-          variant="outline"
-          colorScheme="green"
-          type="submit"
-          disabled={submitting}
-          w="100%"
-        >
-          {create ? "Create Profile" : "Update Profile"}
-        </Button>
-      </VStack>
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Center pb={4}>
+          <Box cursor="pointer" pos="relative">
+            <Dropzone onDrop={acceptedFiles => setFile(acceptedFiles[0])}>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <Avatar size="2xl" src={getPhoto()}>
+                    <AvatarBadge
+                      bg="gray.200"
+                      borderWidth="3px"
+                      borderColor="white"
+                      h="40px"
+                      w="40px"
+                    >
+                      <Icon w={7} h={7} as={AiOutlineCamera} />
+                    </AvatarBadge>
+                  </Avatar>
+                </div>
+              )}
+            </Dropzone>
+          </Box>
+        </Center>
+        <VStack rowGap={2} w="90vw">
+          <Input
+            w="100%"
+            defaultValue={user.email!}
+            disabled={true}
+            placeholder="Email"
+            {...register("email")}
+          />
+          <Input
+            defaultValue={getFirstName()}
+            placeholder="First Name"
+            required
+            {...register("firstName")}
+          />
+          <Input
+            defaultValue={getLastName()}
+            placeholder="Last Name"
+            required
+            {...register("lastName")}
+          />
+          <Select
+            {...register("userType")}
+            defaultValue={
+              existingProfile ? existingProfile.userType.valueOf() : "Player"
+            }
+          >
+            {Object.keys(UserType).map(t => (
+              <option key={t}>{t}</option>
+            ))}
+          </Select>
+          <Button
+            variant="outline"
+            colorScheme="green"
+            type="submit"
+            disabled={submitting}
+            w="100%"
+          >
+            {create ? "Create Profile" : "Update Profile"}
+          </Button>
+        </VStack>
+      </form>
+    </>
   )
 }
