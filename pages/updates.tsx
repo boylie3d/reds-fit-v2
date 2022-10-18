@@ -1,5 +1,13 @@
 import { Comment, Fistbump, Result } from "@/types"
-import { Avatar, Box, HStack, Link, Text, VStack } from "@chakra-ui/react"
+import {
+  Avatar,
+  Box,
+  Center,
+  HStack,
+  Link,
+  Text,
+  VStack,
+} from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import LoadingPane from "components/misc/loading"
 import { useLocalProfile, useProfile } from "hooks/profile"
@@ -66,10 +74,22 @@ const Updates: NextPage = () => {
 
   return (
     <AppLayout>
-      <VStack gap={3}>
-        {socialData &&
-          socialData.map(data => <UpdateItem key={data.id} data={data} />)}
-      </VStack>
+      <Center>
+        <VStack gap={3}>
+          {socialData && socialData.length > 0 ? (
+            socialData.map(data => <UpdateItem key={data.id} data={data} />)
+          ) : (
+            <Center p={10}>
+              <VStack gap={3} color="gray.400">
+                <Text fontSize="4xl">{":("}</Text>
+                <Text justifyContent="center" align="center">
+                  {"No updates here - go do some workouts!"}
+                </Text>
+              </VStack>
+            </Center>
+          )}
+        </VStack>
+      </Center>
     </AppLayout>
   )
 }

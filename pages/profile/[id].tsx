@@ -20,6 +20,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react"
+import { signOut } from "@firebase/auth"
 import AppLayout from "components/layout/appLayout"
 import Card from "components/layout/card"
 import Banner from "components/profile/banner"
@@ -29,8 +30,10 @@ import { useResults } from "hooks/result"
 import { GetServerSideProps, NextPage } from "next"
 import { get } from "pages/api/profile/[id]"
 import { useEffect, useState } from "react"
+import { AiOutlineLogout } from "react-icons/ai"
 import { BsPencilSquare } from "react-icons/bs"
 import { HiOutlineUserGroup } from "react-icons/hi"
+import fb from "util/firebase"
 
 interface Props {
   profile: Profile
@@ -173,6 +176,16 @@ const Toolbar = () => {
                   <Text fontSize="xs">Edit</Text>
                 </VStack>
               </LinkOverlay>
+            </Button>
+          </Center>
+        </Box>
+        <Box flex={1}>
+          <Center>
+            <Button variant="unstyled" onClick={() => signOut(fb.auth)}>
+              <VStack>
+                <Icon w={6} h={6} as={AiOutlineLogout} />
+                <Text fontSize="xs">Log Out</Text>
+              </VStack>
             </Button>
           </Center>
         </Box>

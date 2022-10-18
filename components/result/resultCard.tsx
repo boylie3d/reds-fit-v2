@@ -21,6 +21,7 @@ import { useEffect, useState } from "react"
 import { BiCommentDetail } from "react-icons/bi"
 import { FaHandRock, FaRegHandRock } from "react-icons/fa"
 import { useSWRConfig } from "swr"
+import { formatResult } from "util/common"
 
 interface ResultsProps {
   result: Result
@@ -68,7 +69,7 @@ export default function ResultsCard({ result }: ResultsProps) {
         </VStack>
       </HStack>
       <Box w="100%" h="50px" bgColor="gray.200">
-        <Center h="100%">{result.value}</Center>
+        <Center h="100%">{formatResult(workout, result)}</Center>
       </Box>
       <Text fontSize="sm">{result.description}</Text>
       <Flex pt={5}>

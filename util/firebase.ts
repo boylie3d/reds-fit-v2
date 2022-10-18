@@ -2,6 +2,7 @@
 import { FirebaseApp, getApps, initializeApp } from "@firebase/app"
 import { Auth, getAuth, GoogleAuthProvider } from "@firebase/auth"
 import { Firestore, getFirestore } from "@firebase/firestore"
+import { FirebaseStorage, getStorage } from "@firebase/storage"
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,18 +19,21 @@ interface FirebaseConfig {
   provider: GoogleAuthProvider
   auth: Auth
   db: Firestore
+  storage: FirebaseStorage
 }
 
 const app = getFirebaseApp()
 const auth = getAuth(app)
 const db = getFirestore(app)
 const provider = new GoogleAuthProvider()
+const storage = getStorage()
 
 const fb: FirebaseConfig = {
   app: app,
   provider: provider,
   auth: auth,
   db: db,
+  storage: storage,
 }
 
 function getFirebaseApp() {
