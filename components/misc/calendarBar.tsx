@@ -1,6 +1,7 @@
 import { ArrowLeftIcon, ArrowRightIcon, CalendarIcon } from "@chakra-ui/icons"
 import {
   Box,
+  Center,
   Flex,
   HStack,
   Modal,
@@ -93,10 +94,12 @@ const CalendarModal = ({ open, onChange, onClose, date }: ModalProps) => {
       <ModalContent>
         <ModalHeader>Select Date</ModalHeader>
         <ModalBody>
-          <Calendar
-            defaultValue={date}
-            onChange={(date: Date) => onChange(new Date(date))}
-          />
+          <Center>
+            <Calendar
+              defaultValue={date}
+              onChange={(date: Date) => onChange(new Date(date))}
+            />
+          </Center>
         </ModalBody>
       </ModalContent>
     </Modal>
