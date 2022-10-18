@@ -11,7 +11,8 @@ import {
 } from "@chakra-ui/react"
 import { signInWithRedirect } from "@firebase/auth"
 import LoginBox from "components/auth/loginBox"
-import Router from "next/router"
+import LoadingPane from "components/misc/loading"
+import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { FcGoogle } from "react-icons/fc"
@@ -19,15 +20,16 @@ import fb from "../util/firebase"
 
 export default function LoginPage() {
   const [user, loading, error] = useAuthState(fb.auth)
+  const router = useRouter()
 
   useEffect(() => {
     if (!loading && user) {
-      Router.push("/")
+      router.push("/")
     }
   }, [loading, user])
 
   if (loading) {
-    return <div />
+    return <LoadingPane />
   }
 
   const ssoSignIn = () => signInWithRedirect(fb.auth, fb.provider)
