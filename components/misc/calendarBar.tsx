@@ -39,7 +39,7 @@ export default function CalendarBar({ date, onChanged }: CalendarProps) {
   const calUpdated = (date: Date) => {
     const newDate = new Date(date)
     setDate(newDate)
-    onChanged(new Date(currDate))
+    onChanged(newDate)
   }
 
   return (
