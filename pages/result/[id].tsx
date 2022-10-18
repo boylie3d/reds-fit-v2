@@ -21,6 +21,7 @@ import { get as resultGet } from "pages/api/result/[id]"
 import { get as commentGet } from "pages/api/result/[id]/comment"
 import { get as fistbumpGet } from "pages/api/result/[id]/fistbump/[fbId]"
 import { get as workoutGet } from "pages/api/workout/[id]"
+import { formatResult } from "util/common"
 
 interface Props {
   result: Result
@@ -60,7 +61,7 @@ const ResultPage: NextPage<Props> = ({ result, profile, workout }: Props) => {
           </Text>
         </HStack>
         <Box w="100%">
-          <ResultHeader result={result} />
+          <ResultHeader workout={workout} result={result} />
         </Box>
         <Box w="100%">
           <Text>{result.description}</Text>
@@ -74,13 +75,14 @@ const ResultPage: NextPage<Props> = ({ result, profile, workout }: Props) => {
 
 interface ResultProps {
   result: Result
+  workout: Workout
 }
 
-const ResultHeader = ({ result }: ResultProps) => {
+const ResultHeader = ({ result, workout }: ResultProps) => {
   return (
     <Box h="80px" w="100%" bgColor="gray.300">
       <Center h="100%">
-        <Text fontSize="2xl">{result.value}</Text>
+        <Text fontSize="2xl">{formatResult(workout, result)}</Text>
       </Center>
     </Box>
   )
