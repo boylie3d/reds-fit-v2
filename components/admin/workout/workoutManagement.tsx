@@ -49,7 +49,6 @@ export default function WorkoutManagement() {
         <Button w="100%" bgColor="teamPrimary" color="white" onClick={onOpen}>
           Create New
         </Button>
-        <Box p="10px" />
         {workouts && workouts.length > 0 ? (
           <WorkoutList onUpdate={workoutDeleted} workouts={workouts} />
         ) : (
