@@ -17,5 +17,6 @@ export default function AuthProvider(props: AuthProps) {
     }
   }, [userLoading, user])
 
+  if (userLoading) return <div />
   return <div>{props.children}</div>
 }

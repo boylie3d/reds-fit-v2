@@ -4,6 +4,7 @@ import "@fontsource/roboto"
 import AuthProvider from "components/auth/authProvider"
 import { useProfile } from "hooks/profile"
 import type { AppProps } from "next/app"
+import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import "../styles/calendar.css"
@@ -18,15 +19,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     loading: profileLoading,
     error: profileError,
   } = useProfile(user ? user.uid : "")
+  const router = useRouter()
 
-  //check if user has a profile, if not, bring them to mandatory profile creation
   useEffect(() => {
-    if (user && !profileLoading && !profile) {
-      console.log("no profile")
+    if (user && !profile && !profileLoading) {
+      router.push("/profile/create")
     }
-  }, [profileLoading, profile])
+  }, [user, profileLoading, profile])
 
-  if (userLoading) return <div />
+  if (userLoading || profileLoading) return <div />
 
   return (
     <ChakraProvider theme={theme}>

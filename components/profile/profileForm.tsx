@@ -1,10 +1,22 @@
 import { AccessType, Profile, UserType } from "@/types"
-import { Avatar, Button, Center, Input, Select, VStack } from "@chakra-ui/react"
+import {
+  Avatar,
+  AvatarBadge,
+  Box,
+  Button,
+  Center,
+  Icon,
+  Input,
+  Select,
+  VStack,
+} from "@chakra-ui/react"
+import { ref, uploadBytes } from "@firebase/storage"
 import { useLocalProfile } from "hooks/profile"
-import { useRouter } from "next/router"
 import { useState } from "react"
+import Dropzone from "react-dropzone"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useForm } from "react-hook-form"
+import { AiOutlineCamera } from "react-icons/ai"
 import fb from "util/firebase"
 
 interface FormProps {
@@ -23,7 +35,8 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false)
   const [user, uLoading, uErr] = useAuthState(fb.auth)
   const { profile: existingProfile, loading, error } = useLocalProfile()
-  const router = useRouter()
+
+  const [file, setFile] = useState<File | null>(null)
 
   const {
     register,
@@ -35,11 +48,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
   const onSubmit = async (form: ProfilePartial) => {
     setSubmitting(true)
 
-    const access = existingProfile
-      ? existingProfile.accessType
-      : AccessType.User
-
-    const photo: string | undefined = (
+    let photo: string | undefined = (
       existingProfile
         ? existingProfile.photoURL
         : user
@@ -47,7 +56,19 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
         : undefined
     )!
 
+    if (file) {
+      const image = await uploadImage()
+      console.log(image)
+      photo = image
+    }
+
+    const access = existingProfile
+      ? existingProfile.accessType
+      : AccessType.User
+
     const fullName = `${form.firstName} ${form.lastName}`
+    const email = user ? user.email : ""
+
     const newProfile: Profile = {
       uid: user!.uid,
       firstName: form.firstName,
@@ -55,7 +76,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
       accessType: access,
       photoURL: photo,
       displayName: fullName,
-      email: form.email,
+      email: email!,
       userType: form.userType,
     }
 
@@ -70,25 +91,71 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
     setSubmitting(false)
   }
 
+  const uploadImage = async () => {
+    const id = user!.uid
+    const name = file!.name
+
+    const uploadRef = ref(fb.storage, `${id}/${name}`)
+    const upload = await uploadBytes(uploadRef, file!)
+    const photoUrl = `https://firebasestorage.googleapis.com/v0/b/reds-fit-v2.appspot.com/o/${id}%2F${name}?alt=media`
+    return photoUrl
+  }
+
   const getFirstName = () => {
-    if (!user) return
-    return user.displayName!.split(" ")[0]
+    if (existingProfile) {
+      return existingProfile.firstName
+    }
+    if (user && user.displayName) {
+      return user.displayName!.split(" ")[0]
+    }
+    return ""
   }
 
   const getLastName = () => {
-    if (!user) return
-    const split = user.displayName!.split(" ")
-    split.splice(0, 1)
-    const concat = split.join(" ")
-    return concat
+    if (existingProfile) {
+      return existingProfile.lastName
+    }
+    if (user && user.displayName) {
+      const split = user.displayName!.split(" ")
+      split.splice(0, 1)
+      const concat = split.join(" ")
+      return concat
+    }
+    return ""
+  }
+
+  const getPhoto = () => {
+    if (file) return URL.createObjectURL(file)
+    else if (existingProfile) return existingProfile.photoURL
+    else if (user) return user.photoURL ? user.photoURL : ""
+    return ""
   }
 
   if (!user) return <div />
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Center pb={2}>
-        <Avatar size="2xl" src={user.photoURL!} />
+      <Center pb={4}>
+        <Box cursor="pointer" pos="relative">
+          <Dropzone onDrop={acceptedFiles => setFile(acceptedFiles[0])}>
+            {({ getRootProps, getInputProps }) => (
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <Avatar size="2xl" src={getPhoto()}>
+                  <AvatarBadge
+                    bg="gray.200"
+                    borderWidth="3px"
+                    borderColor="white"
+                    h="40px"
+                    w="40px"
+                  >
+                    <Icon w={7} h={7} as={AiOutlineCamera} />
+                  </AvatarBadge>
+                </Avatar>
+              </div>
+            )}
+          </Dropzone>
+        </Box>
       </Center>
       <VStack rowGap={2} w="90vw">
         <Input
