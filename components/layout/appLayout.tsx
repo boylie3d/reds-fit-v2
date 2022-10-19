@@ -40,7 +40,7 @@ export default function AppLayout(props: LayoutProps) {
                   "main"
                   "footer"`}
         gridTemplateRows={"40px 1fr 60px"}
-        h="100vh"
+        h={document.documentElement.clientHeight}
         color="blackAlpha.700"
         fontWeight="bold"
       >
