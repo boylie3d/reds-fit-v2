@@ -51,7 +51,6 @@ export async function get(id: string) {
 }
 
 async function post(id: string, comment: Comment) {
-  console.log(comment)
   const res = await fb.db.collection(`results/${id}/comments`).add(comment)
 
   // comment.id = res.id

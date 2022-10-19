@@ -31,6 +31,7 @@ import { GetServerSideProps, NextPage } from "next"
 import { get } from "pages/api/profile/[id]"
 import { useEffect, useState } from "react"
 import { AiOutlineLogout } from "react-icons/ai"
+import { BiBook } from "react-icons/bi"
 import { BsPencilSquare } from "react-icons/bs"
 import { HiOutlineUserGroup } from "react-icons/hi"
 import fb from "util/firebase"
@@ -164,6 +165,18 @@ const Toolbar = () => {
                 <Icon w={6} h={6} as={HiOutlineUserGroup} />
                 <Text fontSize="xs">Team</Text>
               </VStack>
+            </Button>
+          </Center>
+        </Box>
+        <Box flex={1}>
+          <Center>
+            <Button variant="unstyled">
+              <LinkOverlay href="/library">
+                <VStack>
+                  <Icon w={6} h={6} as={BiBook} />
+                  <Text fontSize="xs">Library</Text>
+                </VStack>
+              </LinkOverlay>
             </Button>
           </Center>
         </Box>
