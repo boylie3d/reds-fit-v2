@@ -4,8 +4,6 @@ import { useLocalProfile } from "hooks/profile"
 import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import fb from "util/firebase"
 import PageHead from "./head"
 import NavBottom from "./navBottom"
 import NavTop from "./navTop"
@@ -18,7 +16,10 @@ interface LayoutProps {
 export default function AppLayout(props: LayoutProps) {
   const [nav, setNav] = useState<NavItem>()
   const router = useRouter()
-  const [user, loading, error] = useAuthState(fb.auth)
+  const [height, setHeight] = useState<number>(window.innerWidth)
+  function handleWindowSizeChange() {
+    setHeight(window.innerHeight)
+  }
 
   const {
     profile,
@@ -30,6 +31,13 @@ export default function AppLayout(props: LayoutProps) {
     setNav(getNavItem(router.pathname))
   }, [router])
 
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowSizeChange)
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange)
+    }
+  }, [])
+
   if (!nav) return <div />
 
   return (
@@ -40,7 +48,7 @@ export default function AppLayout(props: LayoutProps) {
                   "main"
                   "footer"`}
         gridTemplateRows={"40px 1fr 60px"}
-        h={document.documentElement.clientHeight}
+        h={height}
         color="blackAlpha.700"
         fontWeight="bold"
       >
