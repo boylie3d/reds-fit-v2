@@ -18,7 +18,7 @@ export default function AppLayout(props: LayoutProps) {
   const router = useRouter()
   const [height, setHeight] = useState<number>(window.innerWidth)
   function handleWindowSizeChange() {
-    setHeight(window.innerHeight)
+    setHeight(document.documentElement.clientHeight)
   }
 
   const {
@@ -48,7 +48,7 @@ export default function AppLayout(props: LayoutProps) {
                   "main"
                   "footer"`}
         gridTemplateRows={"40px 1fr 60px"}
-        h={height}
+        h={document.documentElement.clientHeight}
         color="blackAlpha.700"
         fontWeight="bold"
       >
