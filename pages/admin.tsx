@@ -9,6 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react"
 import AnnouncementManagement from "components/admin/announcement/announcementManagement"
+import LibraryManagement from "components/admin/library/libraryManagement"
 import UserManagement from "components/admin/user/userManagement"
 import WorkoutManagement from "components/admin/workout/workoutManagement"
 import AppLayout from "components/layout/appLayout"
@@ -52,7 +53,9 @@ export default function AdminPage() {
           <TabPanel>
             <AnnouncementManagement />
           </TabPanel>
-          <TabPanel></TabPanel>
+          <TabPanel>
+            <LibraryManagement />
+          </TabPanel>
           <TabPanel>
             <UserManagement />
           </TabPanel>

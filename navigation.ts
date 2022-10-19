@@ -48,10 +48,13 @@ export const navItems: NavItem[] = [
     route: "/profile",
   },
   {
+    name: "Library",
+    showInNav: false,
+    route: "/library",
+  },
+  {
     name: "Result",
     showInNav: false,
-    icon: HiOutlineUser,
-    iconSelected: HiUser,
     paramRoute: "/result/[id]",
     route: "/result",
   },
