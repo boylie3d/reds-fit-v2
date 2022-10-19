@@ -3,9 +3,15 @@ import { Button, Heading, VStack } from "@chakra-ui/react"
 import FilteredLibraryList from "components/library/filteredLibraryList"
 import LoadingPane from "components/misc/loading"
 import { useLibrary } from "hooks/library"
+import { useEffect } from "react"
+import { getYoutubeId } from "util/common"
 
 const LibraryManagement = () => {
   const { library, loading, error } = useLibrary()
+
+  useEffect(() => {
+    console.log(getYoutubeId("https://youtu.be/oflaURiziIQ"))
+  }, [])
 
   const tmp = async () => {
     return

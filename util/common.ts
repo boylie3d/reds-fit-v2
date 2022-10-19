@@ -14,3 +14,19 @@ export const formatResult = (workout: Workout, result: Result) => {
       return result.value
   }
 }
+
+export const getYoutubeId = (url: string) => {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
+  const match = url.match(regExp)
+
+  if (match === null) return ""
+  else return match[2]
+}
+
+export const getYoutubeLink = (id: string) => {
+  return `https://www.youtube.com/embed/${id}`
+}
+
+export const getYoutubeThumb = (id: string) => {
+  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+}

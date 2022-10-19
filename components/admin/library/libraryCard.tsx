@@ -9,6 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react"
 import Card from "components/layout/card"
+import { getYoutubeThumb } from "util/common"
 
 interface Props {
   item: LibraryItem
@@ -25,10 +26,7 @@ const AdminLibraryCard = ({ item }: Props) => {
       >
         <GridItem rowSpan={3} colSpan={2}>
           <Center h="100%">
-            <Image
-              w="100%"
-              src={`https://img.youtube.com/vi/${item.link}/hqdefault.jpg`}
-            />
+            <Image w="100%" src={getYoutubeThumb(item.link)} />
           </Center>
         </GridItem>
         <GridItem rowSpan={1} colSpan={3}>

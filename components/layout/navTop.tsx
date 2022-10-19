@@ -92,6 +92,7 @@ const UserBadge = ({ profile }: NavProps) => {
         <MenuItem onClick={() => Router.push("/profile/update")}>
           Edit Profile
         </MenuItem>
+        <MenuItem onClick={() => Router.push("/library")}>Library</MenuItem>
         <MenuDivider />
         <MenuItem onClick={logout}>Log Out</MenuItem>
       </MenuList>
