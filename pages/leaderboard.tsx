@@ -3,6 +3,7 @@ import {
   Center,
   HStack,
   Icon,
+  Link,
   Table,
   TableContainer,
   Tbody,
@@ -137,8 +138,12 @@ const EntryCard = ({ entry, position }: EntryProps) => {
       </Td>
       <Td>
         <HStack h="100%">
-          <Avatar size="xs" src={profile?.photoURL} />
-          <Text>{profile?.displayName}</Text>
+          <Link w="100%" href={`/profile/${profile?.uid}`}>
+            <HStack>
+              <Avatar size="xs" src={profile?.photoURL} />
+              <Text>{profile?.displayName}</Text>
+            </HStack>
+          </Link>
         </HStack>
       </Td>
       <Td isNumeric>{entry.resultCount}</Td>

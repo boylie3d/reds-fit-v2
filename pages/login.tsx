@@ -45,9 +45,9 @@ export default function LoginPage() {
             <Text padding="2">OR</Text>
             <Divider orientation="horizontal" />
           </Flex>
-          <Button onClick={ssoSignIn}>
+          <Button variant="teamOutline" onClick={ssoSignIn}>
             <Icon h={6} w={6} as={FcGoogle} mr="0.5em" />
-            Log In With Google
+            <Text color="black">Log In With Google</Text>
           </Button>
         </VStack>
       </Center>
