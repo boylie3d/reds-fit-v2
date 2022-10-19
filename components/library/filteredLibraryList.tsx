@@ -46,7 +46,7 @@ const FilteredLibraryList = ({ library, admin }: Props) => {
             </InputLeftElement>
             {searchVal.length > 0 && (
               <InputRightElement>
-                <CloseIcon onClick={reset} />
+                <CloseIcon cursor="pointer" onClick={reset} />
               </InputRightElement>
             )}
             <Input
