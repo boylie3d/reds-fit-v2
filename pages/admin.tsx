@@ -31,7 +31,7 @@ export default function AdminPage() {
 
   return (
     <AppLayout>
-      <Tabs size="sm" isFitted>
+      <Tabs colorScheme="red" size="sm" isFitted>
         <TabList>
           <Tab>
             <Text fontSize="xs">Workouts</Text>
