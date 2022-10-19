@@ -24,7 +24,7 @@ export const getYoutubeId = (url: string) => {
 }
 
 export const getYoutubeLink = (id: string) => {
-  return `https://www.youtube.com/embed/${id}`
+  return `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1`
 }
 
 export const getYoutubeThumb = (id: string) => {

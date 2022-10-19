@@ -65,7 +65,7 @@ const LibraryCard = ({ item }: Props) => {
           <ModalCloseButton />
           <ModalBody>
             <VStack gap={3}>
-              <Box>
+              <Box w="100%">
                 <YoutubeEmbed id={item.link} />
               </Box>
               <Text fontSize="xs">{item.description}</Text>

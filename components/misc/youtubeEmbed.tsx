@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react"
+import { AspectRatio } from "@chakra-ui/react"
 import { getYoutubeLink } from "util/common"
 
 interface Props {
@@ -6,15 +6,7 @@ interface Props {
 }
 
 const YoutubeEmbed = ({ id }: Props) => (
-  <Box
-    style={{
-      position: "relative",
-      height: "0",
-      overflow: "hidden",
-      paddingBottom: "56.25%",
-    }}
-    w="100%"
-  >
+  <AspectRatio ratio={16 / 9}>
     <iframe
       src={getYoutubeLink(id)}
       frameBorder="0"
@@ -22,7 +14,7 @@ const YoutubeEmbed = ({ id }: Props) => (
       allowFullScreen
       title="Embedded youtube"
     />
-  </Box>
+  </AspectRatio>
 )
 
 export default YoutubeEmbed
