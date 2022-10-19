@@ -136,13 +136,19 @@ const EmailPassForm = ({ onSubmit, submitLabel, errorMsg }: FormProps) => {
           <InputLeftElement>
             <EmailIcon color="gray.300" />
           </InputLeftElement>
-          <Input placeholder="Email" {...register("email")} />
+          <Input
+            required
+            type="email"
+            placeholder="Email"
+            {...register("email")}
+          />
         </InputGroup>
         <InputGroup>
           <InputLeftElement>
             <LockIcon color="gray.300" />
           </InputLeftElement>
           <Input
+            required
             placeholder="Password"
             type={show ? "text" : "password"}
             {...register("pass")}
