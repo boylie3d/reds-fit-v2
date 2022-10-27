@@ -4,6 +4,7 @@ export type Comment = {
   message: string
   created?: Date
   updated: Date
+  resultId: string
 }
 
 export type Fistbump = {

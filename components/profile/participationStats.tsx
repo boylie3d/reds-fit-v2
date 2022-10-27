@@ -17,8 +17,15 @@ const ParticipationStats = ({ results }: Props) => {
 
   useEffect(() => {
     if (!fistbumps || !profile) return
-    const result = fistbumps.filter(fb => fb.userId === profile.uid)
-    setFbGiven(result.length)
+    const given = fistbumps.filter(fb => fb.userId === profile.uid)
+    setFbGiven(given.length)
+
+    const received = fistbumps.filter(fb => {
+      const isMines =
+        results.find(r => r.id === fb.resultId) === undefined ? false : true
+      if (isMines) return fb
+    })
+    setFbReceived(received.length)
   }, [fistbumps, profile])
 
   return (

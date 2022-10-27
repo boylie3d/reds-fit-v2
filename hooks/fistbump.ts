@@ -26,6 +26,20 @@ export function useAllFistbumps() {
   }
 }
 
+// export function useFistbumpsQuery(query?: any) {
+//   const formattedQuery = objToQueryString(query)
+//   const { data, error } = useSWR<Workout[], Error>(
+//     `/api/fistbump${formattedQuery}`,
+//     fetcher,
+//   )
+
+//   return {
+//     workouts: data,
+//     loading: !error && !data,
+//     error: error,
+//   }
+// }
+
 export function useQueriedFistbumps(id: string, query?: any) {
   const formattedQuery = objToQueryString(query)
   const { data, error } = useSWR<Fistbump[], Error>(
