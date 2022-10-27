@@ -18,12 +18,15 @@
     "@firebase/storage": "^0.9.12",
     "@fontsource/graduate": "^4.5.10",
     "@fontsource/roboto": "^4.5.8",
+    "chart.js": "^3.9.1",
     "firebase": "^9.10.0",
     "firebase-admin": "^11.0.1",
     "framer-motion": "^7.5.1",
+    "luxon": "^3.0.4",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-calendar": "^3.9.0",
+    "react-chartjs-2": "^4.3.1",
     "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
@@ -34,6 +37,7 @@
     "swr": "^1.3.0"
   },
   "devDependencies": {
+    "@types/luxon": "^3.0.2",
     "@types/node": "18.7.23",
     "@types/react": "18.0.21",
     "@types/react-calendar": "^3.5.3",
