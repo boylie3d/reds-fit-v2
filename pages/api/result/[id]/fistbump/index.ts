@@ -41,8 +41,12 @@ export default async function handler(
 }
 
 async function get(id: string, query: Object) {
-  const ref = await fb.db.collection(`results/${id}/fistbumps`)
-  const formattedQuery = query ? objToFirestoreQuery(ref, query) : ref
+  const ref = await fb.db.collection(`fistbumps`)
+  const formattedQuery = (query ? objToFirestoreQuery(ref, query) : ref).where(
+    "resultId",
+    "==",
+    id,
+  )
   const collection = await formattedQuery.get()
   const results = collection.docs.map(item => item.data()) as Fistbump[]
   console.log(results)
@@ -51,7 +55,7 @@ async function get(id: string, query: Object) {
 }
 
 async function post(id: string, fistbump: Fistbump) {
-  const res = await fb.db.collection(`results/${id}/fistbumps`).add(fistbump)
+  const res = await fb.db.collection(`fistbumps`).add(fistbump)
 
   fistbump.id = res.id
   const update = await res.set(fistbump)

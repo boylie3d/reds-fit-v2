@@ -10,4 +10,5 @@ export type Fistbump = {
   id?: string
   userId: string
   created: Date
+  resultId: string
 }
