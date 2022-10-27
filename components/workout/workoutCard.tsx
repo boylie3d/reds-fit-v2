@@ -18,7 +18,7 @@ import LibraryCard from "components/library/libraryCard"
 import { useLibrary } from "hooks/library"
 import { useLocalProfile } from "hooks/profile"
 import { useResults } from "hooks/result"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { getFormattedTime } from "util/time"
 
 interface CardProps {
@@ -28,11 +28,8 @@ interface CardProps {
 export default function WorkoutCard({ workout }: CardProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { library: fullLib, loading: lLoading, error: lError } = useLibrary()
-  const [filteredLib, setFilteredLib] = useState(
-    workout.libraryRefs
-      ? fullLib?.filter(l => workout.libraryRefs?.includes(l.id!))
-      : undefined,
-  )
+  const [filteredLib, setFilteredLib] = useState(undefined)
+
   const {
     profile,
     loading: profileLoading,
@@ -55,6 +52,13 @@ export default function WorkoutCard({ workout }: CardProps) {
     workoutId: workout.id,
     userId: profile?.uid,
   })
+
+  useEffect(() => {
+    if (!workout || !fullLib) return
+
+    const lib = fullLib?.filter(l => workout.libraryRefs?.includes(l.id!))
+    setFilteredLib(lib)
+  }, [workout, fullLib])
 
   if (!allResults || !yourResults) return <div />
 

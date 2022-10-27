@@ -21,9 +21,8 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react"
-import LoadingPane from "components/misc/loading"
 import { useLibrary } from "hooks/library"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useSWRConfig } from "swr"
 import { getYoutubeThumb } from "util/common"
@@ -57,6 +56,7 @@ export default function WorkoutForm({
   const [submitting, setSubmitting] = useState<boolean>(false)
   const { mutate } = useSWRConfig()
   const [library, setLibrary] = useState<LibraryItem[]>([])
+  const { library: fullLib, loading, error } = useLibrary()
 
   const {
     register,
@@ -169,7 +169,15 @@ export default function WorkoutForm({
               </option>
             ))}
           </Select>
-          <LibrarySelector onChange={setLibrary} />
+          <>
+            {fullLib && (
+              <LibrarySelector
+                workout={existing}
+                library={fullLib}
+                onChange={setLibrary}
+              />
+            )}
+          </>
           <Flex gap={5} w="100%">
             <Button
               flex={1}
@@ -201,15 +209,28 @@ export default function WorkoutForm({
 
 interface LibraryProps {
   onChange: (items: LibraryItem[]) => void
+  library: LibraryItem[] | undefined
+  workout: Workout | undefined
 }
 
-const LibrarySelector = ({ onChange }: LibraryProps) => {
-  const { library, loading, error } = useLibrary()
+const LibrarySelector = ({ onChange, workout, library }: LibraryProps) => {
   const [filteredLibrary, setFilteredLibrary] = useState<
     LibraryItem[] | undefined
   >(library)
   const [searchVal, setSearchVal] = useState<string>("")
   const [selectedLibrary, setSelectedLibrary] = useState<LibraryItem[]>([])
+
+  useEffect(() => {
+    if (!library || !workout) return
+
+    const lib = library.filter(l => {
+      if (workout.libraryRefs?.includes(l.id!)) {
+        return l
+      }
+    })
+
+    if (lib) setSelectedLibrary(lib)
+  }, [library])
 
   const search = (input: ChangeEvent<HTMLInputElement>) => {
     const val = input.target.value
@@ -243,7 +264,6 @@ const LibrarySelector = ({ onChange }: LibraryProps) => {
     onChange(tmpLib)
   }
 
-  if (loading) return <LoadingPane />
   if (!library) return <div />
 
   return (
