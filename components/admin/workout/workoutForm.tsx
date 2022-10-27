@@ -205,7 +205,9 @@ interface LibraryProps {
 
 const LibrarySelector = ({ onChange }: LibraryProps) => {
   const { library, loading, error } = useLibrary()
-  const [filteredLibrary, setFilteredLibrary] = useState<LibraryItem[]>(library)
+  const [filteredLibrary, setFilteredLibrary] = useState<
+    LibraryItem[] | undefined
+  >(library)
   const [searchVal, setSearchVal] = useState<string>("")
   const [selectedLibrary, setSelectedLibrary] = useState<LibraryItem[]>([])
 
@@ -276,6 +278,7 @@ const LibrarySelector = ({ onChange }: LibraryProps) => {
             <VStack pt={3}>
               {filteredLibrary?.map(item => (
                 <LibraryElement
+                  key={item.id}
                   isSelected={selectedLibrary.includes(item)}
                   item={item}
                   onSelect={select}
