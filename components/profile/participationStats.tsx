@@ -50,7 +50,7 @@ const ParticipationStats = ({ results }: Props) => {
           </Text>
         </GridItem>
         <GridItem>
-          <Text fontSize="xs" color="gray.400" pl={4} pr={4}>
+          <Text fontSize="xs" color="gray.400">
             {"Fistbumps Given"}
           </Text>
         </GridItem>
