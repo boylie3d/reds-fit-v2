@@ -18,47 +18,47 @@ import { colors } from "theme"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 Chart.register(ChartDataLabels)
+
+const options = {
+  responsive: true,
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      ticks: {
+        precision: 0,
+      },
+      grid: {
+        display: false,
+      },
+    },
+  },
+  plugins: {
+    datalabels: {
+      color: "#FFFFFF",
+      anchor: "end" as const,
+      clamp: true,
+      align: "bottom" as const,
+      clip: true,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      enabled: false,
+    },
+  },
+}
+
 interface Props {
   results: Result[]
 }
 
 const ActivityGraph = ({ results }: Props) => {
   const [data, setData] = useState<ChartData<"bar"> | undefined>()
-
-  const options = {
-    responsive: true,
-    animation: {},
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        ticks: {
-          precision: 0,
-        },
-        grid: {
-          display: false,
-        },
-      },
-    },
-    plugins: {
-      datalabels: {
-        color: "#FFFFFF",
-        anchor: "end",
-        clamp: true,
-        align: "bottom",
-        clip: true,
-      },
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-      },
-    },
-  }
 
   useEffect(() => {
     const now = DateTime.now()
