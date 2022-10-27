@@ -138,7 +138,11 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Center pb={4}>
           <Box cursor="pointer" pos="relative">
-            <Dropzone onDrop={acceptedFiles => setFile(acceptedFiles[0])}>
+            <Dropzone
+              accept={{ "image/jpeg": [], "image/png": [] }}
+              maxFiles={1}
+              onDrop={acceptedFiles => setFile(acceptedFiles[0])}
+            >
               {({ getRootProps, getInputProps }) => (
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
