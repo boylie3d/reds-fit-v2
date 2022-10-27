@@ -1,4 +1,4 @@
-import { Result, ScoringType, Workout } from "@/types"
+import { LibraryItem, Result, ScoringType, Workout } from "@/types"
 import {
   Button,
   Flex,
@@ -28,7 +28,9 @@ interface CardProps {
 export default function WorkoutCard({ workout }: CardProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { library: fullLib, loading: lLoading, error: lError } = useLibrary()
-  const [filteredLib, setFilteredLib] = useState(undefined)
+  const [filteredLib, setFilteredLib] = useState<LibraryItem[] | undefined>(
+    undefined,
+  )
 
   const {
     profile,
