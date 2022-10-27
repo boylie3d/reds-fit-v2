@@ -67,7 +67,7 @@ const Profile: NextPage<Props> = ({ profile }) => {
         </Card>
         <Card>
           <Center>Participation Stats</Center>
-          <>{results && <ParticipationStats />}</>
+          <>{results && <ParticipationStats results={results} />}</>
         </Card>
         {/* <ParticipationCard /> */}
         <ResultList results={results} />
