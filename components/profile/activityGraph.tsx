@@ -58,8 +58,6 @@ const ActivityGraph = ({ results }: Props) => {
     const groups = interval.splitBy({ week: 1 }).map(g => {
       const filter = results.filter(r => {
         const date = DateTime.fromISO(r.created!.toString())
-        console.log("Label Day: ", g.end.toISODate())
-        console.log("Result Day: ", date.toISODate())
         if (g.contains(date)) {
           return r
         }
@@ -87,5 +85,3 @@ const ActivityGraph = ({ results }: Props) => {
 }
 
 export default ActivityGraph
-
-// (property) options?: _DeepPartialObject<CoreChartOptions<"bar"> & ElementChartOptions<"bar"> & PluginChartOptions<"bar"> & DatasetChartOptions<"bar"> & ScaleChartOptions<...> & BarControllerChartOptions> | undefined

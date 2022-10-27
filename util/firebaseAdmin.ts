@@ -23,7 +23,6 @@ try {
   admin.initializeApp({
     credential: admin.credential.cert(config as admin.ServiceAccount),
   })
-  console.log("Initialized.")
 } catch (error: any) {
   if (!/already exists/u.test(error.message)) {
     console.error("Firebase admin initialization error", error.stack)

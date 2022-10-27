@@ -187,7 +187,6 @@ const AnnouncementForm = ({
   const { register, handleSubmit } = useForm()
 
   const submit = (form: FieldValues) => {
-    console.log(existing === undefined)
     if (existing === undefined) create(form.message)
     else update(form.message)
   }

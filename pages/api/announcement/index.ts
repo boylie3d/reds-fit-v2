@@ -39,7 +39,6 @@ async function get(query: Object) {
   const collection = await formattedQuery.get()
 
   const results = collection.docs.map(item => item.data()) as Announcement[]
-  console.log(results)
   return results
 }
 

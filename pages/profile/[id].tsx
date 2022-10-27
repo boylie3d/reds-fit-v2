@@ -25,6 +25,7 @@ import AppLayout from "components/layout/appLayout"
 import Card from "components/layout/card"
 import ActivityGraph from "components/profile/activityGraph"
 import Banner from "components/profile/banner"
+import ParticipationStats from "components/profile/participationStats"
 import ResultList from "components/result/resultList"
 import { useLocalProfile, useProfiles } from "hooks/profile"
 import { useResults } from "hooks/result"
@@ -64,7 +65,11 @@ const Profile: NextPage<Props> = ({ profile }) => {
           <Center>Active Days Per Week</Center>
           <>{results && <ActivityGraph results={results} />}</>
         </Card>
-        <ParticipationCard />
+        <Card>
+          <Center>Participation Stats</Center>
+          <>{results && <ParticipationStats />}</>
+        </Card>
+        {/* <ParticipationCard /> */}
         <ResultList results={results} />
       </VStack>
     </AppLayout>
