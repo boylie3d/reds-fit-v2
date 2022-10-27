@@ -1,18 +1,32 @@
-import { ScoringType, Workout } from "@/types"
-import { DeleteIcon } from "@chakra-ui/icons"
+import { LibraryItem, ScoringType, Workout } from "@/types"
+import { CloseIcon, DeleteIcon, SearchIcon } from "@chakra-ui/icons"
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Box,
   Button,
   Flex,
+  HStack,
+  Image,
   Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
   Select,
   Spacer,
+  Text,
   Textarea,
   VStack,
 } from "@chakra-ui/react"
-import { useState } from "react"
+import LoadingPane from "components/misc/loading"
+import { useLibrary } from "hooks/library"
+import { ChangeEvent, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useSWRConfig } from "swr"
+import { getYoutubeThumb } from "util/common"
 import { toUntimedDate } from "util/time"
 
 interface WorkoutProps {
@@ -42,6 +56,7 @@ export default function WorkoutForm({
   )
   const [submitting, setSubmitting] = useState<boolean>(false)
   const { mutate } = useSWRConfig()
+  const [library, setLibrary] = useState<LibraryItem[]>([])
 
   const {
     register,
@@ -53,6 +68,8 @@ export default function WorkoutForm({
   const onSubmit = async (form: WorkoutPartial) => {
     if (submitting) return
 
+    const lib = library ? (library.map(l => l.id) as string[]) : undefined
+
     setSubmitting(true)
 
     if (currentWorkout) {
@@ -60,6 +77,7 @@ export default function WorkoutForm({
       updatedWorkout.description = form.description
       updatedWorkout.title = form.title
       updatedWorkout.scoreType = form.scoreType
+      updatedWorkout.libraryRefs = lib
 
       const workout = await update(updatedWorkout)
       setCurrentWorkout(workout)
@@ -68,6 +86,7 @@ export default function WorkoutForm({
         description: form.description,
         title: form.title,
         scoreType: form.scoreType,
+        libraryRefs: lib,
         live: date ? toUntimedDate(date) : toUntimedDate(new Date()),
       }
 
@@ -150,6 +169,7 @@ export default function WorkoutForm({
               </option>
             ))}
           </Select>
+          <LibrarySelector onChange={setLibrary} />
           <Flex gap={5} w="100%">
             <Button
               flex={1}
@@ -175,6 +195,127 @@ export default function WorkoutForm({
           )}
         </VStack>
       </form>
+    </Box>
+  )
+}
+
+interface LibraryProps {
+  onChange: (items: LibraryItem[]) => void
+}
+
+const LibrarySelector = ({ onChange }: LibraryProps) => {
+  const { library, loading, error } = useLibrary()
+  const [filteredLibrary, setFilteredLibrary] = useState<LibraryItem[]>(library)
+  const [searchVal, setSearchVal] = useState<string>("")
+  const [selectedLibrary, setSelectedLibrary] = useState<LibraryItem[]>([])
+
+  const search = (input: ChangeEvent<HTMLInputElement>) => {
+    const val = input.target.value
+    setSearchVal(val)
+    if (!library) return
+
+    setFilteredLibrary(
+      library.filter(i => i.title.toLowerCase().includes(val.toLowerCase())),
+    )
+  }
+
+  const reset = () => {
+    if (!library) return
+
+    setSearchVal("")
+    setFilteredLibrary(library)
+  }
+
+  const select = (item: LibraryItem) => {
+    const tmpLib: LibraryItem[] = [...selectedLibrary]
+    tmpLib.push(item)
+
+    setSelectedLibrary(tmpLib)
+    onChange(tmpLib)
+  }
+
+  const deselect = (item: LibraryItem) => {
+    const tmpLib: LibraryItem[] = selectedLibrary.filter(i => i !== item)
+
+    setSelectedLibrary(tmpLib)
+    onChange(tmpLib)
+  }
+
+  if (loading) return <LoadingPane />
+  if (!library) return <div />
+
+  return (
+    <>
+      <Accordion w="100%" allowToggle>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              {"Library Resources (Optional)"}
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel>
+            <Box w="100%">
+              <InputGroup w="100%">
+                <InputLeftElement pointerEvents="none">
+                  <SearchIcon color="gray.300" />
+                </InputLeftElement>
+                {searchVal.length > 0 && (
+                  <InputRightElement>
+                    <CloseIcon cursor="pointer" onClick={reset} />
+                  </InputRightElement>
+                )}
+                <Input
+                  w="100%"
+                  value={searchVal}
+                  placeholder="Search..."
+                  onChange={search}
+                />
+              </InputGroup>
+            </Box>
+            <VStack pt={3}>
+              {filteredLibrary?.map(item => (
+                <LibraryElement
+                  isSelected={selectedLibrary.includes(item)}
+                  item={item}
+                  onSelect={select}
+                  onDeselect={deselect}
+                />
+              ))}
+            </VStack>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+    </>
+  )
+}
+
+interface BtnProps {
+  item: LibraryItem
+  isSelected: boolean
+  onSelect: (item: LibraryItem) => void
+  onDeselect: (item: LibraryItem) => void
+}
+
+const LibraryElement = ({
+  item,
+  isSelected,
+  onSelect,
+  onDeselect,
+}: BtnProps) => {
+  return (
+    <Box
+      w="100%"
+      borderWidth={1}
+      borderColor={isSelected ? "teamPrimary" : ""}
+      bg={isSelected ? "teamPrimary" : ""}
+      color={isSelected ? "white" : "black"}
+      onClick={() => (isSelected ? onDeselect(item) : onSelect(item))}
+    >
+      <HStack w="100%" gap={3}>
+        <Image w="80px" src={getYoutubeThumb(item.link)} />
+        <Text noOfLines={1}>{item.title}</Text>
+      </HStack>
     </Box>
   )
 }
