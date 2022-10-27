@@ -110,7 +110,6 @@ export default function WorkoutForm({
     const result = await resp.json()
     mutate("/api/workout")
     if (onDelete) {
-      console.log("asdsf")
       onDelete()
     }
     setSubmitting(false)

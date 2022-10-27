@@ -14,8 +14,6 @@ export default async function handler(
       .status(400)
       .end("Bad request. ID parameter cannot be an array of IDs.")
 
-  console.log("asdafa")
-
   try {
     switch (req.method) {
       case "GET":

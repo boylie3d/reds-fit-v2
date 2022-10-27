@@ -23,7 +23,9 @@ import {
 import { signOut } from "@firebase/auth"
 import AppLayout from "components/layout/appLayout"
 import Card from "components/layout/card"
+import ActivityGraph from "components/profile/activityGraph"
 import Banner from "components/profile/banner"
+import ParticipationStats from "components/profile/participationStats"
 import ResultList from "components/result/resultList"
 import { useLocalProfile, useProfiles } from "hooks/profile"
 import { useResults } from "hooks/result"
@@ -59,8 +61,15 @@ const Profile: NextPage<Props> = ({ profile }) => {
       <VStack gap={3}>
         <Banner profile={profile} />
         <>{isLocal && <Toolbar />}</>
-        <ActivityCard results={results} />
-        <ParticipationCard />
+        <Card>
+          <Center>Active Days Per Week</Center>
+          <>{results && <ActivityGraph results={results} />}</>
+        </Card>
+        <Card>
+          <Center>Participation Stats</Center>
+          <>{results && <ParticipationStats results={results} />}</>
+        </Card>
+        {/* <ParticipationCard /> */}
         <ResultList results={results} />
       </VStack>
     </AppLayout>
@@ -91,56 +100,56 @@ interface ChartItem {
   date: string
 }
 
-const ActivityCard = ({ results }: ActivityProps) => {
-  useEffect(() => {
-    if (!results) return
+// const ActivityCard = ({ results }: ActivityProps) => {
+//   useEffect(() => {
+//     if (!results) return
 
-    // let items: ChartItem[] = []
-    // results.forEach(r => {
-    //   const item = items.find(f => f.date === toUntimedDate(r.created))
-    // })
-  }, [results])
+//     // let items: ChartItem[] = []
+//     // results.forEach(r => {
+//     //   const item = items.find(f => f.date === toUntimedDate(r.created))
+//     // })
+//   }, [results])
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ]
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: [20, 10, 1, 2, 4, 12, 13, 11, 83, 32, 98, 24],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
-  }
+//   const labels = [
+//     "January",
+//     "February",
+//     "March",
+//     "April",
+//     "May",
+//     "June",
+//     "July",
+//   ]
+//   const data = {
+//     labels,
+//     datasets: [
+//       {
+//         label: "Dataset 1",
+//         data: [20, 10, 1, 2, 4, 12, 13, 11, 83, 32, 98, 24],
+//         backgroundColor: "rgba(255, 99, 132, 0.5)",
+//       },
+//     ],
+//   }
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: "Chart.js Bar Chart",
-      },
-    },
-  }
+//   const options = {
+//     responsive: true,
+//     plugins: {
+//       legend: {
+//         position: "top" as const,
+//       },
+//       title: {
+//         display: true,
+//         text: "Chart.js Bar Chart",
+//       },
+//     },
+//   }
 
-  return (
-    <Card>
-      <Center>Active Days</Center>
-      {/* <Bar width="100%" height="200px" options={options} data={data} /> */}
-    </Card>
-  )
-}
+//   return (
+//     <Card>
+//       <Center>Active Days</Center>
+//       {/* <Bar width="100%" height="200px" options={options} data={data} /> */}
+//     </Card>
+//   )
+// }
 
 const ParticipationCard = () => {
   return (

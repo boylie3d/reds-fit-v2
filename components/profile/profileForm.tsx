@@ -58,7 +58,6 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
 
     if (file) {
       const image = await uploadImage()
-      console.log(image)
       photo = image
     }
 
@@ -200,7 +199,6 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
           </Button>
         </VStack>
       </form>
-      {/* </Center> */}
     </>
   )
 }

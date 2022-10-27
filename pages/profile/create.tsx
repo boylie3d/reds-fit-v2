@@ -12,7 +12,6 @@ export default function ProfileCreate() {
   const { profile, loading, error } = useLocalProfile()
 
   const formSubmitted = (profile: Profile) => {
-    console.log("submitted?")
     router.push("/")
   }
 
