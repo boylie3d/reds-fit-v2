@@ -23,6 +23,10 @@ export const getYoutubeId = (url: string) => {
   else return match[2]
 }
 
+export const youtubeIdToLink = (id: string) => {
+  return `https://youtu.be/${id}`
+}
+
 export const getYoutubeLink = (id: string) => {
   return `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1`
 }
