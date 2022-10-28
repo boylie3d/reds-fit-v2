@@ -35,7 +35,6 @@ export default function WorkoutTester() {
       body: JSON.stringify(result),
     })
     const posted = (await resp.json()) as Result
-    console.log(posted)
   }
 
   return (

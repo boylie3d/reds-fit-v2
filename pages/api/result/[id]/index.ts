@@ -9,7 +9,6 @@ export default async function handler(
   res: NextApiResponse<Result>,
 ) {
   const { id } = req.query
-  console.log(id)
 }
 
 export async function get(id: string) {

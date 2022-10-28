@@ -19,7 +19,6 @@ import {
 } from "@chakra-ui/react"
 import Card from "components/layout/card"
 import YoutubeEmbed from "components/misc/youtubeEmbed"
-import { getYoutubeLink } from "util/common"
 
 interface Props {
   item: LibraryItem
@@ -27,8 +26,6 @@ interface Props {
 
 const LibraryCard = ({ item }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-  console.log(getYoutubeLink(item.link))
 
   return (
     <Card>

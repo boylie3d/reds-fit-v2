@@ -10,7 +10,6 @@ export default function ProfileUpdate() {
 
   const formSubmitted = async (profile: Profile) => {
     // const toast = await showToast()
-    // console.log("done")
     router.push("/profile")
   }
 

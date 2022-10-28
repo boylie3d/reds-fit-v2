@@ -30,7 +30,8 @@ export default async function handler(
 async function get(query: Object) {
   const ref = fb.db.collection("results")
   const formattedQuery = query ? objToFirestoreQuery(ref, query) : ref
-  const coll = await formattedQuery.get()
+  const q = formattedQuery.orderBy("created", "desc")
+  const coll = await q.get()
   const results = coll.docs.map(item => item.data()) as Result[]
   return results
 }
