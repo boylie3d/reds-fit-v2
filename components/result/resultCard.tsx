@@ -117,6 +117,7 @@ const FistbumpToggle = ({ profile, result }: SocialProps) => {
     const fb: Fistbump = {
       userId: profile.uid!,
       created: new Date(),
+      resultId: result.id!,
     }
     const resp = await fetch(`/api/result/${result.id}/fistbump`, {
       method: "POST",

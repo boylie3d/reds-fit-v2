@@ -78,41 +78,6 @@ const ActivityGraph = ({ results }: Props) => {
       return filter.length
     })
 
-    // const chart = new Chart("activity", {
-    //   options: {
-    //     responsive: true,
-    //     scales: {
-    //       x: {
-    //         grid: {
-    //           display: false,
-    //         },
-    //       },
-    //       y: {
-    //         ticks: {
-    //           precision: 0,
-    //         },
-    //         grid: {
-    //           display: false,
-    //         },
-    //       },
-    //     },
-    //     plugins: {
-    //       legend: {
-    //         display: false,
-    //       },
-    //     },
-    //   },
-    //   data: {
-    //     labels: labels,
-    //     datasets: [
-    //       {
-    //         label: "Results for Week",
-    //         data: groups,
-    //         backgroundColor: `${colors.teamPrimary}BF`,
-    //       },
-    //     ],
-    //   },
-    // })
     const chartData: ChartData<"bar"> = {
       labels: labels,
       datasets: [
