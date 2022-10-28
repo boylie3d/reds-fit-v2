@@ -38,6 +38,7 @@ const ResultPage: NextPage<Props> = ({ result, profile, workout }: Props) => {
       userId: "UpKYkVJKXzQww0HiE88q6nD65mP2",
       created: now,
       updated: now,
+      resultId: result.id!,
       message:
         "working out is very good for your mind and your health praise be unto morth almighty amen",
     }
