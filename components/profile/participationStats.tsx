@@ -1,5 +1,7 @@
 import { Result } from "@/types"
 import { Center, Grid, GridItem, Text } from "@chakra-ui/react"
+import { useAllFistbumps } from "hooks/fistbump"
+import { useLocalProfile } from "hooks/profile"
 import { useEffect, useState } from "react"
 
 interface Props {
@@ -7,13 +9,24 @@ interface Props {
 }
 
 const ParticipationStats = ({ results }: Props) => {
+  const { fistbumps, loading: fbLoading, error: fbError } = useAllFistbumps()
+  const { profile, loading: pLoading, error: pError } = useLocalProfile()
   const [comments, setComments] = useState<number>(0)
   const [fbGiven, setFbGiven] = useState<number>(0)
   const [fbReceived, setFbReceived] = useState<number>(0)
 
   useEffect(() => {
-    console.log(results)
-  }, [results])
+    if (!fistbumps || !profile) return
+    const given = fistbumps.filter(fb => fb.userId === profile.uid)
+    setFbGiven(given.length)
+
+    const received = fistbumps.filter(fb => {
+      const isMines =
+        results.find(r => r.id === fb.resultId) === undefined ? false : true
+      if (isMines) return fb
+    })
+    setFbReceived(received.length)
+  }, [fistbumps, profile])
 
   return (
     <>

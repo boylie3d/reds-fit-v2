@@ -28,6 +28,10 @@ export default function Home() {
   })
   const { mutate } = useSWRConfig()
 
+  useEffect(() => {
+    fetch("/api/fistbump")
+  }, [])
+
   return (
     <AppLayout>
       <VStack>

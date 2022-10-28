@@ -48,7 +48,7 @@ async function queriedGet(id: string, query: Object) {
 }
 
 export async function get(id: string) {
-  const ref = await fb.db.collection(`results/${id}/fistbumps`)
+  const ref = await fb.db.collection(`fistbumps`).where("resultId", "==", id)
   const collection = await ref.get()
   const results = collection.docs.map(item => item.data()) as Fistbump[]
 
@@ -56,6 +56,6 @@ export async function get(id: string) {
 }
 
 async function del(id: string, fbId: string) {
-  const ref = await fb.db.doc(`results/${id}/fistbumps/${fbId}`).delete()
+  const ref = await fb.db.doc(`fistbumps/${fbId}`).delete()
   return null
 }
