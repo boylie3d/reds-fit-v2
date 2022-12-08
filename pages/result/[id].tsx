@@ -68,7 +68,11 @@ const ResultPage: NextPage<Props> = ({ result, profile, workout }: Props) => {
                 <Button
                   size="xs"
                   variant="teamOutline"
-                  onClick={() => Router.push(`/result?workoutId=${workout.id}`)}
+                  onClick={() =>
+                    Router.push(
+                      `/result?workoutId=${workout.id}&existing=${result.id}`,
+                    )
+                  }
                 >
                   <EditIcon mr="0.5em" />
                   {"Edit"}
