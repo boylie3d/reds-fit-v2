@@ -2,6 +2,7 @@ import { Result, Workout } from "@/types"
 import { Button, Input, Textarea, VStack } from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import LoadingPane from "components/misc/loading"
+import ResultForm from "components/result/resultForm"
 import { useLocalProfile } from "hooks/profile"
 import { GetServerSideProps, NextPage } from "next"
 import Router from "next/router"
@@ -30,13 +31,6 @@ const Index: NextPage<Props> = ({ workout }: Props) => {
   console.log({ workout })
   const { profile, loading: pLoading, error: pError } = useLocalProfile()
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<ResultForm>()
-
   const submit = async (form: ResultForm) => {
     if (!workout || !profile) return
 
@@ -56,28 +50,40 @@ const Index: NextPage<Props> = ({ workout }: Props) => {
       body: JSON.stringify(result),
     })
     const json = (await resp.json()) as Result
-    Router.push(`/result/${json.id}`)
+    // Router.push(`/result/${json.id}`)
+    Router.push(`/`)
   }
 
   if (pLoading) return <LoadingPane />
 
   return (
     <AppLayout>
-      <form onSubmit={handleSubmit(submit)}>
-        <VStack gap={3}>
-          <Input
-            required
-            w="100%"
-            placeholder="Your time"
-            {...register("value")}
-          />
-          <Textarea w="100%" placeholder="Notes" {...register("description")} />
-          <Button type="submit" w="100%">
-            Submit
-          </Button>
-        </VStack>
-      </form>
+      <OtherForm onSubmit={submit} />
     </AppLayout>
+  )
+}
+
+interface FormProps {
+  onSubmit: (form: ResultForm) => void
+}
+const OtherForm = (props: FormProps) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<ResultForm>()
+
+  return (
+    <form onSubmit={handleSubmit(props.onSubmit)}>
+      <VStack gap={3}>
+        <Input required w="100%" placeholder="Result" {...register("value")} />
+        <Textarea w="100%" placeholder="Notes" {...register("description")} />
+        <Button type="submit" w="100%">
+          Submit
+        </Button>
+      </VStack>
+    </form>
   )
 }
 

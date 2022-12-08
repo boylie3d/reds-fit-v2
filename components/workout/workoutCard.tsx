@@ -172,7 +172,7 @@ const buttonProps = (workout: Workout, result: Result) => {
 
   switch (sType) {
     case ScoringType.Reps:
-      return <>what up fam</>
+      return <>{result.value}</>
     case ScoringType.Time:
       return <>{getFormattedTime(result.value)}</>
     case ScoringType.Other:
