@@ -23,7 +23,7 @@ export default function WorkoutTester() {
     const result: Result = {
       workoutId: "qLx6sB823VUr4jz2ENez",
       userId: "UpKYkVJKXzQww0HiE88q6nD65mP2",
-      title: "did it",
+      // title: "did it",
       description: "did the shits",
       value: 100,
       created: new Date(),

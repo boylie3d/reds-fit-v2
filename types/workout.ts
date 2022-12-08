@@ -18,10 +18,13 @@ export enum ScoringType {
   Reps = "Reps",
   Load = "Load",
   Other = "Other / Text",
-  Calories = "Calories",
-  Points = "Points",
-  Meters = "Meters",
-  Centimeters = "Centimeters",
-  Feet = "Feet",
-  Inches = "Inches",
+
+  // we don't care about these ones...
+
+  // Calories = "Calories",
+  // Points = "Points",
+  // Meters = "Meters",
+  // Centimeters = "Centimeters",
+  // Feet = "Feet",
+  // Inches = "Inches",
 }
