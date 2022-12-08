@@ -1,5 +1,13 @@
 import { Result, Workout } from "@/types"
-import { Button, Input, Textarea, VStack } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Center,
+  Input,
+  Text,
+  Textarea,
+  VStack,
+} from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import LoadingPane from "components/misc/loading"
 import ResultForm from "components/result/resultForm"
@@ -58,6 +66,12 @@ const Index: NextPage<Props> = ({ workout }: Props) => {
 
   return (
     <AppLayout>
+      <Box p="2em">
+        <Center>
+          <Text fontSize="lg">{workout.title}</Text>
+        </Center>
+        <Text fontSize="sm">{workout.description}</Text>
+      </Box>
       <OtherForm onSubmit={submit} />
     </AppLayout>
   )

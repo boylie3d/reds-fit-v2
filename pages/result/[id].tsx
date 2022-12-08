@@ -36,6 +36,13 @@ const ResultPage: NextPage<Props> = ({ result, profile, workout }: Props) => {
   const { comments, loading, error } = useComments(result.id || "")
   const { profile: local } = useLocalProfile()
 
+  const del = async () => {
+    const resp = await fetch(`/api/result/${result.id}`, { method: "DELETE" })
+    const json = await resp.json()
+    console.log(json)
+    Router.push("/")
+  }
+
   return (
     <AppLayout>
       <VStack gap={3} pt={4}>
@@ -66,7 +73,7 @@ const ResultPage: NextPage<Props> = ({ result, profile, workout }: Props) => {
                   <EditIcon mr="0.5em" />
                   {"Edit"}
                 </Button>
-                <Button size="xs">
+                <Button size="xs" onClick={del}>
                   <DeleteIcon />
                 </Button>
               </HStack>
