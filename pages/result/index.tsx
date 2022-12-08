@@ -4,6 +4,7 @@ import AppLayout from "components/layout/appLayout"
 import LoadingPane from "components/misc/loading"
 import { useLocalProfile } from "hooks/profile"
 import { GetServerSideProps, NextPage } from "next"
+import Router from "next/router"
 import { get } from "pages/api/workout/[id]"
 import { useForm } from "react-hook-form"
 
@@ -55,20 +56,24 @@ const Index: NextPage<Props> = ({ workout }: Props) => {
       body: JSON.stringify(result),
     })
     const json = (await resp.json()) as Result
-    console.log(json)
+    Router.push(`/result/${json.id}`)
   }
 
   if (pLoading) return <LoadingPane />
 
   return (
     <AppLayout>
-      {/* <div>{JSON.stringify(workout)}</div> */}
       <form onSubmit={handleSubmit(submit)}>
         <VStack gap={3}>
-          <Input w="100%" placeholder="Your time" {...register("value")} />
+          <Input
+            required
+            w="100%"
+            placeholder="Your time"
+            {...register("value")}
+          />
           <Textarea w="100%" placeholder="Notes" {...register("description")} />
           <Button type="submit" w="100%">
-            hi
+            Submit
           </Button>
         </VStack>
       </form>
