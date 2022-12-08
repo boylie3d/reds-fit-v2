@@ -31,8 +31,10 @@ const Leaderboard: NextPage = () => {
   const { results, loading: rLoading, error: rError } = useResults()
   const { profiles, loading: pLoading, error: pError } = useProfiles()
   const [entries, setEntries] = useState<Entry[] | null>(null)
+  const [ranOnce, setRanOnce] = useState(false)
 
   useEffect(() => {
+    if (ranOnce) return
     if (!results || results.length === 0) return
     if (!profiles || profiles.length === 0) return
 
@@ -47,9 +49,14 @@ const Leaderboard: NextPage = () => {
       {},
     )
 
+    // filter out non-players
+    const players = profiles.filter(profile => profile.userType === "Player")
+
     // create entry objects based on the groupings, then sort
-    const entries: any = profiles
+    const entries: any = players
       .map(profile => {
+        console.log({ profile })
+
         const grp = groups[profile.uid!]
         // if the profile exists, but there are no records, smoosh em in there
         if (!grp) {
@@ -69,6 +76,7 @@ const Leaderboard: NextPage = () => {
       .sort((a, b) => b.resultCount - a.resultCount)
 
     setEntries(entries)
+    setRanOnce(true)
   }, [results, profiles])
 
   if (rLoading) return <LoadingPane />

@@ -70,8 +70,10 @@ export default function ResultsCard({ result }: ResultsProps) {
           </Text>
         </VStack>
       </HStack>
-      <Box w="100%" h="50px" bgColor="gray.200">
-        <Center h="100%">{formatResult(workout, result)}</Center>
+      <Box pt="1em" pb="1em">
+        <Box borderRadius={"5px"} bgColor="gray.200" w="100%" h="50px">
+          <Center h="100%">{formatResult(workout, result)}</Center>
+        </Box>
       </Box>
       <Text fontSize="sm">{result.description}</Text>
       <Flex pt={5}>

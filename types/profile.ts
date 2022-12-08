@@ -19,4 +19,5 @@ export type Profile = {
   photoURL?: string
   userType: UserType
   accessType: AccessType
+  ownedGear?: string
 }
