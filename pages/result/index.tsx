@@ -42,7 +42,7 @@ const Index: NextPage<Props> = ({ workout, result }: Props) => {
   // console.log({ workout })
   const { profile, loading: pLoading, error: pError } = useLocalProfile()
 
-  const submit = async (form: ResultForm) => {
+  const create = async (form: ResultForm) => {
     //TODO:if(result) PUT /api/result/result.id body=result
 
     if (!workout || !profile) return
@@ -67,6 +67,22 @@ const Index: NextPage<Props> = ({ workout, result }: Props) => {
     Router.push(`/`)
   }
 
+  const update = async (form: ResultForm) => {
+    if (!result) return
+
+    result.value = form.value
+    result.description = form.description
+    result.updated = new Date()
+
+    const resp = await fetch(`/api/result/${result.id}`, {
+      method: "PUT",
+      body: JSON.stringify(result),
+    })
+    const json = (await resp.json()) as Result
+    Router.push(`/result/${result.id}`)
+    Router.push(`/`)
+  }
+
   if (pLoading) return <LoadingPane />
 
   return (
@@ -77,7 +93,7 @@ const Index: NextPage<Props> = ({ workout, result }: Props) => {
         </Center>
         <Text fontSize="sm">{workout.description}</Text>
       </Box>
-      <OtherForm onSubmit={submit} existing={result} />
+      <OtherForm onSubmit={result ? update : create} existing={result} />
     </AppLayout>
   )
 }
