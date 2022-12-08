@@ -168,11 +168,15 @@ export default function WorkoutCard({ workout }: CardProps) {
 // }
 
 const buttonProps = (workout: Workout, result: Result) => {
-  switch (workout.scoreType) {
+  const sType = ScoringType[workout.scoreType as keyof typeof ScoringType]
+
+  switch (sType) {
     case ScoringType.Reps:
       return <>what up fam</>
     case ScoringType.Time:
       return <>{getFormattedTime(result.value)}</>
+    case ScoringType.Other:
+      return <>{result.value}</>
     default:
       return <>Type not implemented</>
   }
