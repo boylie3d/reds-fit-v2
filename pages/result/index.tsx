@@ -28,7 +28,7 @@ const Index: NextPage<Props> = ({ workout }: Props) => {
   //   error: wError,
   // } = useWorkout(workoutId as string)
 
-  console.log({ workout })
+  // console.log({ workout })
   const { profile, loading: pLoading, error: pError } = useLocalProfile()
 
   const submit = async (form: ResultForm) => {
