@@ -1,11 +1,21 @@
 import { Result, Workout } from "@/types"
-import { Button, Input, Textarea, VStack } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Center,
+  Input,
+  Text,
+  Textarea,
+  VStack,
+} from "@chakra-ui/react"
 import AppLayout from "components/layout/appLayout"
 import LoadingPane from "components/misc/loading"
+import ResultForm from "components/result/resultForm"
 import { useLocalProfile } from "hooks/profile"
 import { GetServerSideProps, NextPage } from "next"
 import Router from "next/router"
-import { get } from "pages/api/workout/[id]"
+import { get } from "pages/api/result/[id]"
+import { get as getWorkout } from "pages/api/workout/[id]"
 import { useForm } from "react-hook-form"
 
 type ResultForm = {
@@ -16,9 +26,11 @@ type ResultForm = {
 
 interface Props {
   workout: Workout
+  result?: Result
 }
 
-const Index: NextPage<Props> = ({ workout }: Props) => {
+const Index: NextPage<Props> = ({ workout, result }: Props) => {
+  console.log(result)
   // const router = useRouter()
   // const { workoutId } = router.query
   // const {
@@ -27,17 +39,12 @@ const Index: NextPage<Props> = ({ workout }: Props) => {
   //   error: wError,
   // } = useWorkout(workoutId as string)
 
-  console.log({ workout })
+  // console.log({ workout })
   const { profile, loading: pLoading, error: pError } = useLocalProfile()
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<ResultForm>()
+  const create = async (form: ResultForm) => {
+    //TODO:if(result) PUT /api/result/result.id body=result
 
-  const submit = async (form: ResultForm) => {
     if (!workout || !profile) return
 
     const now = new Date()
@@ -56,39 +63,92 @@ const Index: NextPage<Props> = ({ workout }: Props) => {
       body: JSON.stringify(result),
     })
     const json = (await resp.json()) as Result
-    Router.push(`/result/${json.id}`)
+    // Router.push(`/result/${json.id}`)
+    Router.push(`/`)
+  }
+
+  const update = async (form: ResultForm) => {
+    if (!result) return
+
+    result.value = form.value
+    result.description = form.description
+    result.updated = new Date()
+
+    const resp = await fetch(`/api/result/${result.id}`, {
+      method: "PUT",
+      body: JSON.stringify(result),
+    })
+    const json = (await resp.json()) as Result
+    Router.push(`/result/${result.id}`)
+    Router.push(`/`)
   }
 
   if (pLoading) return <LoadingPane />
 
   return (
     <AppLayout>
-      <form onSubmit={handleSubmit(submit)}>
-        <VStack gap={3}>
-          <Input
-            required
-            w="100%"
-            placeholder="Your time"
-            {...register("value")}
-          />
-          <Textarea w="100%" placeholder="Notes" {...register("description")} />
-          <Button type="submit" w="100%">
-            Submit
-          </Button>
-        </VStack>
-      </form>
+      <Box p="2em">
+        <Center>
+          <Text fontSize="lg">{workout.title}</Text>
+        </Center>
+        <Text fontSize="sm">{workout.description}</Text>
+      </Box>
+      <OtherForm onSubmit={result ? update : create} existing={result} />
     </AppLayout>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const { workoutId } = ctx.query
-  const workout = await get(workoutId as string)
+interface FormProps {
+  onSubmit: (form: ResultForm) => void
+  existing?: Result
+}
 
+const OtherForm = (props: FormProps) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<ResultForm>()
+
+  return (
+    <form onSubmit={handleSubmit(props.onSubmit)}>
+      <VStack gap={3}>
+        <Input
+          required
+          defaultValue={props.existing?.value}
+          w="100%"
+          placeholder="Result"
+          {...register("value")}
+        />
+        <Textarea
+          defaultValue={props.existing?.description}
+          w="100%"
+          placeholder="Notes"
+          {...register("description")}
+        />
+        <Button type="submit" w="100%">
+          Submit
+        </Button>
+      </VStack>
+    </form>
+  )
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { workoutId, existing } = ctx.query
+  const workout = await getWorkout(workoutId as string)
+  // let result: Result | undefined = undefined
+
+  let response: any = {
+    workout: workout,
+  }
+  if (existing) {
+    const result = await get(existing as string)
+    response.result = result
+  }
   return {
-    props: {
-      workout: workout,
-    },
+    props: response,
   }
 }
 

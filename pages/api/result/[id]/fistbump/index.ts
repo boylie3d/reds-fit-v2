@@ -49,7 +49,7 @@ async function get(id: string, query: Object) {
   )
   const collection = await formattedQuery.get()
   const results = collection.docs.map(item => item.data()) as Fistbump[]
-  console.log(results)
+  // console.log(results)
 
   return results
 }

@@ -1,4 +1,5 @@
 import { Comment, Profile, Result, Workout } from "@/types"
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons"
 import {
   Avatar,
   Box,
@@ -6,6 +7,7 @@ import {
   Center,
   Divider,
   Flex,
+  Grid,
   HStack,
   Link,
   Text,
@@ -16,6 +18,7 @@ import LoadingPane from "components/misc/loading"
 import { useComments } from "hooks/comment"
 import { useLocalProfile, useProfile } from "hooks/profile"
 import { GetServerSideProps, NextPage } from "next"
+import Router from "next/router"
 import { get as profileGet } from "pages/api/profile/[id]"
 import { get as resultGet } from "pages/api/result/[id]"
 import { get as commentGet } from "pages/api/result/[id]/comment"
@@ -31,26 +34,17 @@ interface Props {
 
 const ResultPage: NextPage<Props> = ({ result, profile, workout }: Props) => {
   const { comments, loading, error } = useComments(result.id || "")
+  const { profile: local } = useLocalProfile()
 
-  const tmp = () => {
-    const now = new Date()
-    const comment: Comment = {
-      userId: "UpKYkVJKXzQww0HiE88q6nD65mP2",
-      created: now,
-      updated: now,
-      resultId: result.id!,
-      message:
-        "working out is very good for your mind and your health praise be unto morth almighty amen",
-    }
-
-    fetch(`/api/result/${result.id}/comment`, {
-      method: "POST",
-      body: JSON.stringify(comment),
-    })
+  const del = async () => {
+    const resp = await fetch(`/api/result/${result.id}`, { method: "DELETE" })
+    const json = await resp.json()
+    console.log(json)
+    Router.push("/")
   }
+
   return (
     <AppLayout>
-      <Button onClick={tmp}>test</Button>
       <VStack gap={3} pt={4}>
         <HStack w="100%">
           <Link href={`/profile/${profile.uid}`}>
@@ -67,6 +61,29 @@ const ResultPage: NextPage<Props> = ({ result, profile, workout }: Props) => {
         <Box w="100%">
           <Text>{result.description}</Text>
         </Box>
+        {profile.uid === local?.uid && (
+          <Box w="100%">
+            <Grid justifyContent="flex-end">
+              <HStack>
+                <Button
+                  size="xs"
+                  variant="teamOutline"
+                  onClick={() =>
+                    Router.push(
+                      `/result?workoutId=${workout.id}&existing=${result.id}`,
+                    )
+                  }
+                >
+                  <EditIcon mr="0.5em" />
+                  {"Edit"}
+                </Button>
+                <Button size="xs" onClick={del}>
+                  <DeleteIcon />
+                </Button>
+              </HStack>
+            </Grid>
+          </Box>
+        )}
         <Divider />
         <CommentBox comments={comments} />
       </VStack>

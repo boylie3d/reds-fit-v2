@@ -17,8 +17,8 @@ import LoadingPane from "components/misc/loading"
 import { useFistbumps, useQueriedFistbumps } from "hooks/fistbump"
 import { useLocalProfile, useProfile } from "hooks/profile"
 import { useWorkout } from "hooks/workout"
+import { DateTime } from "luxon"
 import { useEffect, useState } from "react"
-import { BiCommentDetail } from "react-icons/bi"
 import { FaHandRock, FaRegHandRock } from "react-icons/fa"
 import { useSWRConfig } from "swr"
 import { formatResult } from "util/common"
@@ -65,7 +65,9 @@ export default function ResultsCard({ result }: ResultsProps) {
               {" logged a workout"}
             </Text>
           </HStack>
-          <Text fontSize="xs">{result.updated.toString()}</Text>
+          <Text fontSize="xs">
+            {DateTime.fromISO(result.updated.toString()).toFormat("ff")}
+          </Text>
         </VStack>
       </HStack>
       <Box w="100%" h="50px" bgColor="gray.200">
@@ -75,18 +77,20 @@ export default function ResultsCard({ result }: ResultsProps) {
       <Flex pt={5}>
         <FistbumpCounter profile={lProfile} result={result} />
         <Spacer />
-        <Text fontSize="xs">comments</Text>
+        {/* TODO:uncomment and hook up */}
+        {/* <Text fontSize="xs">comments</Text> */}
       </Flex>
       <Divider />
       <Flex p={5}>
         <FistbumpToggle profile={lProfile} result={result} />
         <Spacer />
-        <Link href={`/result/${result.id}`}>
+        {/* TODO:uncomment and hook up */}
+        {/* <Link href={`/result/${result.id}`}>
           <HStack h="100%" style={{ cursor: "pointer" }}>
             <Icon as={BiCommentDetail} />
             <Text fontSize="xs">Comment</Text>
           </HStack>
-        </Link>
+        </Link> */}
       </Flex>
     </Card>
   )

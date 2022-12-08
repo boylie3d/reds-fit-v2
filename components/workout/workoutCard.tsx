@@ -100,7 +100,10 @@ export default function WorkoutCard({ workout }: CardProps) {
               {"Log Your Result"}
             </Button>
           ) : (
-            <Button variant="teamOutline">
+            <Button
+              variant="teamOutline"
+              onClick={() => router.push(`/result/${yourResults[0].id}`)}
+            >
               {buttonProps(workout, yourResults[0])}
             </Button>
           )}
@@ -172,7 +175,7 @@ const buttonProps = (workout: Workout, result: Result) => {
 
   switch (sType) {
     case ScoringType.Reps:
-      return <>what up fam</>
+      return <>{result.value}</>
     case ScoringType.Time:
       return <>{getFormattedTime(result.value)}</>
     case ScoringType.Other:
