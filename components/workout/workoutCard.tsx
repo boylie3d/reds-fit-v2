@@ -18,6 +18,7 @@ import LibraryCard from "components/library/libraryCard"
 import { useLibrary } from "hooks/library"
 import { useLocalProfile } from "hooks/profile"
 import { useResults } from "hooks/result"
+import router from "next/router"
 // import { Router } from "next/router"
 import { useEffect, useState } from "react"
 import { getFormattedTime } from "util/time"
@@ -93,7 +94,11 @@ export default function WorkoutCard({ workout }: CardProps) {
             </Text>
           </Flex>
           {yourResults && yourResults?.length === 0 ? (
-            <Button>Log Your Result</Button>
+            <Button
+              onClick={() => router.push(`/result?workoutId=${workout.id}`)}
+            >
+              {"Log Your Result"}
+            </Button>
           ) : (
             <Button variant="teamOutline">
               {buttonProps(workout, yourResults[0])}

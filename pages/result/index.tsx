@@ -1,10 +1,10 @@
-import { Result } from "@/types"
+import { Result, Workout } from "@/types"
 import { Button, Input, Textarea, VStack } from "@chakra-ui/react"
+import AppLayout from "components/layout/appLayout"
 import LoadingPane from "components/misc/loading"
 import { useLocalProfile } from "hooks/profile"
-import { useWorkout } from "hooks/workout"
-import { NextPage } from "next"
-import { useRouter } from "next/router"
+import { GetServerSideProps, NextPage } from "next"
+import { get } from "pages/api/workout/[id]"
 import { useForm } from "react-hook-form"
 
 type ResultForm = {
@@ -13,15 +13,20 @@ type ResultForm = {
   value: any
 }
 
-const Index: NextPage = () => {
-  const router = useRouter()
-  const { workoutId } = router.query
-  const {
-    workout,
-    loading: wLoading,
-    error: wError,
-  } = useWorkout(workoutId as string)
+interface Props {
+  workout: Workout
+}
 
+const Index: NextPage<Props> = ({ workout }: Props) => {
+  // const router = useRouter()
+  // const { workoutId } = router.query
+  // const {
+  //   workout,
+  //   loading: wLoading,
+  //   error: wError,
+  // } = useWorkout(workoutId as string)
+
+  console.log({ workout })
   const { profile, loading: pLoading, error: pError } = useLocalProfile()
 
   const {
@@ -53,10 +58,11 @@ const Index: NextPage = () => {
     console.log(json)
   }
 
-  if (wLoading || pLoading) return <LoadingPane />
+  if (pLoading) return <LoadingPane />
 
   return (
-    <>
+    <AppLayout>
+      {/* <div>{JSON.stringify(workout)}</div> */}
       <form onSubmit={handleSubmit(submit)}>
         <VStack gap={3}>
           <Input w="100%" placeholder="Your time" {...register("value")} />
@@ -66,8 +72,19 @@ const Index: NextPage = () => {
           </Button>
         </VStack>
       </form>
-    </>
+    </AppLayout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { workoutId } = ctx.query
+  const workout = await get(workoutId as string)
+
+  return {
+    props: {
+      workout: workout,
+    },
+  }
 }
 
 export default Index

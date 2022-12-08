@@ -26,7 +26,7 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   {
-    name: "Workouts",
+    name: "Workout",
     showInNav: true,
     icon: TbBarbell,
     iconSelected: IoBarbellSharp,
