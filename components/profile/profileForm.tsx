@@ -29,6 +29,7 @@ type ProfilePartial = {
   firstName: string
   lastName: string
   userType: UserType
+  ownedGear: string
 }
 
 export default function ProfileForm({ onUpdate, create }: FormProps) {
@@ -77,6 +78,7 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
       displayName: fullName,
       email: email!,
       userType: form.userType,
+      ownedGear: form.ownedGear,
     }
 
     const resp = await fetch(`/api/profile/${user?.uid}`, {
@@ -192,6 +194,12 @@ export default function ProfileForm({ onUpdate, create }: FormProps) {
               <option key={t}>{t}</option>
             ))}
           </Select>
+          <Input
+            defaultValue={existingProfile ? existingProfile.ownedGear : ""}
+            placeholder="List any gear you have at home"
+            required
+            {...register("ownedGear")}
+          />
           <Button
             variant="outline"
             colorScheme="green"

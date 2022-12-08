@@ -102,6 +102,7 @@ interface UpdateProps {
 
 const UpdateItem = ({ data }: UpdateProps) => {
   const { profile, loading, error } = useProfile(data.item.userId)
+  const { profile: local, loading: localLoading } = useLocalProfile()
   const [fistbump, setFistbump] = useState<Fistbump | undefined>()
   const [comment, setComment] = useState<Comment | undefined>()
   const {
@@ -118,8 +119,9 @@ const UpdateItem = ({ data }: UpdateProps) => {
     }
   }, [data])
 
-  if (loading || wLoading) return <LoadingPane />
+  if (loading || wLoading || localLoading) return <LoadingPane />
   if (!profile) return <div />
+  if (!local) return <div />
 
   return (
     <Box w="100%">
@@ -131,9 +133,13 @@ const UpdateItem = ({ data }: UpdateProps) => {
         </Box>
         <Box>
           <Text fontSize="sm">
-            <Link href={`/profile/${profile.uid}`}>{profile.displayName}</Link>
+            <Link href={`/profile/${profile.uid}`}>
+              {profile.uid === local.uid ? "You" : profile.displayName}
+            </Link>
             {fistbump !== undefined
-              ? ` gave you fistbumps on your "${workout?.title}" workout`
+              ? ` gave ${
+                  local.uid === profile.uid ? "yourself" : "you"
+                } fistbumps on your "${workout?.title}" workout`
               : `commented on your "${workout?.title}" workout`}
           </Text>
           <Text color="gray.400" fontSize="xs">
