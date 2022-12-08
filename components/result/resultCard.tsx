@@ -84,13 +84,13 @@ export default function ResultsCard({ result }: ResultsProps) {
       <Flex p={5}>
         <FistbumpToggle profile={lProfile} result={result} />
         <Spacer />
-        <Link href={`/result/${result.id}`}>
+        {/* TODO:uncomment and hook up */}
+        {/* <Link href={`/result/${result.id}`}>
           <HStack h="100%" style={{ cursor: "pointer" }}>
-            {/* TODO:uncomment and hook up */}
-            {/* <Icon as={BiCommentDetail} /> */}
-            {/* <Text fontSize="xs">Comment</Text> */}
+            <Icon as={BiCommentDetail} />
+            <Text fontSize="xs">Comment</Text>
           </HStack>
-        </Link>
+        </Link> */}
       </Flex>
     </Card>
   )

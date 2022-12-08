@@ -65,7 +65,9 @@ const Index: NextPage<Props> = ({ workout }: Props) => {
 
 interface FormProps {
   onSubmit: (form: ResultForm) => void
+  existing?: Result
 }
+
 const OtherForm = (props: FormProps) => {
   const {
     register,
