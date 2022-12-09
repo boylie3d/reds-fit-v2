@@ -80,7 +80,7 @@ const Leaderboard: NextPage = () => {
   }, [results, profiles])
 
   if (rLoading) return <LoadingPane />
-  if (!entries || entries.length === 0) return <div />
+  // if (!entries || entries.length === 0) return <div />
 
   return (
     <AppLayout>
