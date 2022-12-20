@@ -154,7 +154,11 @@ export default function WorkoutForm({
           />
           <Select
             required
-            defaultValue={existing ? existing.scoreType.valueOf() : undefined}
+            defaultValue={
+              existing
+                ? existing.scoreType.valueOf()
+                : ScoringType.Other.valueOf()
+            }
             {...register("scoreType")}
             size="sm"
             placeholder="Select Type"
