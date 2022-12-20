@@ -71,7 +71,9 @@ export default function WorkoutCard({ workout }: CardProps) {
       <Card>
         <VStack align="left" rowGap={4}>
           <Text fontSize="sm">{workout.title}</Text>
-          <Text fontSize="xs">{workout.description}</Text>
+          <Text fontSize="xs" style={{ whiteSpace: "pre-wrap" }}>
+            {workout.description}
+          </Text>
           <Flex>
             {workout.libraryRefs ? (
               <Button
