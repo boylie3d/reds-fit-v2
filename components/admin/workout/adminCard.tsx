@@ -31,7 +31,9 @@ export default function AdminCard({
     <Box boxShadow="md" w="100%" p="20px" borderRadius="md" borderWidth="1px">
       <VStack align="left" rowGap={4}>
         <Text fontSize="sm">{workout.title}</Text>
-        <Text fontSize="xs">{workout.description}</Text>
+        <Text fontSize="xs" style={{ whiteSpace: "pre-wrap" }}>
+          {workout.description}
+        </Text>
         <Button onClick={onOpen} variant="teamOutline">
           Edit
         </Button>
