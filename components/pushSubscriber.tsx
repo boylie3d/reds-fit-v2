@@ -24,12 +24,14 @@ export default function PushSubscriber({}) {
 
   useEffect(() => {
     if (
-      typeof window !== "undefined"
-      // && "serviceWorker" in navigator
+      typeof window !== "undefined" &&
+      "serviceWorker" in navigator
       // && window.workbox !== undefined
     ) {
       // run only in browser
+      console.log("hi")
       navigator.serviceWorker.ready.then(reg => {
+        console.log("made it")
         reg.pushManager.getSubscription().then(sub => {
           if (
             sub &&
