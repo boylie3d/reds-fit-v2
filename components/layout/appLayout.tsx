@@ -1,5 +1,6 @@
 import { Profile } from "@/types"
 import { Box, Center, Grid, GridItem } from "@chakra-ui/react"
+import PushSubscriber from "components/pushSubscriber"
 import { useLocalProfile } from "hooks/profile"
 import { getNavItem, NavItem } from "navigation"
 import { useRouter } from "next/router"
@@ -75,6 +76,7 @@ export default function AppLayout(props: LayoutProps) {
           <Box>
             <Center>
               <Box w="90%" maxW="800px">
+                <PushSubscriber />
                 {props.children}
               </Box>
             </Center>

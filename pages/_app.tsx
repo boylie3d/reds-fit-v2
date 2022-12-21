@@ -11,6 +11,7 @@ import fb from "../util/firebase"
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, userLoading, userError] = useAuthState(fb.auth)
+
   if (userLoading) return <div />
 
   return (
