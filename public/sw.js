@@ -14,6 +14,7 @@
 // If the loader is already loaded, just stop.
 if (!self.define) {
   self.addEventListener("push", function (event) {
+    console.log({ event })
     const data = JSON.parse(event.data.text())
     event.waitUntil(
       registration.showNotification(data.title, {
