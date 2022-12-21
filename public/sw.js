@@ -13,6 +13,7 @@
 
 // If the loader is already loaded, just stop.
 if (!self.define) {
+  console.log("ASDSAD")
   self.addEventListener("push", function (event) {
     console.log({ event })
     const data = JSON.parse(event.data.text())
