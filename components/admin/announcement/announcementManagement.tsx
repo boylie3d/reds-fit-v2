@@ -157,7 +157,9 @@ const AnnouncementItem = ({
             <Icon color="teamPrimary" as={BsFillMegaphoneFill} />
           </HStack>
         </Center>
-        <Text fontSize="xs">{announcement.message}</Text>
+        <Text fontSize="xs" style={{ whiteSpace: "pre-wrap" }}>
+          {announcement.message}
+        </Text>
         <Flex w="100%" gap={3}>
           <Button onClick={onEdit} variant="teamOutline" flex={1}>
             Edit

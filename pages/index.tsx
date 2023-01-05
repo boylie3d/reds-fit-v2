@@ -88,7 +88,7 @@ const AnnouncementsBar = ({ date }: AnnouncementProps) => {
       </Center>
       <VStack align="left" gap={2}>
         {announcements.map(a => (
-          <Text key={a.id} fontSize="xs">
+          <Text key={a.id} fontSize="xs" style={{ whiteSpace: "pre-wrap" }}>
             {a.message}
           </Text>
         ))}
