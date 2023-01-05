@@ -63,6 +63,7 @@ export default function WorkoutManagement() {
           <ModalCloseButton />
           <ModalBody>
             <WorkoutForm
+              date={calDate}
               onDelete={() => console.log("hi?")}
               onSubmitted={workoutFormSubmitted}
             />

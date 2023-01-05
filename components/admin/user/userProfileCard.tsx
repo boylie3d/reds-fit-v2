@@ -2,16 +2,19 @@ import { AccessType, Profile } from "@/types"
 import { CloseIcon } from "@chakra-ui/icons"
 import {
   Avatar,
+  AvatarBadge,
   Box,
   Center,
   Checkbox,
   Grid,
   GridItem,
   HStack,
+  Icon,
   Text,
   useToast,
   VStack,
 } from "@chakra-ui/react"
+import { GiWhistle } from "react-icons/gi"
 import { useSWRConfig } from "swr"
 
 interface ProfileProps {
@@ -68,7 +71,18 @@ export default function VerifiedProfileCard({
       <Grid templateColumns="repeat(5, 1fr)" h="100%" w="100%">
         <GridItem colSpan={4}>
           <HStack>
-            <Avatar src={profile.photoURL} />
+            <Avatar src={profile.photoURL}>
+              {profile.userType === "Coach" && (
+                <AvatarBadge
+                  boxSize="1.25em"
+                  borderColor="white"
+                  border="2px"
+                  bg="teamPrimary"
+                >
+                  <Icon as={GiWhistle} color="white" padding="1px" />
+                </AvatarBadge>
+              )}
+            </Avatar>
             <VStack align="left">
               <Box>{profile.displayName}</Box>
               <Box>
